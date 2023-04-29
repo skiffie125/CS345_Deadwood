@@ -1,3 +1,13 @@
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
+import javax.swing.text.View;
+
 public class Board {
     // Fields
     private Scene[] scenes;
@@ -62,8 +72,22 @@ public class Board {
         return null;
     }
 
-    // Reset board for new game
+    // Reset deck
     public void reset() {
         return;
+    }
+}
+
+// Inner class for XML parsing functionality
+class ParseXML {
+    // Generate document from XML file
+    public Document getDocFromFile(String filename) 
+    throws ParserConfigurationException {
+        return null;
+    }
+
+    // Reads data from document and stores it 
+    public void readData(Document d) {
+
     }
 }
