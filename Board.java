@@ -7,7 +7,8 @@ public class Board {
     Card[] deck;
 
     // Methods
-    public Board Board() {
+    public Board Board(Scene[] scene, Location trailer, Location castingOffice,
+    int cardsLeft, Card[] deck) {
         return null;
     }
 
