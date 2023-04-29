@@ -1,31 +1,31 @@
 public class Bank {
     // Fields
-    int[] dollars;
-    int[] credits;
+    private int[] dollars;
+    private int[] credits;
 
     // Methods
 
     // Constructor
     // Take an array of players and the number thereof
     // to determine starting currency/currencies
-    public Bank Bank(int[] players, int numPlayers) {
-        return null;
+    public Bank(int[] players, int numPlayers) {
+        return;
     }
 
     public void setDollars(int player, int amount) {
         return;
     }
 
+    public int getDollars(int player) {
+        return this.dollars[player];
+    }
+
     public void setCredits(int player, int amount) {
         return;
     }
 
-    public int getDollars(int player) {
-        return 0;
-    }
-
     public int getCredits(int player) {
-        return 0;
+        return this.credits[player];
     }
 
     // add given amount(s) to specified player

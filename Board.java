@@ -1,15 +1,19 @@
 public class Board {
     // Fields
-    Scene[] scene;
-    Location trailer;
-    Location castingOffice;
-    int cardsLeft;
-    Card[] deck;
+    private Scene[] scenes;
+    private Location trailer;
+    private Location castingOffice;
+    private int cardsLeft;
+    private Card[] deck;
 
     // Methods
-    public Board Board(Scene[] scene, Location trailer, Location castingOffice,
+    public Board(Scene[] scenes, Location trailer, Location castingOffice,
     int cardsLeft, Card[] deck) {
-        return null;
+        this.scenes = scenes;
+        this.trailer = trailer;
+        this.castingOffice = castingOffice;
+        this. cardsLeft = cardsLeft;
+        this.deck = deck;
     }
 
     public void setScene(int index, Scene scene) {
@@ -18,7 +22,7 @@ public class Board {
 
     // Returns scene at specified index
     public Scene getScene(int index) {
-        return;
+        return this.scenes[index];
     }
 
     public void setTrailer(Location loc) {
@@ -26,7 +30,7 @@ public class Board {
     }
 
     public Location getTrailer() {
-        return;
+        return this.trailer;
     }
 
     public void setCastingOffice(Location loc) {
@@ -34,7 +38,7 @@ public class Board {
     }
 
     public Location getCastingOffice() {
-
+        return this.castingOffice;
     }
 
     public void setCardsLeft(int amount) {
@@ -42,7 +46,7 @@ public class Board {
     }
 
     public int getCardsLeft() {
-        return;
+        return this.cardsLeft;
     }
     
     public void setCards(Card[] cards) {
@@ -50,10 +54,10 @@ public class Board {
     }
 
     public Card[] getCards() {
-        return null;
+        return this.deck;
     }
 
-    // Get first card out of cards array
+    // Get first card out of deck
     public Card pop() {
         return null;
     }

@@ -1,7 +1,7 @@
 public class Card {
     // Fields
-    String description;
-    Role[] onCardRoles;
+    private String description;
+    private Role[] onCardRoles;
 
     public Card Card(String description, Roles[] roles) {
         return null;
@@ -12,7 +12,7 @@ public class Card {
     }
 
     public String getDescription() {
-        return "";
+        return this.description;
     }
 
     public void setOnCardRoles(Card[] roles) {
@@ -20,6 +20,6 @@ public class Card {
     }
 
     public Role[] getOnCardRoles() {
-        return null;
+        return this.onCardRoles;
     }
 }
