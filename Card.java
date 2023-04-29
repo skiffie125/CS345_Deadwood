@@ -3,7 +3,7 @@ public class Card {
     private String description;
     private Role[] onCardRoles;
 
-    public Card Card(String description, Roles[] roles) {
+    public Card Card(String description, Role[] roles) {
         return null;
     }
 

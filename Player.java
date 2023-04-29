@@ -75,7 +75,7 @@ public class Player {
 
 }
 
-public class Dice{
+class Dice{
     public Dice(){
 
     }

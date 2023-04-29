@@ -9,7 +9,7 @@ public class LocationManager{
         board=newBoard;
     }
     public Board getBoard(){
-        return Board;
+        return this.board;
     }
 
     public boolean checkCardStatus(Scene s){
