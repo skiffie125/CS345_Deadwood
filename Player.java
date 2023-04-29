@@ -1,7 +1,7 @@
 
 public class Player {
     private Role currentRole;
-    private currentLocation Location;
+    private Location currentLocation;
     private int rank;
     private int ID;
 
