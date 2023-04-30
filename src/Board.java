@@ -7,6 +7,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import javax.swing.text.View;
+import java.util.Random;
 
 public class Board {
     // Fields
@@ -67,13 +68,19 @@ public class Board {
         return this.deck;
     }
 
-    // Get first card out of deck
+    // Get a random card out of deck
     public Card pop() {
-        return null;
+        Random r = new Random();
+        int cardIndex =  r.nextInt(cardsLeft);
+        Card temp = deck[cardIndex];
+        deck[cardIndex] = deck[cardsLeft -1];
+        deck[cardsLeft -1] = temp;
+        return temp;
     }
 
     // Reset deck
     public void reset() {
+        cardsLeft = 40;
         return;
     }
 }
