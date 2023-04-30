@@ -1,6 +1,6 @@
 public class Viewer {
     // Command constants
-    static final String[] commands = {"Current", "Locate all", "move", "Work", "Upgrade",
+    static final String[] commands = {"Current", "Locate all", "Move", "Work", "Upgrade",
         "Rehearse", "Act", "End turn", "End game"};
     
     // Variable Fields
