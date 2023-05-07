@@ -8,11 +8,14 @@ public class Bank {
     // Constructor
     // Take an array of players and the number thereof
     // to determine starting currency/currencies
-    public Bank(int[] players, int numPlayers) {
+    public Bank(int numPlayers) {
+        dollars = new int[numPlayers];
+        credits = new int[numPlayers];
         return;
     }
 
     public void setDollars(int player, int amount) {
+        dollars[player] = amount;
         return;
     }
 
@@ -21,6 +24,7 @@ public class Bank {
     }
 
     public void setCredits(int player, int amount) {
+        credits[player] = amount;
         return;
     }
 
@@ -28,13 +32,19 @@ public class Bank {
         return this.credits[player];
     }
 
+    //we should add a method here to check to make sure a player can't go into the red
+
     // add given amount(s) to specified player
-    public void add(int player, int dollars, int credits) {
+    public void add(int player, int dollarAmount, int creditAmount) {
+        dollars[player] += dollarAmount;
+        credits[player] += creditAmount; 
         return;
     }
 
     // subtract given amount(s) to specified player
-    public void pay(int player, int dollars, int credits) {
+    public void pay(int player, int dollarAmount, int creditAmount) {
+        dollars[player] -= dollarAmount;
+        credits[player] -= creditAmount;
         return;
     }
 }
