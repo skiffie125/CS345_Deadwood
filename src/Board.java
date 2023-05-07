@@ -28,6 +28,7 @@ public class Board {
     }
 
     public void setScene(int index, Scene scene) {
+        this.scenes[index]= scene;
         return;
     }
 
@@ -37,6 +38,7 @@ public class Board {
     }
 
     public void setTrailer(Location loc) {
+        this.trailer = loc;
         return;
     }
 
@@ -45,6 +47,7 @@ public class Board {
     }
 
     public void setCastingOffice(Location loc) {
+        this.castingOffice = loc;
         return;
     }
 
@@ -53,6 +56,7 @@ public class Board {
     }
 
     public void setCardsLeft(int amount) {
+        this.cardsLeft = amount;
         return;
     }
 
@@ -61,12 +65,14 @@ public class Board {
     }
     
     public void setCards(Card[] cards) {
+        this.deck = cards;
         return;
     }
 
     public Card[] getCards() {
         return this.deck;
     }
+
 
     // Get a random card out of deck
     public Card pop() {
@@ -87,14 +93,52 @@ public class Board {
 
 // Inner class for XML parsing functionality
 class ParseXML {
-    // Generate document from XML file
+    // Generate document from XML files
+    //fully copy pasted from from given files
+
     public Document getDocFromFile(String filename) 
     throws ParserConfigurationException {
-        return null;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = null;
+        try{
+            doc = db.parse(filename);
+        } catch (Exception ex){
+            System.out.println("XML parse failure");
+            ex.printStackTrace();
+        }
+        return doc;
     }
 
     // Reads data from document and stores it 
-    public void readData(Document d) {
+
+    //No idea if this works
+    
+    public void readCardData(Document d, Card[] deck) {
+        Element root = d.getDocumentElement();
+        NodeList cards = root.getElementsByTagName("card");
+        for (int i=0; i<cards.getLength();i++){
+            Node card = card.item(i);
+            String name = card.getAttributes().getNamedItem("name").getNodeValue();
+            deck[i].setName(name);
+            String img = card.getAttributes().getNamedItem("img").getNodeValue();
+            deck[i].setName(img);
+            int budget = card.getAttributes().getNamedItem("budget").getNodeValue();
+            deck[i].setBudget(budget);
+
+            NodeList children = card.getChildNodes();
+            for (int j=0; j< children.getLength(); j++){
+                Node sub = children.item(j);
+
+                //need to fill the rest of this in 
+            }
+
+        }
+
+
+    }
+
+    public void readBoardData(Document d, Scene[] scenes, Location castingOffice, Location trailer) {
 
     }
 }
