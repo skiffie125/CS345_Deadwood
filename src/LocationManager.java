@@ -2,7 +2,8 @@ public class LocationManager{
     private Board board;
 
     public LocationManager(){
-
+        board = new Board();
+        // need call a method on board to set it up here
     }
     
     public void setBoard(Board newBoard){
@@ -13,7 +14,7 @@ public class LocationManager{
     }
 
     public boolean checkCardStatus(Scene s){
-        return false;
+        return s.cardFaceUp();
     }
     public boolean checkRoleStatus(Scene s, Role r){
         return false;
