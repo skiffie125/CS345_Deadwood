@@ -1,8 +1,9 @@
 public class Role {
     // Fields
-    String description;
-    int minRank;
-    Player player;
+    private String description;
+    private int minRank;
+    private Player player;
+    private String line;
 
     // Methods
     public Role(String description, int minRank, Player player) {
@@ -25,6 +26,10 @@ public class Role {
 
     public int getMinRank() {
         return this.minRank;
+    }
+
+    public void setline(int newLine) {
+        this.line = newLine;
     }
 
     public boolean take(Player player) {
