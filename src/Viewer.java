@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Viewer {
     // Command constants
     static final String[] commands = {"Current", "Locate all", "Move", "Work", "Upgrade",
@@ -15,8 +16,13 @@ public class Viewer {
         this.game = game;
     }
 
-    public void getCommand() {
-        return;
+    public String getCommand() {
+        String result = null;
+        Scanner s = new Scanner(System.in);
+        result = s.nextLine()
+        buffer += result;
+        s.close();
+        return result;
     }
 
     public String showOutput() {
