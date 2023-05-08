@@ -5,6 +5,8 @@ public class Player {
     private Location currentLocation;
     private int rank;
     private int id;
+    private int dollars;
+    private int credits;
 
     //Constructors
     public Player(int rank, int id) {
@@ -35,6 +37,18 @@ public class Player {
     }
     public int getId(){
         return id;
+    }
+    public int getDollars() {
+        return this.dollars;
+    }
+    public void setDollars(int amount) {
+        dollars += amount;
+    }
+    public int getCredits() {
+        return credits;
+    }
+    public void setCredits(int amount) {
+        credits += amount;
     }
 
 

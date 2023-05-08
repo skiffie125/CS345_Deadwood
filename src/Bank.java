@@ -33,7 +33,9 @@ public class Bank {
     }
 
     //we should add a method here to check to make sure a player can't go into the red
-    // Should that validation happen here or should there be a 'transaction manager' class?
+    private boolean verifyWithdraw(Player player, int dollarAmount, int creditAmount) {
+        return (((player.getDollars() - dollarAmount) > 0) || (player.getCredits() - creditAmount > 0));
+    }
 
     // add given amount(s) to specified player
     public void add(int player, int dollarAmount, int creditAmount) {

@@ -92,6 +92,7 @@ public class Board {
 }
 
 // Inner class for XML parsing functionality
+// This should probably be in viewer yeah?
 class ParseXML {
     // Generate document from XML files
     //fully copy pasted from from given files
@@ -113,27 +114,28 @@ class ParseXML {
     // Reads data from document and stores it 
 
     //No idea if this works
-    
+
+    // Commented out to do viewer testing. Also no clue if it works
     public void readCardData(Document d, Card[] deck) {
-        Element root = d.getDocumentElement();
-        NodeList cards = root.getElementsByTagName("card");
-        for (int i=0; i<cards.getLength();i++){
-            Node card = card.item(i);
-            String name = card.getAttributes().getNamedItem("name").getNodeValue();
-            deck[i].setName(name);
-            String img = card.getAttributes().getNamedItem("img").getNodeValue();
-            deck[i].setName(img);
-            int budget = card.getAttributes().getNamedItem("budget").getNodeValue();
-            deck[i].setBudget(budget);
+        // Element root = d.getDocumentElement();
+        // NodeList cards = root.getElementsByTagName("card");
+        // for (int i=0; i<cards.getLength();i++){
+        //     Node card = card.item(i);
+        //     String name = card.getAttributes().getNamedItem("name").getNodeValue();
+        //     deck[i].setName(name);
+        //     String img = card.getAttributes().getNamedItem("img").getNodeValue();
+        //     deck[i].setName(img);
+        //     int budget = card.getAttributes().getNamedItem("budget").getNodeValue();
+        //     deck[i].setBudget(budget);
 
-            NodeList children = card.getChildNodes();
-            for (int j=0; j< children.getLength(); j++){
-                Node sub = children.item(j);
+        //     NodeList children = card.getChildNodes();
+        //     for (int j=0; j< children.getLength(); j++){
+        //         Node sub = children.item(j);
 
-                //need to fill the rest of this in 
-            }
+        //         //need to fill the rest of this in 
+        //     }
 
-        }
+        // }
 
 
     }
