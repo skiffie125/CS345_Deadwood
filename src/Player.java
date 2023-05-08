@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Player {
     private Role currentRole;
@@ -38,19 +39,18 @@ public class Player {
     public int getId(){
         return id;
     }
-    public int getDollars() {
-        return this.dollars;
-    }
     public void setDollars(int amount) {
-        dollars += amount;
+        dollars = amount;
+    }
+    public int getDollars() {
+        return dollars;
+    }
+    public void setCredits(int amount) {
+        credits = amount;
     }
     public int getCredits() {
         return credits;
     }
-    public void setCredits(int amount) {
-        credits += amount;
-    }
-
 
     //actual class methods 
 
@@ -61,7 +61,7 @@ public class Player {
         /*
         take user input from choices: 
         Move, Upgrade, Take a role, Work, End Turn
-
+        
         if Move:
             go to move method 
             take user input from choices: 
@@ -85,6 +85,26 @@ public class Player {
         if end turn:
             termintate
          */
+         String result = null;
+         Scanner s = new Scanner(System.in);
+         System.out.println("Move, Upgrade, Take role, Work, or End turn?");
+         while (true) {
+            result = s.nextLine();
+            if (result.equals("End turn")) {
+                System.out.println("Turn ended");
+                break;
+            }
+            switch (result) {
+                case "Move":
+                    break;
+                case "Upgrade":
+                    break;
+                case "Take role":
+                    break;
+                case "Work":
+                    break;
+            }
+         }
     }
 
     public boolean move(Location location){
@@ -113,6 +133,10 @@ public class Player {
             //end turn and return true
         //else 
             //end turn and return false 
+            if (currentRole != null) {
+                System.out.println("Invalid: Player already has a role");
+                return false;
+            }
         return false;
     }
 

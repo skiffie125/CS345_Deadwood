@@ -18,6 +18,9 @@ public class Board {
     private Card[] deck;
 
     // Methods
+    public Board() {
+        // Parse XML and call private constructor
+    }
     public Board(Scene[] scenes, Location trailer, Location castingOffice,
     int cardsLeft, Card[] deck) {
         this.scenes = scenes;
@@ -92,7 +95,6 @@ public class Board {
 }
 
 // Inner class for XML parsing functionality
-// This should probably be in viewer yeah?
 class ParseXML {
     // Generate document from XML files
     //fully copy pasted from from given files

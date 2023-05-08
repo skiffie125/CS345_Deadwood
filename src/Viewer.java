@@ -23,6 +23,7 @@ public class Viewer {
         // Buffer can be eliminated as a field
         String result = null;
         Scanner s = new Scanner(System.in);
+        Player[] players = game.getPlayers();
         while (true) {
             result = s.nextLine();
             //buffer += result;
@@ -35,7 +36,7 @@ public class Viewer {
                     System.out.println("Current!");
                     break;
                 case "Locate all":
-                    int numPlayers = game.players.length;
+                    int numPlayers = players.length;
                     for (int i = 0; i < numPlayers; i++) {
                         System.out.println("Current player: Player " + players[i].getId());
                         System.out.println("Player location: " + players[i].getLocation());
@@ -59,7 +60,7 @@ public class Viewer {
                 case "End turn":
                     System.out.println("End turn");
                     break;
-                case default:
+                default:
                     System.out.println("Invalid command");
                     break;
                 }
