@@ -2,7 +2,7 @@ public class LocationManager{
     private Board board;
 
     public LocationManager(){
-        board = new Board();
+        // board = new Board();
         // need call a method on board to set it up here
     }
     

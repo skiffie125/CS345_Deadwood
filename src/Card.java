@@ -38,7 +38,7 @@ public class Card {
     }
 
 
-    public void setOnCardRoles(Card[] roles) {
+    public void setOnCardRoles(Role[] roles) {
         onCardRoles = roles;
         return;
     }

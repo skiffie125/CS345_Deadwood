@@ -4,11 +4,12 @@ public class Player {
     private Role currentRole;
     private Location currentLocation;
     private int rank;
-    private int ID;
+    private int id;
 
     //Constructors
-    public Player(){
-
+    public Player(int rank, int id) {
+        this.rank = rank;
+        this.id = id;
     }
     //Getters and Setters For Fields 
     public void setRole(Role role){
@@ -29,11 +30,11 @@ public class Player {
     public int getRank(){
         return rank;
     }
-    public void setID(int newID){
-        ID = newID;
+    public void setID(int newId){
+        id = newId;
     }
-    public int getID(){
-        return ID;
+    public int getId(){
+        return id;
     }
 
 

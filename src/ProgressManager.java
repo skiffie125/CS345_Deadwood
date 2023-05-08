@@ -48,49 +48,50 @@ public class ProgressManager {
 
     // Set up board for play
     public void setUpGame(int numPlayers) {
-        System.out.println("Welcome to Deadwood");
-        if(numPlayers > 8 || numPlayers < 2){
-            System.out.println("Incorrect Number of Players; Failed in set Up Game");
-        } else{
-            Bank b = new Bank(numPlayers);
-            bank = b;
-            LocationManager l = new LocationManager();
-            lm = l; 
-            totalDays = 4;
+        // This wasnt compiling, commented out so i can do some Viewer tests - JB
+        // System.out.println("Welcome to Deadwood");
+        // if(numPlayers > 8 || numPlayers < 2){
+        //     System.out.println("Incorrect Number of Players; Failed in set Up Game");
+        // } else{
+        //     Bank b = new Bank(numPlayers);
+        //     bank = b;
+        //     LocationManager l = new LocationManager();
+        //     lm = l; 
+        //     totalDays = 4;
 
-            for(int i = 0; i< 8; i++){
-                if (i<numPlayers){
-                    Player p = new Player();
-                    players[i] =p;
-                    p.setRank(1);
-                    p.setLocation(null);
-                    p.setRole(null);
-                    p.setID(i);
-                    bank.setDollars(i, 0);
-                    bank.setCredits(i, 0);
-                } else{
-                    players[i] = null;
-                }
-            }
-            if( numPlayers == 2 || numPlayers == 3){
-                totalDays = 3;
-            } else if(numPlayers == 5){
-                for(int i = 0; i< 5; i++){
-                    bank.setCredits(i, 2);
-                }
-            } else if(numPlayers == 6){
-                for(int i = 0; i< 5; i++){
-                    bank.setCredits(i, 4);
-                }
-            }else if(numPlayers == 7  || numPlayers == 8){
-                for(int i = 0; i< 8; i++){
-                     if (i<numPlayers){
-                        players[i].setRank(2);
-                     }
-                }
-            }
-        }
-        return;
+        //     for(int i = 0; i< 8; i++){
+        //         if (i<numPlayers){
+        //             Player p = new Player();
+        //             players[i] =p;
+        //             p.setRank(1);
+        //             p.setLocation(null);
+        //             p.setRole(null);
+        //             p.setID(i);
+        //             bank.setDollars(i, 0);
+        //             bank.setCredits(i, 0);
+        //         } else{
+        //             players[i] = null;
+        //         }
+        //     }
+        //     if( numPlayers == 2 || numPlayers == 3){
+        //         totalDays = 3;
+        //     } else if(numPlayers == 5){
+        //         for(int i = 0; i< 5; i++){
+        //             bank.setCredits(i, 2);
+        //         }
+        //     } else if(numPlayers == 6){
+        //         for(int i = 0; i< 5; i++){
+        //             bank.setCredits(i, 4);
+        //         }
+        //     }else if(numPlayers == 7  || numPlayers == 8){
+        //         for(int i = 0; i< 8; i++){
+        //              if (i<numPlayers){
+        //                 players[i].setRank(2);
+        //              }
+        //         }
+        //     }
+        // }
+        // return;
     }
 
     // Prepare players for start of day

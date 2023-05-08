@@ -28,7 +28,7 @@ public class Role {
         return this.minRank;
     }
 
-    public void setline(int newLine) {
+    public void setline(String newLine) {
         this.line = newLine;
     }
 
