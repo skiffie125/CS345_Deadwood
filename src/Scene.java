@@ -2,6 +2,7 @@ public class Scene extends Location{
     private String name;
     private Location[] neighbors;
     private int[] players;
+    private int shotCountersMax;
     private int shotCountersLeft;
     private Card card;
     private boolean faceUp;
@@ -16,7 +17,7 @@ public class Scene extends Location{
         name = name;
     }
     //Getters and setters 
-    public void setShotCounters(int n){
+    public void setShotCountersLeft(int n){
         shotCountersLeft = n;
     }
     public void removeAShotCounter(){
@@ -25,6 +26,13 @@ public class Scene extends Location{
     public int getShotCountersLeft(){
         return shotCountersLeft;
     }
+    public void setShotCountersMax(int n){
+        shotCountersMax = n;
+    }
+     public int getShotCountersMax(){
+        return shotCountersMax;
+    }
+    
 
     public void setCard(Card newCard){
         card = newCard;
@@ -61,12 +69,11 @@ public class Scene extends Location{
     }
 
     //class methods
+    public void reset(Card newCard){
+        card = newCard;
+        shotCountersLeft = shotCountersMax; 
+        faceUp = false;
 
-    public void WrapScene(){
-
-    }
-    public void reset(){
-        
     }
 
 }
