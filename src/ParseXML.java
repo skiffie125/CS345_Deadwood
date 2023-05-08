@@ -29,7 +29,15 @@ public class ParseXML {
         for (int i = 0; i < setLen; i++) {
             Node set = sets.item(i);
             String setName = set.getAttributes().getNamedItem("name").getNodeValue();
-            System.out.println("Name: " + setName);
+            NodeList subNodes = set.getChildNodes();
+            int numSubNodes = subNodes.getLength();
+            for (int j = 0; j < numSubNodes; j++) {
+                Node sub = subNodes.item(j);
+                String nodeName = sub.getNodeName();
+                switch (nodeName) {
+                    
+                }
+            }
         }
         return null;
     }

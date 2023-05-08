@@ -17,11 +17,7 @@ public class Board {
     private int cardsLeft;
     private Card[] deck;
 
-    // Methods
-    public Board() {
-        // Parse XML and call private constructor
-    }
-    public Board(Scene[] scenes, Location trailer, Location castingOffice,
+    public Board(Scene[] scenes, Location trailer, Location castingOffice, Location[] sets,
     int cardsLeft, Card[] deck) {
         this.scenes = scenes;
         this.trailer = trailer;
