@@ -13,6 +13,7 @@ CLASSES = \
 		  Deadwood.java \
 		  Location.java \
 		  LocationManager.java \
+		  ParseXML.java \
 		  Player.java \
 		  ProgressManager.java \
 		  Role.java \

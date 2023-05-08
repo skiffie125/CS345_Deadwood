@@ -1,4 +1,7 @@
 public class Scene extends Location{
+    private String name;
+    private Location[] neighbors;
+    private int[] players;
     private int shotCountersLeft;
     private Card card;
     private boolean faceUp;

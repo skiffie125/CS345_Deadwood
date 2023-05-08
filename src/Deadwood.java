@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import org.w3c.dom.Document;
 public class Deadwood {
     public static Player[] generatePlayers(int amount) {
         Player[] players = new Player[amount];
@@ -23,10 +24,26 @@ public class Deadwood {
                 break;
             }
         }
-        Player[] players = generatePlayers(numPlayers);
+        // XML parsing
+        // ParseXML parser = new ParseXML();
+        // try {
+        //     Document doc = parser.getDocFromFile("board.xml");
+        //     parser.readBoard(doc);
+        // } catch (Exception e) {
+        //     System.out.println("Parsing error: " + e);
+        // }
+        // Set up game components
+        // card
+        // locations
+        // location manager
+        //ProgressManager game = new ProgressManager(players, locMan, bank);
+        // roles
+        // scenes
+        //Viewer view = new Viewer(game);
         for (int i = 0; i < numPlayers; i++) {
             System.out.println("Rank: " + players[i].getRank());
             System.out.println("ID: " + players[i].getId());
         }
+        
     }
 }

@@ -96,6 +96,14 @@ public class Player {
             }
             switch (result) {
                 case "Move":
+                    System.out.println("Enter destination: ");
+                    String destName = s.nextLine();
+                    // Need to get location from string
+                    // while(!move()) {
+                    //     System.out.println("Invalid destination. New destination: ");
+                    //     dest = s.nextLine();
+                    // }
+                    // currentLocation = dest;
                     break;
                 case "Upgrade":
                     break;
@@ -112,6 +120,13 @@ public class Player {
         // check location given is a neighbor 
         // if both true move and return true
         // else stay and return false
+        Location[] neighbors = currentLocation.getNeighbors();
+        int len = neighbors.length;
+        for (int i = 0; i < len; i++) {
+            if (neighbors[i].getName().equals(location.getName())) {
+                return true;
+            }
+        }
         return false;
     }
 

@@ -7,11 +7,11 @@ public class ProgressManager {
     private int totalDays;
 
     // Methods
-    public ProgressManager(Player[] players, LocationManager lm, Bank bank, int totalDays) {
+    public ProgressManager(Player[] players, LocationManager lm, Bank bank) {
         this.players = players;
         this.lm = lm;
         this.bank = bank;
-        this.totalDays = totalDays;
+        this.totalDays = totalDays(players.length);
     }
 
     public void setPlayers(Player[] player) {
@@ -97,6 +97,14 @@ public class ProgressManager {
     // Prepare players for start of day
     public void setUpDay(int numPlayers) {
         return;
+    }
+
+    // Calculate the length of game
+    public int totalDays(int numPlayers) {
+        if (numPlayers >= 3) {
+            return 3;
+        }
+        return 4;
     }
 
     // Calculate score for all players

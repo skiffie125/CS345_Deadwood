@@ -1,9 +1,11 @@
 public class LocationManager{
     private Board board;
+    private Location[] locations;
 
-    public LocationManager(){
+    public LocationManager(Location[] locations){
         // board = new Board();
         // need call a method on board to set it up here
+        locations = locations;
     }
     
     public void setBoard(Board newBoard){
