@@ -24,14 +24,15 @@ public class Deadwood {
                 break;
             }
         }
+        Player[] players = generatePlayers(numPlayers);
         // XML parsing
-        // ParseXML parser = new ParseXML();
-        // try {
-        //     Document doc = parser.getDocFromFile("board.xml");
-        //     parser.readBoard(doc);
-        // } catch (Exception e) {
-        //     System.out.println("Parsing error: " + e);
-        // }
+        ParseXML parser = new ParseXML();
+        try {
+            Document doc = parser.getDocFromFile("board.xml");
+            parser.readBoard(doc);
+        } catch (Exception e) {
+            System.out.println("Parsing error: " + e);
+        }
         // Set up game components
         // card
         // locations

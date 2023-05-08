@@ -25,7 +25,7 @@ public class ParseXML {
         Element root = d.getDocumentElement();
         // Get all sets ('scenes')
         NodeList sets = d.getElementsByTagName("set");
-        int setLen = sets.length;
+        int setLen = sets.getLength();
         for (int i = 0; i < setLen; i++) {
             Node set = sets.item(i);
             String setName = set.getAttributes().getNamedItem("name").getNodeValue();
