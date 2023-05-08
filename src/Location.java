@@ -8,7 +8,7 @@ public class Location{
 
     }
     public Location(String name){
-        name = name;
+        this.name = name;
     }
 
     //getters and Setters 
@@ -36,7 +36,13 @@ public class Location{
 
     //class methods
     public boolean checkIfNeighbor(Location l){
-        return false;
+        boolean result = false;
+        for(int i = 0; i < neighbors.length; i++){
+            if (l == neighbors[i]){
+                result = true;
+            }
+        }
+        return result;
     }
 
 }
