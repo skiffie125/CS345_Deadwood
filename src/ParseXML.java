@@ -24,32 +24,30 @@ public class ParseXML {
     public Board readBoard(Document d) {
         Element root = d.getDocumentElement();
         // Get all sets ('scenes')
-        NodeList sets = d.getElementsByTagName("set");
-        int setLen = sets.getLength();
-        Location[] locations = new Location[setLen];
+        NodeList setsList = d.getElementsByTagName("set");
+        int setLen = setsList.getLength();
+        Location[] sets = new Location[setLen];
         // For each set
         for (int i = 0; i < setLen; i++) {
-            Node set = sets.item(i);
-            String setName = set.getAttributes().getNamedItem("name").getNodeValue();
-            Location setLoc = new Location(setName);
-            locations[i] = setLoc;
-            NodeList data = set.getChildNodes();
-            int numSubNodes = data.getLength();
-            // For each field in that set
-            for (int j = 0; j < numSubNodes; j++) {
-                Node sub = data.item(j);
-                if (sub.getNodeName().equals("neighbors")) {
-                    // How do we get the data out of this? 
-                } else if (sub.getNodeName().equals("parts")) {
-                    System.out.println("Parts");
-                }
-            }
-            
+            sets[i] = getLocation(setsList.item(i));
+        }
+        NodeList neighborsList = d.getElementsByTagName("neighbor");
+        int numNeighbors = neighborsList.getLength();
+        Location[] neighbors = new Location[numNeighbors];
+        for (int i = 0; i < numNeighbors; i++) {
+            neighbors[i] = getLocation(neighborsList.item(i));
+            System.out.println(neighbors[i].getName());
         }
         return null;
     }
 
     public Card[] readCards() {
         return null;
+    }
+
+    private Location getLocation(Node set) {
+        String name = set.getAttributes().getNamedItem("name").getNodeValue();
+        Location loc = new Location(name);
+        return loc;
     }
 }
