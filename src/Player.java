@@ -54,66 +54,7 @@ public class Player {
 
     //actual class methods 
 
-    //Method to take a turn
-    //Preconditions: It is the players turn
-    //Postcondition: Turn is over 
-    public void takeATurn(){
-        /*
-        take user input from choices: 
-        Move, Upgrade, Take a role, Work, End Turn
-        
-        if Move:
-            go to move method 
-            take user input from choices: 
-            End Turn, Upgrade, Take a role
-            go to coresponding method or end turn
-
-        if Upgrade:
-            get desired rank  
-            go to upgrade method
-            take user input from choices:
-            Move, End Turn
-            go to coresponding method or end turn
-        
-        if Take a role:
-            show roles on current scence
-            take user input for which role 
-            go to take role method
-
-        if Work
-            go work method 
-        if end turn:
-            termintate
-         */
-         String result = null;
-         Scanner s = new Scanner(System.in);
-         System.out.println("Move, Upgrade, Take role, Work, or End turn?");
-         while (true) {
-            result = s.nextLine();
-            if (result.equals("End turn")) {
-                System.out.println("Turn ended");
-                break;
-            }
-            switch (result) {
-                case "Move":
-                    System.out.println("Enter destination: ");
-                    String destName = s.nextLine();
-                    // Need to get location from string
-                    // while(!move()) {
-                    //     System.out.println("Invalid destination. New destination: ");
-                    //     dest = s.nextLine();
-                    // }
-                    // currentLocation = dest;
-                    break;
-                case "Upgrade":
-                    break;
-                case "Take role":
-                    break;
-                case "Work":
-                    break;
-            }
-         }
-    }
+   
 
     public boolean move(Location location){
         // check current location is accurate
@@ -127,6 +68,8 @@ public class Player {
                 return true;
             }
         }
+        currentLocation = location;
+        
         return false;
     }
 
@@ -188,22 +131,7 @@ public class Player {
         return false;
     }
 
-    public void wrapScene(Scene s){
-        //check if all shot counters are removed
-        //get all on card players
-        // if no on card players, no bonuses
-        // else 
-            // rolln(budget)
-            //distribute dollars based on rank
-            // give off card bonuses 
-        //check if that was the 2nd to last scene
-        // if it was end game
-        // else end turn 
-    }
-
-    public void endGame(){
-
-    }
+    
 
 }
 

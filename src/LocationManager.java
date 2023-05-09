@@ -7,6 +7,9 @@ public class LocationManager{
         // need call a method on board to set it up here
         locations = locations;
     }
+    public LocationManager(){
+        
+    }
     
     public void setBoard(Board newBoard){
         board=newBoard;

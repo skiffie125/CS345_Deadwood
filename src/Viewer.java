@@ -13,6 +13,8 @@ public class Viewer {
     public Viewer(ProgressManager game) {
         this.game = game;
     }
+    public Viewer() {
+    }
 
     // Do we want this just to get the command or should we have it act on said commands too?
     // Evidently i vote act on them
@@ -68,7 +70,57 @@ public class Viewer {
         s.close();
         return;
     }
-    
+
+
+    public String getValidComand() {
+        String result = null;
+        Scanner s = new Scanner(System.in);
+        result = s.nextLine();
+        switch (result){
+            case "Current":
+                break;
+            case "Locate all":
+                break;
+            case "Move":
+                break;
+            case "Work":
+                break;
+            case "Upgrade":
+                break;
+            case "Rehearse":
+                break;
+            case "Act":
+                break;
+            case "End turn":
+                break;
+            case "End game":
+                break;
+            default:
+                System.out.println("Invalid command, please try again");
+                result = getValidComand();
+                break;
+        }
+        s.close();
+        return result;
+
+    }
+    public int getParameter(int max){
+        int result;
+        Scanner s = new Scanner(System.in);
+        String input = s.nextLine();
+        Scanner s1 = new Scanner(input);
+        if(!s1.hasNextInt()){
+            System.out.println("Invalid option, please try again");
+            result = getParameter(max);
+        } else{
+            result = s1.nextInt();
+            if (result > max || result < 0){
+                System.out.println("Invalid option, please try again");
+                result = getParameter(max);
+            }
+        }
+        return result;
+    }
         
     public String showOutput() {
         return "";
