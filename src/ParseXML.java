@@ -21,22 +21,32 @@ public class ParseXML {
         return doc;
     }
     
+    // Parse and store board.xml
     public Board readBoard(Document d) {
         Element root = d.getDocumentElement();
         // Get all sets ('scenes')
         NodeList setsList = d.getElementsByTagName("set");
         int setLen = setsList.getLength();
         Location[] sets = new Location[setLen];
-        // For each set
+        // Get each set
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
         }
         NodeList neighborsList = d.getElementsByTagName("neighbor");
         int numNeighbors = neighborsList.getLength();
         Location[] neighbors = new Location[numNeighbors];
+        // Get all neighbors
         for (int i = 0; i < numNeighbors; i++) {
             neighbors[i] = getLocation(neighborsList.item(i));
-            System.out.println(neighbors[i].getName());
+        }
+        neighborJoin(sets, neighbors);
+        Location trailer = new Location("trailer");
+        Location office = new Location("office");
+        setTrailerNeighbors(trailer);
+        setOfficeNeighbors(office);
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Trailer neighbor " + i + ":" + trailer.getNeighbors()[i].getName());
+            System.out.println("Office neighbor " + i + ":" + office.getNeighbors()[i].getName());
         }
         return null;
     }
@@ -45,9 +55,73 @@ public class ParseXML {
         return null;
     }
 
+    // Create a location object from a given node
     private Location getLocation(Node set) {
         String name = set.getAttributes().getNamedItem("name").getNodeValue();
         Location loc = new Location(name);
         return loc;
+    }
+
+    private void setOfficeNeighbors(Location office) {
+        Location[] temp = new Location[3];
+        temp[0] = new Location("Train Station");
+        temp[1] = new Location("Ranch");
+        temp[2] = new Location("Secret Hideout");
+        office.setNeighbors(temp);
+    }
+    // Manually set neighbors bc i cant figure out the bug
+    private void setTrailerNeighbors(Location trailer) {
+        Location[] temp = new Location[3];
+        temp[0] = new Location("Main Street");
+        temp[1] = new Location("Saloon");
+        temp[2] = new Location("Hotel");
+        trailer.setNeighbors(temp);
+    }
+
+    // Couple locations with their neighbors
+    private void neighborJoin(Location[] origin, Location[] neighbors) {
+        int len = origin.length;
+        int neighborIndex = 0;
+        for (int i = 0; i < len; i++) {
+            Location source = origin[i];
+            if (source.getName().equals("General Store")) {
+                // Four neighbors
+                Location[] tempNeighbors = new Location[4];
+                for (int j = 0; j < 4; j++) {
+                    tempNeighbors[j] = neighbors[neighborIndex];
+                    neighborIndex++;
+                }
+                source.setNeighbors(tempNeighbors);
+            } else if (source.getName().equals("Ranch")) {
+                // Four neighbors
+                Location[] tempNeighbors = new Location[4];
+                for (int j = 0; j < 4; j++) {
+                    tempNeighbors[j] = neighbors[neighborIndex];
+                    neighborIndex++;
+                }
+                source.setNeighbors(tempNeighbors);
+            } else if (source.getName().equals("Bank")) {
+                // Four neighbors
+                Location[] tempNeighbors = new Location[4];
+                for (int j = 0; j < 4; j++) {
+                    tempNeighbors[j] = neighbors[neighborIndex];
+                    neighborIndex++;
+                }
+                source.setNeighbors(tempNeighbors);
+            } else if (source.getName().equals("Saloon")) {
+                Location[] tempNeighbors = new Location[3];
+                tempNeighbors[0] = new Location("Main street");
+                tempNeighbors[1] = new Location("Saloon");
+                tempNeighbors[2] = new Location("Hotel");
+                source.setNeighbors(tempNeighbors);
+            } else {
+                Location[] tempNeighbors = new Location[3];
+                for (int j = 0; j < 3; j++) {
+                    tempNeighbors[j] = neighbors[neighborIndex];
+                    neighborIndex++;
+                }
+                source.setNeighbors(tempNeighbors);
+            }
+        }
     }
 }
