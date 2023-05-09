@@ -16,14 +16,16 @@ public class Board {
     private Location castingOffice;
     private int cardsLeft;
     private Card[] deck;
+    private Location[] locations;
 
-    public Board(Scene[] scenes, Location trailer, Location castingOffice, Location[] sets,
+    public Board(Scene[] scenes, Location trailer, Location castingOffice, Location[] locations,
     int cardsLeft, Card[] deck) {
         this.scenes = scenes;
         this.trailer = trailer;
         this.castingOffice = castingOffice;
         this. cardsLeft = cardsLeft;
         this.deck = deck;
+        this.locations = locations;
     }
 
     public void setScene(int index, Scene scene) {

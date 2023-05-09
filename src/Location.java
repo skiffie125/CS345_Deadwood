@@ -3,12 +3,12 @@ public class Location{
     private Location[] neighbors;
     private int[] players;
 
-    //constructor
-    public Location(){
+    //constructors
+    public Location() {
 
     }
     public Location(String name){
-
+        name = name;
     }
 
     //getters and Setters 

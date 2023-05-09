@@ -9,13 +9,12 @@ public class Scene extends Location{
     private int[] rehearsals;
 
     //Constructors 
-    public Scene(){
-
+    // public Scene(String name){
+    //     name = name;
+    // }
+    public Scene(String name) {
+        name = name;
     }
-    public Scene(String newName){
-        
-    }
-
     //Getters and setters 
     public void setShotCounters(int n){
         shotCountersLeft = n;
