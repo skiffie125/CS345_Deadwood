@@ -44,16 +44,17 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
-        System.out.println(setLen+2);
         //Get dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
-        // This should be a 2D array where each subarray holds 4 ints 
-        int[] dimensions = new int[dimLength];
-        System.out.println(dimLength);
-        // for (int i = 0; i < dimLength; i++) {
-        //     dimensions[i] = getDimensions(dimList.item(i));
-        // }
+        int[][] rawDimensions = new int[dimLength][4];
+        for (int i = 0; i < dimLength; i++) {
+            rawDimensions[i] = getDimensions(dimList.item(i));
+        }
+        int [][] sceneDim = getSceneDimensions(rawDimensions);
+        sceneDimensionJoin(sets, sceneDim);
+        trailer.setDimensions(sceneDim[10]);
+        office.setDimensions(sceneDim[11]);
         return null;
     }
 
@@ -75,10 +76,34 @@ public class ParseXML {
     }
 
     // Get all dimensions from given Node
-    private int getDimensions(Node dim) {
-        String amountStr = dim.getAttributes().getNamedItem("area").getNodeValue();
-        int amount = Integer.parseInt(amountStr);
-        return amount;
+    private int[] getDimensions(Node dim) {
+        String xStr = dim.getAttributes().getNamedItem("x").getNodeValue();
+        String yStr = dim.getAttributes().getNamedItem("y").getNodeValue();
+        String hStr = dim.getAttributes().getNamedItem("h").getNodeValue();
+        String wStr = dim.getAttributes().getNamedItem("w").getNodeValue();
+        int x = Integer.parseInt(xStr);
+        int y = Integer.parseInt(yStr);
+        int h = Integer.parseInt(hStr);
+        int w = Integer.parseInt(wStr);
+        int[] dimArray = {x, y, h, w};
+        return dimArray;
+    }
+
+    // Get only those dimensions that map to scenes
+    private int[][] getSceneDimensions(int[][] origin) {
+        int len = origin.length;
+        int[][] returnArray = new int[12][4];
+        int returnLoc = 0;
+        for (int i = 0; i < len; i++) {
+            if ( i ==0 || i == 8 || i == 16 || i == 21 || i == 29 || i == 37
+            || i == 41 || i == 46 || i == 52 || i == 56 || i == 61 || i == 62 ) {
+                for (int j = 0; j < 4; j++) {
+                    returnArray[returnLoc][j] = origin[i][j];
+                }
+                returnLoc++;
+            }
+        }
+        return returnArray;
     }
 
     private void setOfficeNeighbors(Location office) {
@@ -95,6 +120,14 @@ public class ParseXML {
         temp[1] = new Location("Saloon");
         temp[2] = new Location("Hotel");
         trailer.setNeighbors(temp);
+    }
+
+    // Couple scenes with their dimensions
+    private void sceneDimensionJoin(Location[] origin, int[][] dimensions) {
+        int originLen = origin.length;
+        for (int i = 0; i < originLen; i++) {
+            origin[i].setDimensions(dimensions[i]);
+        }
     }
 
     // Couple scenes with their neighbors
