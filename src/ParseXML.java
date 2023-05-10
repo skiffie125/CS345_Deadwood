@@ -55,6 +55,14 @@ public class ParseXML {
         sceneDimensionJoin(sets, sceneDim);
         trailer.setDimensions(sceneDim[10]);
         office.setDimensions(sceneDim[11]);
+        // Get number of takes
+        NodeList takes = d.getElementsByTagName("take");
+        int takesLen = takes.getLength();
+        int[] shotCounters = new int[setLen];
+        System.out.println(takesLen);
+        for (int i = 0; i < takesLen; i++) {
+            getShotCounter(takes.item(i));
+        }
         return null;
     }
 
@@ -104,6 +112,13 @@ public class ParseXML {
             }
         }
         return returnArray;
+    }
+
+    // Find max of values stored in take
+    private int getShotCounter(Node take) {
+        String valueStr = take.getAttributes().getNamedItem("number").getNodeValue();
+        System.out.println(valueStr);
+        return 0;
     }
 
     private void setOfficeNeighbors(Location office) {
