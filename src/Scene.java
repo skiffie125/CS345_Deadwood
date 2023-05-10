@@ -8,6 +8,7 @@ public class Scene extends Location{
     private boolean faceUp;
     private Role[] offCardRoles;
     private int[] rehearsals;
+    private int[] dimensions;
 
     //Constructors 
     // public Scene(String name){
@@ -66,6 +67,12 @@ public class Scene extends Location{
     }
     public int getRehearsal(int player){
         return rehearsals[player];
+    }
+    public void setDimensions(int[] dim) {
+        dimensions = dim;
+    }
+    public int[] getDimensions() {
+        return dimensions;
     }
 
     //class methods

@@ -2,6 +2,7 @@ public class Location{
     private String name;
     private Location[] neighbors;
     private int[] players;
+    private int[] dimensions;
 
     //constructors
     public Location() {
@@ -32,6 +33,12 @@ public class Location{
     }
     public int[] getPlayers(){
         return players;
+    }
+    public void setDimensions(int[] dim) {
+        dimensions = dim;
+    }
+    public int[] getDimensions() {
+        return dimensions;
     }
 
     //class methods

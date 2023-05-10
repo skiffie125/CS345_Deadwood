@@ -27,6 +27,7 @@ public class ParseXML {
         // Get all sets ('scenes')
         NodeList setsList = d.getElementsByTagName("set");
         int setLen = setsList.getLength();
+        //TODO: Convert the appropriate locations(i.e. not the office or trailer) into scenes
         Location[] sets = new Location[setLen];
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
@@ -43,9 +44,16 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
-        // Get dimensions
+        System.out.println(setLen+2);
+        //Get dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
+        // This should be a 2D array where each subarray holds 4 ints 
+        int[] dimensions = new int[dimLength];
+        System.out.println(dimLength);
+        // for (int i = 0; i < dimLength; i++) {
+        //     dimensions[i] = getDimensions(dimList.item(i));
+        // }
         return null;
     }
 
@@ -60,10 +68,17 @@ public class ParseXML {
         return loc;
     }
 
-    // Get specified dimension from given Node
-    private int getDimension(Node dim, String dimension) {
-        String amountStr = dim.getAttributes().getNamedItem(dimension).getNodeValue();
-        int amount = 
+    private Scene getScene(Node set) {
+        String name = set.getAttributes().getNamedItem("name").getNodeValue();
+        Scene scene = new Scene(name);
+        return scene;
+    }
+
+    // Get all dimensions from given Node
+    private int getDimensions(Node dim) {
+        String amountStr = dim.getAttributes().getNamedItem("area").getNodeValue();
+        int amount = Integer.parseInt(amountStr);
+        return amount;
     }
 
     private void setOfficeNeighbors(Location office) {
@@ -82,7 +97,7 @@ public class ParseXML {
         trailer.setNeighbors(temp);
     }
 
-    // Couple locations with their neighbors
+    // Couple scenes with their neighbors
     private void neighborJoin(Location[] origin, Location[] neighbors) {
         int len = origin.length;
         int neighborIndex = 0;
