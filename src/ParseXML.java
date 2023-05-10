@@ -28,14 +28,13 @@ public class ParseXML {
         NodeList setsList = d.getElementsByTagName("set");
         int setLen = setsList.getLength();
         Location[] sets = new Location[setLen];
-        // Get each set
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
         }
+        // Get all neighbors
         NodeList neighborsList = d.getElementsByTagName("neighbor");
         int numNeighbors = neighborsList.getLength();
         Location[] neighbors = new Location[numNeighbors];
-        // Get all neighbors
         for (int i = 0; i < numNeighbors; i++) {
             neighbors[i] = getLocation(neighborsList.item(i));
         }
@@ -44,10 +43,9 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Trailer neighbor " + i + ":" + trailer.getNeighbors()[i].getName());
-            System.out.println("Office neighbor " + i + ":" + office.getNeighbors()[i].getName());
-        }
+        // Get dimensions
+        NodeList dimList = d.getElementsByTagName("area");
+        int dimLength = dimList.getLength();
         return null;
     }
 
@@ -60,6 +58,12 @@ public class ParseXML {
         String name = set.getAttributes().getNamedItem("name").getNodeValue();
         Location loc = new Location(name);
         return loc;
+    }
+
+    // Get specified dimension from given Node
+    private int getDimension(Node dim, String dimension) {
+        String amountStr = dim.getAttributes().getNamedItem(dimension).getNodeValue();
+        int amount = 
     }
 
     private void setOfficeNeighbors(Location office) {
