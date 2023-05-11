@@ -22,12 +22,12 @@ public class ParseXML {
     }
     
     // Parse and store board.xml
+    // wow this is so inefficient i did this SO wrong
     public Board readBoard(Document d) {
         Element root = d.getDocumentElement();
         // Get all sets ('scenes')
         NodeList setsList = d.getElementsByTagName("set");
         int setLen = setsList.getLength();
-        //TODO: Convert the appropriate locations(i.e. not the office or trailer) into scenes
         Location[] sets = new Location[setLen];
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
@@ -70,6 +70,9 @@ public class ParseXML {
             allShotCounters[i] = getShotCounter(takes.item(i));
         }
         int[] parsedShots = parseShotCounters(allShotCounters);
+        for (int i = 0; i < setLen; i++) {
+            scenes[i].setShotCountersMax(parsedShots[i]);
+        }
         // Get all roles
         NodeList parts = d.getElementsByTagName("part");
         int partsLen = parts.getLength();
@@ -90,7 +93,52 @@ public class ParseXML {
         return board;
     }
 
-    public Card[] readCards() {
+    public Card[] readCards(Document d) {
+        Element root = d.getDocumentElement();
+        // get all cards
+        NodeList cardList = root.getElementsByTagName("card");
+        int numCards = cardList.getLength();
+        Card[] deck = new Card[numCards];
+        for (int i = 0; i < 1; i++) {
+            Node card = cardList.item(i);
+            deck[i] = getCard(card);
+            System.out.println(deck[i].getName());
+            System.out.println(deck[i].getImg());
+            System.out.println(deck[i].getBudget());
+            NodeList children = card.getChildNodes();
+            int numChild = children.getLength();
+            for (int j = 0; j < numChild; j++) {
+                Node sub = children.item(j);
+                String nodeName = sub.getNodeName();
+                if (nodeName.equals("scene")) {
+                    int sceneNum = Integer.parseInt(sub.getAttributes().getNamedItem("number").getNodeValue());
+                    String desc = sub.getTextContent();
+                    deck[i].setSceneNumber(sceneNum);
+                    System.out.println(deck[i].getSceneNumber());
+                    deck[i].setDescription(desc);
+                    System.out.println(deck[i].getDescription());
+                }
+                if (nodeName.equals("part")) {
+                    String partName = sub.getAttributes().getNamedItem("name").getNodeValue();
+                    int level = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
+                    Role part = new Role(partName, level);
+                    // How do we get the area?
+                    // String xStr = sub.getAttributes().getNamedItem("x").getNodeValue();
+                    // String yStr = sub.getAttributes().getNamedItem("y").getNodeValue();
+                    // String hStr = sub.getAttributes().getNamedItem("h").getNodeValue();
+                    // String wStr = sub.getAttributes().getNamedItem("w").getNodeValue();
+                    // int x = Integer.parseInt(xStr);
+                    // int y = Integer.parseInt(yStr);
+                    // int h = Integer.parseInt(hStr);
+                    // int w = Integer.parseInt(wStr);
+                    // int[] dimensions = {x, y, h, w};
+                    // part.setDimensions(dimensions);
+                    String line = sub.getTextContent();
+                    part.setLine(line);
+                    System.out.println(part.getLine());
+                }
+            }
+        }
         return null;
     }
 
@@ -99,6 +147,19 @@ public class ParseXML {
         String name = set.getAttributes().getNamedItem("name").getNodeValue();
         Location loc = new Location(name);
         return loc;
+    }
+
+    // Create a card object from a given node
+    private Card getCard(Node card) {
+        String name = card.getAttributes().getNamedItem("name").getNodeValue();
+        String img = card.getAttributes().getNamedItem("img").getNodeValue();
+        int budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
+        Card crd = new Card(name);
+        // for some reason the name is null unless its set again
+        crd.setName(name);
+        crd.setImg(img);
+        crd.setBudget(budget);
+        return crd;
     }
 
     // Create a role object from a given node
@@ -202,7 +263,6 @@ public class ParseXML {
                     rolesIndex++;
                 }
                 scenes[i].setRoles(tempRoles);
-                    System.out.println(scenes[i].getName());
             } else if (i == 7) {
                 Role[] tempRoles = new Role[3];
                 for (int j = 0; j < 3; j++) {
@@ -210,7 +270,6 @@ public class ParseXML {
                     rolesIndex++;
                 }
                 scenes[i].setRoles(tempRoles);
-                    System.out.println(scenes[i].getName());
             } else {
                 Role[] tempRoles = new Role[2];
                 for (int j = 0; j < 2; j++) {

@@ -4,6 +4,7 @@ public class Role {
     private int minRank;
     private Player player;
     private String line;
+    private int[] dimensions;
 
     // Methods
     public Role(String description, int minRank, Player player) {
@@ -47,6 +48,12 @@ public class Role {
 
     public Player getPlayer() {
         return this.player;
+    }
+    public int[] getDimensions() {
+        return dimensions;
+    }
+    public void setDimensions(int[] dimensions) {
+        dimensions = dimensions;
     }
 
 }

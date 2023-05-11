@@ -28,11 +28,21 @@ public class Deadwood {
         // XML parsing
         ParseXML parser = new ParseXML();
         Board board = null;
+        // parse board
         try {
             Document doc = parser.getDocFromFile("board.xml");
-            Board b = parser.readBoard(doc);
+            board = parser.readBoard(doc);
         } catch (Exception e) {
-            System.out.println("Parsing error: " + e);
+            System.out.println("Board parsing error: " + e);
+        }
+        // parse card
+        try {
+            Document doc = parser.getDocFromFile("cards.xml");
+            Card[] deck = parser.readCards(doc);
+        } catch (Exception e) {
+            System.out.println("Card parsing error: " + e);
+        }
+
         }
         // Document doc = parser.getDocFromFile("board.xml");
         // Board board = parser.readBoard(doc);
@@ -44,9 +54,5 @@ public class Deadwood {
         // roles
         // scenes
         //Viewer view = new Viewer(game);
-        for (int i = 0; i < numPlayers; i++) {
-            System.out.println("Rank: " + players[i].getRank());
-            System.out.println("ID: " + players[i].getId());
-        }   
-    }
+        
 }
