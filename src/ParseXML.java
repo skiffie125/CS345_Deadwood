@@ -99,12 +99,9 @@ public class ParseXML {
         NodeList cardList = root.getElementsByTagName("card");
         int numCards = cardList.getLength();
         Card[] deck = new Card[numCards];
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < numCards; i++) {
             Node card = cardList.item(i);
             deck[i] = getCard(card);
-            System.out.println(deck[i].getName());
-            System.out.println(deck[i].getImg());
-            System.out.println(deck[i].getBudget());
             NodeList children = card.getChildNodes();
             int numChild = children.getLength();
             for (int j = 0; j < numChild; j++) {
@@ -122,20 +119,19 @@ public class ParseXML {
                     String partName = sub.getAttributes().getNamedItem("name").getNodeValue();
                     int level = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
                     Role part = new Role(partName, level);
-                    // How do we get the area?
-                    // String xStr = sub.getAttributes().getNamedItem("x").getNodeValue();
-                    // String yStr = sub.getAttributes().getNamedItem("y").getNodeValue();
-                    // String hStr = sub.getAttributes().getNamedItem("h").getNodeValue();
-                    // String wStr = sub.getAttributes().getNamedItem("w").getNodeValue();
-                    // int x = Integer.parseInt(xStr);
-                    // int y = Integer.parseInt(yStr);
-                    // int h = Integer.parseInt(hStr);
-                    // int w = Integer.parseInt(wStr);
-                    // int[] dimensions = {x, y, h, w};
-                    // part.setDimensions(dimensions);
                     String line = sub.getTextContent();
                     part.setLine(line);
-                    System.out.println(part.getLine());
+                    NodeList subChildren = sub.getChildNodes();
+                    int numSubChild = subChildren.getLength();
+                    System.out.println(part.getDescription());
+                    for (int k = 0; k < numSubChild; k++) {
+                        Node subSub = subChildren.item(k);
+                        String subSubName = subSub.getNodeName();
+                        if (subSubName.equals("area")) {
+                            int[] dimensions = getDimensions(subSub);
+                            part.setDimensions(dimensions);
+                        }
+                    }
                 }
             }
         }

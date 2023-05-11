@@ -53,7 +53,6 @@ public class Role {
         return dimensions;
     }
     public void setDimensions(int[] dimensions) {
-        dimensions = dimensions;
+        this.dimensions = dimensions;
     }
-
 }
