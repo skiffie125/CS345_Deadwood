@@ -62,17 +62,6 @@ public class ParseXML {
             scenes[i].setNeighbors(sets[i].getNeighbors());
             scenes[i].setDimensions(sets[i].getDimensions());
         }
-        for (int i = 0; i < setLen; i++) {
-            Location[] neigh = scenes[i].getNeighbors();
-            System.out.println("Name of scene: " + scenes[i].getName());
-            for (int j = 0; j < neigh.length; j++) {
-                System.out.println("Neighbor" + j + ":" + neigh[j].getName());
-            }
-            int[] dim = scenes[i].getDimensions();
-            for (int j = 0; j < dim.length; j++) {
-                System.out.println("Dimension" + j + ":" + dim[j]);
-            }
-        }
         // Get & set shot counters of takes
         NodeList takes = d.getElementsByTagName("take");
         int takesLen = takes.getLength();
@@ -81,6 +70,20 @@ public class ParseXML {
             allShotCounters[i] = getShotCounter(takes.item(i));
         }
         int[] parsedShots = parseShotCounters(allShotCounters);
+        // Get & set all roles
+        NodeList parts = d.getElementsByTagName("part");
+        int partsLen = parts.getLength();
+        Role[] roles = new Role[partsLen];
+        for (int i = 0; i < partsLen; i++) {
+            roles[i] = getRole(parts.item(i));
+        }
+        // Get & set all lines
+        NodeList linesList = d.getElementsByTagName("line");
+        int lineLen = linesList.getLength();
+        String[] lines = new String[lineLen];
+        for (int i = 0; i < lineLen; i++) {
+            roles[i].setLine(linesList.item(i).getTextContent());
+        }
         return null;
     }
 
@@ -93,6 +96,14 @@ public class ParseXML {
         String name = set.getAttributes().getNamedItem("name").getNodeValue();
         Location loc = new Location(name);
         return loc;
+    }
+
+    // Create a role object from a given node
+    private Role getRole(Node part) {
+        String name = part.getAttributes().getNamedItem("name").getNodeValue();
+        int rank = Integer.parseInt(part.getAttributes().getNamedItem("level").getNodeValue());
+        Role rol = new Role(name, rank);
+        return rol;
     }
 
     private Scene getScene(Node set) {

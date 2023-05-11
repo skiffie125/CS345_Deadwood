@@ -12,6 +12,11 @@ public class Role {
         this.player = player;
     }
 
+    public Role(String description, int minRank) {
+        this.description = description;
+        this.minRank = minRank;
+    }
+
     public void setDescription(String desc) {
         this.description = desc;
     }
@@ -28,8 +33,12 @@ public class Role {
         return this.minRank;
     }
 
-    public void setline(String newLine) {
+    public void setLine(String newLine) {
         this.line = newLine;
+    }
+
+    public String getLine() {
+        return line;
     }
 
     public boolean take(Player player) {
