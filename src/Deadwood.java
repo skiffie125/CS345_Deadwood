@@ -27,12 +27,15 @@ public class Deadwood {
         Player[] players = generatePlayers(numPlayers);
         // XML parsing
         ParseXML parser = new ParseXML();
+        Board board = null;
         try {
             Document doc = parser.getDocFromFile("board.xml");
-            parser.readBoard(doc);
+            Board b = parser.readBoard(doc);
         } catch (Exception e) {
             System.out.println("Parsing error: " + e);
         }
+        // Document doc = parser.getDocFromFile("board.xml");
+        // Board board = parser.readBoard(doc);
         // Set up game components
         // card
         // locations
@@ -44,7 +47,6 @@ public class Deadwood {
         for (int i = 0; i < numPlayers; i++) {
             System.out.println("Rank: " + players[i].getRank());
             System.out.println("ID: " + players[i].getId());
-        }
-        
+        }   
     }
 }

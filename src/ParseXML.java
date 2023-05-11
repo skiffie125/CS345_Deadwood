@@ -70,7 +70,7 @@ public class ParseXML {
             allShotCounters[i] = getShotCounter(takes.item(i));
         }
         int[] parsedShots = parseShotCounters(allShotCounters);
-        // Get & set all roles
+        // Get all roles
         NodeList parts = d.getElementsByTagName("part");
         int partsLen = parts.getLength();
         Role[] roles = new Role[partsLen];
@@ -84,7 +84,10 @@ public class ParseXML {
         for (int i = 0; i < lineLen; i++) {
             roles[i].setLine(linesList.item(i).getTextContent());
         }
-        return null;
+        // Bind all roles to their appropriate scene
+        sceneRoleJoin(scenes, roles);
+        Board board = new Board(scenes, trailer, office, sets, 0, null);
+        return board;
     }
 
     public Card[] readCards() {
@@ -186,6 +189,37 @@ public class ParseXML {
             }
         }
         return returnArray;
+    }
+    // couple roles with their scenes
+    private void sceneRoleJoin(Scene[] scenes, Role[] roles) {
+        int len = scenes.length;
+        int rolesIndex = 0;
+        for (int i = 0; i < len; i++) {
+            if (i == 0 || i == 1 || i == 3 || i == 4) {
+                Role[] tempRoles = new Role[4];
+                for (int j = 0; j < 4; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+                    System.out.println(scenes[i].getName());
+            } else if (i == 7) {
+                Role[] tempRoles = new Role[3];
+                for (int j = 0; j < 3; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+                    System.out.println(scenes[i].getName());
+            } else {
+                Role[] tempRoles = new Role[2];
+                for (int j = 0; j < 2; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+            }
+        }
     }
 
     // Couple scenes with their neighbors

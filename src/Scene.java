@@ -45,7 +45,9 @@ public class Scene extends Location{
     public boolean cardFaceUp(){
         return faceUp;
     }
-
+    public Role[] getRoles() {
+        return offCardRoles;
+    }
     public void setRoles(Role[] roles){
         offCardRoles = roles;
     }
