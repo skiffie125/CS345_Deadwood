@@ -32,7 +32,7 @@ public class ParseXML {
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
         }
-        // Get all neighbors
+        // Get & set all neighbors
         NodeList neighborsList = d.getElementsByTagName("neighbor");
         int numNeighbors = neighborsList.getLength();
         Location[] neighbors = new Location[numNeighbors];
@@ -44,7 +44,7 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
-        //Get dimensions
+        //Get & set all dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
         int[][] rawDimensions = new int[dimLength][4];
@@ -55,14 +55,32 @@ public class ParseXML {
         sceneDimensionJoin(sets, sceneDim);
         trailer.setDimensions(sceneDim[10]);
         office.setDimensions(sceneDim[11]);
-        // Get number of takes
+        // Convert all sets from Locations to Scenes
+        Scene[] scenes = new Scene[setLen];
+        for (int i = 0; i < setLen; i++) {
+            scenes[i] = new Scene(sets[i].getName());
+            scenes[i].setNeighbors(sets[i].getNeighbors());
+            scenes[i].setDimensions(sets[i].getDimensions());
+        }
+        for (int i = 0; i < setLen; i++) {
+            Location[] neigh = scenes[i].getNeighbors();
+            System.out.println("Name of scene: " + scenes[i].getName());
+            for (int j = 0; j < neigh.length; j++) {
+                System.out.println("Neighbor" + j + ":" + neigh[j].getName());
+            }
+            int[] dim = scenes[i].getDimensions();
+            for (int j = 0; j < dim.length; j++) {
+                System.out.println("Dimension" + j + ":" + dim[j]);
+            }
+        }
+        // Get & set shot counters of takes
         NodeList takes = d.getElementsByTagName("take");
         int takesLen = takes.getLength();
-        int[] shotCounters = new int[setLen];
-        System.out.println(takesLen);
+        int[] allShotCounters = new int[takesLen];
         for (int i = 0; i < takesLen; i++) {
-            getShotCounter(takes.item(i));
+            allShotCounters[i] = getShotCounter(takes.item(i));
         }
+        int[] parsedShots = parseShotCounters(allShotCounters);
         return null;
     }
 
@@ -114,13 +132,12 @@ public class ParseXML {
         return returnArray;
     }
 
-    // Find max of values stored in take
+    // get all 'takes' fields
     private int getShotCounter(Node take) {
-        String valueStr = take.getAttributes().getNamedItem("number").getNodeValue();
-        System.out.println(valueStr);
-        return 0;
+        return Integer.parseInt(take.getAttributes().getNamedItem("number").getNodeValue());
     }
 
+    // Manually set office neighbors bc i cant figure out the bug
     private void setOfficeNeighbors(Location office) {
         Location[] temp = new Location[3];
         temp[0] = new Location("Train Station");
@@ -128,6 +145,7 @@ public class ParseXML {
         temp[2] = new Location("Secret Hideout");
         office.setNeighbors(temp);
     }
+
     // Manually set neighbors bc i cant figure out the bug
     private void setTrailerNeighbors(Location trailer) {
         Location[] temp = new Location[3];
@@ -143,6 +161,20 @@ public class ParseXML {
         for (int i = 0; i < originLen; i++) {
             origin[i].setDimensions(dimensions[i]);
         }
+    }
+
+    private int[] parseShotCounters(int[] origin) {
+        int len = origin.length;
+        int[] returnArray = new int[10];
+        int retLoc = 0;
+        for (int i = 0; i < len; i++) {
+            if ( i ==0 || i == 3 || i == 6 || i == 8 || i == 8 || i == 11
+            || i == 14 || i == 15 || i == 17 || i == 19 || i == 20) {
+                returnArray[retLoc] = origin[i];
+                retLoc++;
+            }
+        }
+        return returnArray;
     }
 
     // Couple scenes with their neighbors
