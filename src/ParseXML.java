@@ -111,9 +111,7 @@ public class ParseXML {
                     int sceneNum = Integer.parseInt(sub.getAttributes().getNamedItem("number").getNodeValue());
                     String desc = sub.getTextContent();
                     deck[i].setSceneNumber(sceneNum);
-                    System.out.println(deck[i].getSceneNumber());
                     deck[i].setDescription(desc);
-                    System.out.println(deck[i].getDescription());
                 }
                 if (nodeName.equals("part")) {
                     String partName = sub.getAttributes().getNamedItem("name").getNodeValue();
@@ -123,7 +121,6 @@ public class ParseXML {
                     part.setLine(line);
                     NodeList subChildren = sub.getChildNodes();
                     int numSubChild = subChildren.getLength();
-                    System.out.println(part.getDescription());
                     for (int k = 0; k < numSubChild; k++) {
                         Node subSub = subChildren.item(k);
                         String subSubName = subSub.getNodeName();
@@ -135,7 +132,7 @@ public class ParseXML {
                 }
             }
         }
-        return null;
+        return deck;
     }
 
     // Create a location object from a given node
