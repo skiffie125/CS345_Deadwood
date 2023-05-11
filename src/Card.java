@@ -7,8 +7,8 @@ public class Card {
     private String img;
     private int sceneNumber;
 
-    public Card Card(String description, Role[] roles) {
-        return null;
+    public Card(String name) {
+        name = name;
     }
 
     public void setDescription(String desc) {
@@ -24,17 +24,29 @@ public class Card {
         name = newName;
         return;
     }
+    public String getName() {
+        return name;
+    }
     public void setBudget(int newbudget) {
         budget = newbudget;
         return;
+    }
+    public int getBudget() {
+        return budget;
     }
     public void setSceneNumber(int num) {
         sceneNumber = num;
         return;
     }
+    public int getSceneNumber() {
+        return sceneNumber;
+    }
     public void setImg(String newImg) {
         img = newImg;
         return;
+    }
+    public String getImg() {
+        return img;
     }
 
 

@@ -38,6 +38,10 @@ public class Board {
         return this.scenes[index];
     }
 
+    public Scene[] getScenes() {
+        return this.scenes;
+    }
+
     public void setTrailer(Location loc) {
         this.trailer = loc;
         return;

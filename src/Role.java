@@ -4,12 +4,18 @@ public class Role {
     private int minRank;
     private Player player;
     private String line;
+    private int[] dimensions;
 
     // Methods
     public Role(String description, int minRank, Player player) {
         this.description = description;
         this.minRank = minRank;
         this.player = player;
+    }
+
+    public Role(String description, int minRank) {
+        this.description = description;
+        this.minRank = minRank;
     }
 
     public void setDescription(String desc) {
@@ -28,8 +34,12 @@ public class Role {
         return this.minRank;
     }
 
-    public void setline(String newLine) {
+    public void setLine(String newLine) {
         this.line = newLine;
+    }
+
+    public String getLine() {
+        return line;
     }
 
     public boolean take(Player player) {
@@ -39,5 +49,10 @@ public class Role {
     public Player getPlayer() {
         return this.player;
     }
-
+    public int[] getDimensions() {
+        return dimensions;
+    }
+    public void setDimensions(int[] dimensions) {
+        this.dimensions = dimensions;
+    }
 }

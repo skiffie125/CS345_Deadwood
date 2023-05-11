@@ -11,16 +11,8 @@ public class Scene extends Location{
     private int[] dimensions;
 
     //Constructors 
-    // public Scene(String name){
-    //     name = name;
-    // }
     public Scene(String name) {
-        name = name;
-    }
-    public Scene(String name, Location[] neighbors, int[] dimensions) {
-        name = name;
-        neighbors = neighbors;
-        dimensions = dimensions;
+        super(name);
     }
     //Getters and setters 
     public void setShotCountersLeft(int n){
@@ -53,7 +45,9 @@ public class Scene extends Location{
     public boolean cardFaceUp(){
         return faceUp;
     }
-
+    public Role[] getRoles() {
+        return offCardRoles;
+    }
     public void setRoles(Role[] roles){
         offCardRoles = roles;
     }

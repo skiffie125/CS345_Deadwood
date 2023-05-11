@@ -22,17 +22,17 @@ public class ParseXML {
     }
     
     // Parse and store board.xml
+    // wow this is so inefficient i did this SO wrong
     public Board readBoard(Document d) {
         Element root = d.getDocumentElement();
         // Get all sets ('scenes')
         NodeList setsList = d.getElementsByTagName("set");
         int setLen = setsList.getLength();
-        //TODO: Convert the appropriate locations(i.e. not the office or trailer) into scenes
         Location[] sets = new Location[setLen];
         for (int i = 0; i < setLen; i++) {
             sets[i] = getLocation(setsList.item(i));
         }
-        // Get all neighbors
+        // Get & set all neighbors
         NodeList neighborsList = d.getElementsByTagName("neighbor");
         int numNeighbors = neighborsList.getLength();
         Location[] neighbors = new Location[numNeighbors];
@@ -44,7 +44,7 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
-        //Get dimensions
+        //Get & set all dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
         int[][] rawDimensions = new int[dimLength][4];
@@ -55,18 +55,86 @@ public class ParseXML {
         sceneDimensionJoin(sets, sceneDim);
         trailer.setDimensions(sceneDim[10]);
         office.setDimensions(sceneDim[11]);
-        // Get number of takes
+        // Convert all sets from Locations to Scenes
+        Scene[] scenes = new Scene[setLen];
+        for (int i = 0; i < setLen; i++) {
+            scenes[i] = new Scene(sets[i].getName());
+            scenes[i].setNeighbors(sets[i].getNeighbors());
+            scenes[i].setDimensions(sets[i].getDimensions());
+        }
+        // Get & set shot counters of takes
         NodeList takes = d.getElementsByTagName("take");
         int takesLen = takes.getLength();
-        int[] shotCounters = new int[setLen];
-        System.out.println(takesLen);
+        int[] allShotCounters = new int[takesLen];
         for (int i = 0; i < takesLen; i++) {
-            getShotCounter(takes.item(i));
+            allShotCounters[i] = getShotCounter(takes.item(i));
         }
-        return null;
+        int[] parsedShots = parseShotCounters(allShotCounters);
+        for (int i = 0; i < setLen; i++) {
+            scenes[i].setShotCountersMax(parsedShots[i]);
+        }
+        // Get all roles
+        NodeList parts = d.getElementsByTagName("part");
+        int partsLen = parts.getLength();
+        Role[] roles = new Role[partsLen];
+        for (int i = 0; i < partsLen; i++) {
+            roles[i] = getRole(parts.item(i));
+        }
+        // Get & set all lines
+        NodeList linesList = d.getElementsByTagName("line");
+        int lineLen = linesList.getLength();
+        String[] lines = new String[lineLen];
+        for (int i = 0; i < lineLen; i++) {
+            roles[i].setLine(linesList.item(i).getTextContent());
+        }
+        // Bind all roles to their appropriate scene
+        sceneRoleJoin(scenes, roles);
+        Board board = new Board(scenes, trailer, office, sets, 0, null);
+        return board;
     }
 
-    public Card[] readCards() {
+    public Card[] readCards(Document d) {
+        Element root = d.getDocumentElement();
+        // get all cards
+        NodeList cardList = root.getElementsByTagName("card");
+        int numCards = cardList.getLength();
+        Card[] deck = new Card[numCards];
+        for (int i = 0; i < numCards; i++) {
+            Node card = cardList.item(i);
+            deck[i] = getCard(card);
+            NodeList children = card.getChildNodes();
+            int numChild = children.getLength();
+            for (int j = 0; j < numChild; j++) {
+                Node sub = children.item(j);
+                String nodeName = sub.getNodeName();
+                if (nodeName.equals("scene")) {
+                    int sceneNum = Integer.parseInt(sub.getAttributes().getNamedItem("number").getNodeValue());
+                    String desc = sub.getTextContent();
+                    deck[i].setSceneNumber(sceneNum);
+                    System.out.println(deck[i].getSceneNumber());
+                    deck[i].setDescription(desc);
+                    System.out.println(deck[i].getDescription());
+                }
+                if (nodeName.equals("part")) {
+                    String partName = sub.getAttributes().getNamedItem("name").getNodeValue();
+                    int level = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
+                    Role part = new Role(partName, level);
+                    String line = sub.getTextContent();
+                    part.setLine(line);
+                    NodeList subChildren = sub.getChildNodes();
+                    int numSubChild = subChildren.getLength();
+                    System.out.println(part.getDescription());
+                    for (int k = 0; k < numSubChild; k++) {
+                        Node subSub = subChildren.item(k);
+                        String subSubName = subSub.getNodeName();
+                        if (subSubName.equals("area")) {
+                            int[] dimensions = getDimensions(subSub);
+                            part.setDimensions(dimensions);
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 
@@ -75,6 +143,27 @@ public class ParseXML {
         String name = set.getAttributes().getNamedItem("name").getNodeValue();
         Location loc = new Location(name);
         return loc;
+    }
+
+    // Create a card object from a given node
+    private Card getCard(Node card) {
+        String name = card.getAttributes().getNamedItem("name").getNodeValue();
+        String img = card.getAttributes().getNamedItem("img").getNodeValue();
+        int budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
+        Card crd = new Card(name);
+        // for some reason the name is null unless its set again
+        crd.setName(name);
+        crd.setImg(img);
+        crd.setBudget(budget);
+        return crd;
+    }
+
+    // Create a role object from a given node
+    private Role getRole(Node part) {
+        String name = part.getAttributes().getNamedItem("name").getNodeValue();
+        int rank = Integer.parseInt(part.getAttributes().getNamedItem("level").getNodeValue());
+        Role rol = new Role(name, rank);
+        return rol;
     }
 
     private Scene getScene(Node set) {
@@ -114,13 +203,12 @@ public class ParseXML {
         return returnArray;
     }
 
-    // Find max of values stored in take
+    // get all 'takes' fields
     private int getShotCounter(Node take) {
-        String valueStr = take.getAttributes().getNamedItem("number").getNodeValue();
-        System.out.println(valueStr);
-        return 0;
+        return Integer.parseInt(take.getAttributes().getNamedItem("number").getNodeValue());
     }
 
+    // Manually set office neighbors bc i cant figure out the bug
     private void setOfficeNeighbors(Location office) {
         Location[] temp = new Location[3];
         temp[0] = new Location("Train Station");
@@ -128,6 +216,7 @@ public class ParseXML {
         temp[2] = new Location("Secret Hideout");
         office.setNeighbors(temp);
     }
+
     // Manually set neighbors bc i cant figure out the bug
     private void setTrailerNeighbors(Location trailer) {
         Location[] temp = new Location[3];
@@ -142,6 +231,49 @@ public class ParseXML {
         int originLen = origin.length;
         for (int i = 0; i < originLen; i++) {
             origin[i].setDimensions(dimensions[i]);
+        }
+    }
+
+    private int[] parseShotCounters(int[] origin) {
+        int len = origin.length;
+        int[] returnArray = new int[10];
+        int retLoc = 0;
+        for (int i = 0; i < len; i++) {
+            if ( i ==0 || i == 3 || i == 6 || i == 8 || i == 8 || i == 11
+            || i == 14 || i == 15 || i == 17 || i == 19 || i == 20) {
+                returnArray[retLoc] = origin[i];
+                retLoc++;
+            }
+        }
+        return returnArray;
+    }
+    // couple roles with their scenes
+    private void sceneRoleJoin(Scene[] scenes, Role[] roles) {
+        int len = scenes.length;
+        int rolesIndex = 0;
+        for (int i = 0; i < len; i++) {
+            if (i == 0 || i == 1 || i == 3 || i == 4) {
+                Role[] tempRoles = new Role[4];
+                for (int j = 0; j < 4; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+            } else if (i == 7) {
+                Role[] tempRoles = new Role[3];
+                for (int j = 0; j < 3; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+            } else {
+                Role[] tempRoles = new Role[2];
+                for (int j = 0; j < 2; j++) {
+                    tempRoles[j] = roles[rolesIndex];
+                    rolesIndex++;
+                }
+                scenes[i].setRoles(tempRoles);
+            }
         }
     }
 
