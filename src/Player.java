@@ -56,7 +56,7 @@ public class Player {
 
    
 
-    public boolean move(Location location){
+    public boolean move(Location location, LocationManager lm){
         // check current location is accurate
         // check location given is a neighbor 
         // if both true move and return true
@@ -73,14 +73,56 @@ public class Player {
         return false;
     }
 
-    public boolean upgrade(int newRank){
+    public boolean upgrade(int newRank, Bank b, LocationManager lm){
+        int dollars;
+        int credits;
+        Location castingOffice = lm.getBoard().getCastingOffice();
+        boolean result = false;
+        if(lm.checkLocation(castingOffice, id)){
+            switch(newRank){
+                case 2:
+                    dollars = 4;
+                    credits = 5;
+                    break;
+                case 3:
+                    dollars = 10;
+                    credits = 10;
+                    break;
+                case 4:
+                    dollars = 18;
+                    credits = 15;
+                    break;
+                case 5:
+                    dollars = 28;
+                    credits = 20;
+                    break;
+                case 6:
+                    dollars = 40;
+                    credits = 25;
+                    break;
+                default:
+                    System.out.print("Sorry Not a Valid Rank");
+                    dollars = 0;
+                    credits = 0;
+                    newRank = rank;
+                    break; 
+            }
+            if (b.verifyWithdraw(id,dollars,credits)){
+                b.pay(id,dollars,credits);
+                rank=newRank;
+                result = true;
+            } else{
+                 System.out.print("Insuffient funds");          
+            }
+        }
+        
         // check location is casting office
         //check they have enough money for desired rank
         // if both true
             // upgrade rank and subtract money return true
         // else 
             // don't upgrade and keep money, return false
-        return false;
+        return result;
     }
 
     public boolean takeRole(Scene s, Role r){

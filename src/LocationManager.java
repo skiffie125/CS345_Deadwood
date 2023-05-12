@@ -27,7 +27,7 @@ public class LocationManager{
     public boolean checkMove(Location start, Location end, Player p){
         return false;
     }
-    public boolean checkLocation(Location l, Player p){
+    public boolean checkLocation(Location l, int playerID){
         return false;
     }
 }
