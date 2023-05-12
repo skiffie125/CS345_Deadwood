@@ -150,7 +150,13 @@ public class Player {
         return result;
     }
 
-    public void rehearse(Scene s){
+    public boolean rehearse(Scene s, LocationManager lm){
+        boolean result = false;
+        if(lm.checkLocation(s, id)){
+            result = true;
+            s.addRehearsal(id);
+        }
+        return result;
         // check they are the scence 
         // add a resheal for that player to the scene
     }
@@ -168,7 +174,22 @@ public class Player {
                 //else end turn
     }
 
-    public boolean act(Scene S, Role r){
+    public boolean act(Scene s, Role r, Player p){
+        boolean result = false;
+        boolean onCardRole = true;
+        Role[] offCardRoles =  s.getOffCardRoles();
+        for(int i = 0; i< offCardRoles.length; i++){
+            if(r == offCardRoles[i]){
+                onCardRole = false;
+            }
+        }
+        if(r.getPlayer() == p){
+            Dice d = new Dice();
+            int roll = d.roll();
+            roll += s.getRehearsal(id);
+           // need to figure out where budget is
+            //if(roll >= )
+        }
         // check have taken that role
         // if true
             // get bonuses from reheasals
@@ -180,7 +201,7 @@ public class Player {
                 //return true
             //else
                 // give any money and return false
-        return false;
+        return result;
     }
 
     

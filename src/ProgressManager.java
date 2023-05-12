@@ -231,6 +231,8 @@ public class ProgressManager {
                         case "Act":
                             break;
                         case "Rehearse":
+                            //need some way to either get current scene or change location to scene?
+                            //player.rehearse(player.getLocation(), lm);
                             break;
                         default:
                             System.out.println("Sorry that's not any of the options, try again on your next turn");
