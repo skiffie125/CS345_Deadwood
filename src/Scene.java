@@ -79,6 +79,10 @@ public class Scene extends Location{
         card = newCard;
         shotCountersLeft = shotCountersMax; 
         faceUp = false;
+        for(int i = 0; i< players.length; i++){
+            rehearsals[i] = 0;
+            players[i] = 0;
+        }
 
     }
 

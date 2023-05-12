@@ -174,7 +174,7 @@ public class Player {
                 //else end turn
     }
 
-    public boolean act(Scene s, Role r, Player p){
+    public boolean act(Scene s, Role r, Player p, Bank b){
         boolean result = false;
         boolean onCardRole = true;
         Role[] offCardRoles =  s.getOffCardRoles();
@@ -188,7 +188,19 @@ public class Player {
             int roll = d.roll();
             roll += s.getRehearsal(id);
            // need to figure out where budget is
-            //if(roll >= )
+            if(roll >= s.getCard().getBudget()){
+                s.removeAShotCounter();
+                if(onCardRole){
+                    b.add(id, 0, 2);
+                } else{
+                    b.add(id, 1, 1);
+                }
+                result = true;
+            } else {
+                if(!onCardRole){
+                    b.add(id, 1, 0);
+                }
+            }
         }
         // check have taken that role
         // if true

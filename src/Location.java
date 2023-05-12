@@ -42,6 +42,7 @@ public class Location{
     }
 
     //class methods
+    //honestly should be in lm
     public boolean checkIfNeighbor(Location l){
         boolean result = false;
         for(int i = 0; i < neighbors.length; i++){

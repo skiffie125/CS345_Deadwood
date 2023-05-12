@@ -250,6 +250,15 @@ public class ProgressManager {
     }
 
     public void wrapScene(Scene s){
+        if(s.getShotCountersLeft() == 0){
+            //check if an on card
+            Role[] onCardRoles = s.getCard().getOnCardRoles();
+            for (int i = 0; i<onCardRoles.length; i++){
+
+            }
+            //go through the on card roles by rank and give dice 
+            //give off card bonuses
+        }
         //check if all shot counters are removed
         //get all on card players
         // if no on card players, no bonuses
@@ -260,6 +269,7 @@ public class ProgressManager {
         //check if that was the 2nd to last scene
         // if it was end game
         // else end turn 
+        
     }
 
     public void endGame(){
@@ -268,6 +278,22 @@ public class ProgressManager {
 
     // Prepare players for start of day
     public void setUpDay(int numPlayers) {
+        Location castingOffice = lm.getBoard().getCastingOffice();
+        Location trailer = lm.getBoard().getCastingOffice();
+        for(int i = 0; i< 8; i++){
+            if (i<numPlayers){
+                players[i].setLocation(lm.getBoard().getTrailer());
+                players[i].setRole(null);
+                castingOffice.setPlayer(i,0);
+                trailer.setPlayer(i,1);
+            }
+        }
+        Scene[] scenes = lm.getBoard().getScenes();
+        for(int j = 0; j<scenes.length; j++){
+            scenes[j].reset(lm.getBoard().pop());
+        }
+        
+        
         return;
     }
 

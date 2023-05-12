@@ -24,7 +24,7 @@ public class LocationManager{
     public boolean checkRoleStatus(Scene s, Role r){
         boolean onScene =false;
         boolean roleAvalible = false;
-        if (r.getPlayer() == null){
+        if (r.getPlayer() == null && s.getShotCountersLeft()>0){
             roleAvalible = true;
         }
         Role[] offCardRoles = s.getOffCardRoles();
