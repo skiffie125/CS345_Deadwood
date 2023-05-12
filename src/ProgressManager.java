@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
 public class ProgressManager {
     // Fields
     private Player[] players;
@@ -68,7 +70,7 @@ public class ProgressManager {
                     p.setRole(null);
                     p.setID(i);
                     bank.setDollars(i, 0);
-                   bank.setCredits(i, 0);
+                    bank.setCredits(i, 0);
                } else{
                    players[i] = null;
                 }
@@ -92,6 +94,19 @@ public class ProgressManager {
             }
 
             //set up location manager and board here 
+            ParseXML parser = new ParseXML();
+            Document startBoard = null;
+            Document startCards = null;
+            try{
+                startBoard = parser.getDocFromFile("board.xml");
+                startCards = parser.getDocFromFile("cards.xml");
+            }catch(ParserConfigurationException e){
+                System.out.print("board and cards not set up correctly");
+            }
+            Board newBoard = parser.readBoard(startBoard);
+            Card[] newDeck = parser.readCards(startCards);
+            newBoard.setCards(newDeck);
+            lm.setBoard(newBoard);
         }
         return;
     }
@@ -131,25 +146,45 @@ public class ProgressManager {
          String result = v.getValidComand();
          //Scanner s = new Scanner(System.in);
          System.out.println("Move, Upgrade, Take role, Work, or End turn?");
-         while (true) {
+        String next;
+        int newrank;
+        Location current;
+        Location[] currentNeighbors;
+        int index;
             //result = s.nextLine();
-            if (result.equals("End turn")) {
-                System.out.println("Turn ended");
-                break;
-            }
+        if (result.equals("End turn")) {
+            System.out.println("Turn ended");
+        } else{
             switch (result) {
                 case "Move":
                     //System.out.println("Enter destination: ");
                     System.out.println("Here are your options:");
-                    Location current = player.getLocation();
-                    Location[] currentNeighbors = current.getNeighbors();
+                    current = player.getLocation();
+                    currentNeighbors = current.getNeighbors();
 
                     for(int i = 0; currentNeighbors[i] != null; i++){
                         System.out.println("["+ i +"] " + currentNeighbors[i].getName());
                     }
                     System.out.println("Please type the coresponding number");
-                    int index = v.getParameter(5);
-                    player.move(currentNeighbors[index]);
+                    index = v.getParameter(5);
+                    player.move(currentNeighbors[index], lm);
+                    System.out.println("Upgrade, Take role or End turn?");
+                    next = v.getValidComand();
+                    switch (next){
+                        case "Upgrade":
+                            System.out.println("What rank would you like to upgrade to?");
+                            newrank = v.getParameter(5);
+                            player.upgrade(newrank, bank, lm);
+                            break;
+                        case "Take A Role":
+                            break;
+                        case "End turn":
+                            System.out.println("Turn ended");
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
                     //String destName = s.nextLine();
                     // Need to get location from string
                     // while(!move()) {
@@ -159,13 +194,57 @@ public class ProgressManager {
                     // currentLocation = dest;
                     break;
                 case "Upgrade":
+                    System.out.println("What rank would you like to upgrade to?");
+                    newrank = v.getParameter(5);
+                    player.upgrade(newrank+1, bank, lm);
+                    System.out.println("Move or End turn?");
+                    next = v.getValidComand();
+                    switch (next){
+                        case "Move":
+                            System.out.println("Here are your options:");
+                            current = player.getLocation();
+                            currentNeighbors = current.getNeighbors();
+
+                            for(int i = 0; currentNeighbors[i] != null; i++){
+                                System.out.println("["+ i +"] " + currentNeighbors[i].getName());
+                                }
+                            System.out.println("Please type the coresponding number");
+                            index = v.getParameter(5);
+                            player.move(currentNeighbors[index], lm);
+                            break;
+                        case "End turn":
+                            System.out.println("Turn ended");
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
+
                     break;
                 case "Take role":
+                    System.out.println("What role would you like to take?");
                     break;
                 case "Work":
+                    System.out.println("Act or Rehearse?");
+                    next = v.getValidComand();
+                    switch (next){
+                        case "Act":
+                            break;
+                        case "Rehearse":
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
+                    break;
+                default:
+                    System.out.println("Sorry that's not any of the options, lets try again");
+                    takeATurn(player);
                     break;
             }
-         }
+        }
+            
+         
     }
 
     public void wrapScene(Scene s){
