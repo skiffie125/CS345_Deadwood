@@ -61,16 +61,23 @@ public class Player {
         // check location given is a neighbor 
         // if both true move and return true
         // else stay and return false
-        Location[] neighbors = currentLocation.getNeighbors();
+        /*Location[] neighbors = currentLocation.getNeighbors();
         int len = neighbors.length;
+        
         for (int i = 0; i < len; i++) {
             if (neighbors[i].getName().equals(location.getName())) {
                 return true;
             }
         }
         currentLocation = location;
-        
-        return false;
+        */
+        boolean result = false;
+        if (lm.checkMove(currentLocation, location, id)){
+            currentLocation.setPlayer(id,0);
+            location.setPlayer(id,1);
+            currentLocation = location;
+        }
+        return result;
     }
 
     public boolean upgrade(int newRank, Bank b, LocationManager lm){
@@ -125,7 +132,7 @@ public class Player {
         return result;
     }
 
-    public boolean takeRole(Scene s, Role r){
+    public boolean takeRole(Scene s, Role r, LocationManager lm, Player p){
         //check if they are at scene
         //check if the role is open
         //check if the role is within their rank 
@@ -133,11 +140,14 @@ public class Player {
             //end turn and return true
         //else 
             //end turn and return false 
-            if (currentRole != null) {
-                System.out.println("Invalid: Player already has a role");
-                return false;
+        boolean result = false;
+        if(lm.checkRoleStatus(s, r) && lm.checkLocation(s,id)){
+            if(r.getMinRank() <= rank){
+                result = true;
+                r.take(p);
             }
-        return false;
+        }
+        return result;
     }
 
     public void rehearse(Scene s){
