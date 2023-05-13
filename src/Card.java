@@ -8,7 +8,7 @@ public class Card {
     private int sceneNumber;
 
     public Card(String name) {
-        name = name;
+        this.name = name;
     }
 
     public void setDescription(String desc) {

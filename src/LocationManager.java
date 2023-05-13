@@ -1,12 +1,7 @@
 public class LocationManager{
     private Board board;
-    private Location[] locations;
 
-    public LocationManager(Location[] locations){
-        // board = new Board();
-        // need call a method on board to set it up here
-        locations = locations;
-    }
+
     public LocationManager(){
         
     }
@@ -14,13 +9,17 @@ public class LocationManager{
     public void setBoard(Board newBoard){
         board=newBoard;
     }
+
     public Board getBoard(){
         return this.board;
     }
 
+    
     public boolean checkCardStatus(Scene s){
         return s.cardFaceUp();
     }
+
+    //check that this role is untaken and is on this scene
     public boolean checkRoleStatus(Scene s, Role r){
         boolean onScene =false;
         boolean roleAvalible = false;
@@ -41,6 +40,8 @@ public class LocationManager{
         }
         return onScene && roleAvalible;
     }
+
+    //would a player be able to make this move
     public boolean checkMove(Location start, Location end, int playerID){
         boolean result = false;
         if (start.checkIfNeighbor(end) && end.checkIfNeighbor(start)){

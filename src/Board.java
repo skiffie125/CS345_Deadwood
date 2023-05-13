@@ -1,12 +1,4 @@
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-import java.io.File;
-import javax.swing.text.View;
+
 import java.util.Random;
 
 public class Board {
@@ -16,7 +8,7 @@ public class Board {
     private Location castingOffice;
     private int cardsLeft;
     private Card[] deck;
-    private Location[] locations;
+    //private Location[] locations;
 
     public Board(Scene[] scenes, Location trailer, Location castingOffice, Location[] locations,
     int cardsLeft, Card[] deck) {
@@ -25,7 +17,6 @@ public class Board {
         this.castingOffice = castingOffice;
         this. cardsLeft = cardsLeft;
         this.deck = deck;
-        this.locations = locations;
     }
 
     public void setScene(int index, Scene scene) {
