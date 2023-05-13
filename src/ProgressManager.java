@@ -146,28 +146,30 @@ public class ProgressManager {
         if end turn:
             termintate
          */
+        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         boolean gameContinues = true;
         Viewer v = new Viewer();
         String result = v.getValidComand();
-         //Scanner s = new Scanner(System.in);
-        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         String next;
         int newrank;
         Location current;
         Location[] currentNeighbors;
         int index;
-            //result = s.nextLine();
         if (result.equals("End turn")) {
             System.out.println("Turn ended");
         } else{
             switch (result) {
+                case "Current":
+                    System.out.println("Active player: Player " + player.getId());
+                    result = v.getValidComand();
+                    break;
                 case "Move":
-                    //System.out.println("Enter destination: ");
                     System.out.println("Here are your options:");
                     current = player.getLocation();
                     currentNeighbors = current.getNeighbors();
+                    int numNeighbors = currentNeighbors.length;
 
-                    for(int i = 0; currentNeighbors[i] != null; i++){
+                    for(int i = 0; i < numNeighbors; i++){
                         System.out.println("["+ i +"] " + currentNeighbors[i].getName());
                     }
                     System.out.println("Please type the coresponding number");

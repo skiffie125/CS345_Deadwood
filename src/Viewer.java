@@ -91,6 +91,8 @@ public class Viewer {
                 break;
             case "Act":
                 break;
+            case "Take role":
+                break;
             case "End turn":
                 break;
             case "End game":
