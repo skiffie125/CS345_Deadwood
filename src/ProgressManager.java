@@ -266,12 +266,31 @@ public class ProgressManager {
     public void wrapScene(Scene s){
         if(s.getShotCountersLeft() == 0){
             //check if an on card
+            boolean bonuses = false;
             Role[] onCardRoles = s.getCard().getOnCardRoles();
             for (int i = 0; i<onCardRoles.length; i++){
-
+                if(onCardRoles[i].getPlayer() != null){
+                    if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
+                        bonuses = true;
+                    }
+                }
             }
-            //go through the on card roles by rank and give dice 
-            //give off card bonuses
+            if(bonuses){
+                //go through the on card roles by rank and give dice 
+                
+                //off card roles bonuses 
+                Role[] offCardRoles = s.getOffCardRoles();
+                for(int i = 0; i < offCardRoles.length; i++){
+                    if (offCardRoles[i].getPlayer() != null){
+                        bank.add(offCardRoles[i].getPlayer().getId(), offCardRoles[i].getMinRank(), 0);
+                    }
+                }
+            }
+            if(lm.ScenesWrapped() == 9){
+                //time to end the day. 
+            }
+  
+            
         }
         //check if all shot counters are removed
         //get all on card players
@@ -322,8 +341,8 @@ public class ProgressManager {
 
     // Calculate score for all players
     public int calculateScore() {
-        int[] score = new int[8];
-        for(int i = 0; i < 8; i++){
+        int[] score = new int[players.length];
+        for(int i = 0; i < players.length; i++){
             if(players[i] != null){
                 score[i] = bank.getCredits(i) + bank.getDollars(i) + players[i].getRank()*5;
             }
@@ -331,13 +350,13 @@ public class ProgressManager {
         int winner =0;
         boolean tie = false;
         // find max score
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < players.length; i++){
             if(score[winner]< score[i]){
                 winner = i;
             }
         }
         //find if tie
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < players.length; i++){
             if(score[winner] == score[i]){
                 tie = true;
             }
@@ -347,7 +366,7 @@ public class ProgressManager {
         } else{
             //why did you have to tie, i don't like you
             System.out.println("Looks like we have a Tie! The players that tied are: ");
-            for(int i = 0; i < 8; i++){
+            for(int i = 0; i < players.length; i++){
                 if(score[winner] == score[i]){
                     System.out.println("Player" + i);
                 }
