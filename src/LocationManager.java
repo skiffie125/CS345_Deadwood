@@ -60,8 +60,28 @@ public class LocationManager{
             return true;
         } else{
             return false;
-        }
+        } 
+    }
 
-        
+    public int ScenesWrapped(){
+        int result =  0;
+        Scene[] s =board.getScenes();
+        for (int i = 0; i < s.length; i++){
+            if(s[i].getShotCountersLeft()==0){
+                result++;
+            }
+        }
+        return result;
+    }
+    
+    public Scene LocationToScene(Location l){
+        Scene s = null;
+        Scene[] allScenes =board.getScenes();
+        for(int i = 0; i < allScenes.length; i++){
+            if(l.getName().equals(allScenes[i].getName())){
+                s = allScenes[i];
+            }
+        }
+        return s;
     }
 }
