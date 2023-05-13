@@ -14,7 +14,6 @@ public class ProgressManager {
         this.players = players;
         this.lm = lm;
         this.bank = bank;
-        this.totalDays = totalDays(players.length);
     }
 
     public void setPlayers(Player[] player) {
@@ -52,28 +51,25 @@ public class ProgressManager {
     // Set up board for play
     public void setUpGame(int numPlayers) {
         // This wasnt compiling, commented out so i can do some Viewer tests - JB
-        // System.out.println("Welcome to Deadwood");
+        System.out.println("Welcome to Deadwood");
          if(numPlayers > 8 || numPlayers < 2){
             System.out.println("Incorrect Number of Players; Failed in set Up Game");
         } else{
+            this.totalDays = totalDays(numPlayers);
+            Player[] players = new Player[numPlayers];
             Bank b = new Bank(numPlayers);
             bank = b;
             LocationManager l = new LocationManager();
             lm = l; 
             totalDays = 4;
-
-            for(int i = 0; i< 8; i++){
-                 if (i<numPlayers){
-                    Player p = new Player(1, i);
+            for (int i = 0; i < numPlayers; i++) {
+                Player p = new Player(1, i);
                     players[i] =p;
                     p.setLocation(null);
                     p.setRole(null);
                     p.setID(i);
                     bank.setDollars(i, 0);
                     bank.setCredits(i, 0);
-               } else{
-                   players[i] = null;
-                }
             }
             if( numPlayers == 2 || numPlayers == 3){
                 totalDays = 3;
