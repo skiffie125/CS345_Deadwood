@@ -104,6 +104,17 @@ public class ParseXML {
             deck[i] = getCard(card);
             NodeList children = card.getChildNodes();
             int numChild = children.getLength();
+            int partNum = 0;
+            for (int j = 0; j < numChild; j++) {
+                Node sub1 = children.item(j);
+                String nodeName1 = sub1.getNodeName();
+                if (nodeName1.equals("part")) {
+                    partNum++;
+                }
+            }
+            Role[] parts = new Role[partNum];
+            deck[i].setOnCardRoles(parts);
+            int partIndex = 0;
             for (int j = 0; j < numChild; j++) {
                 Node sub = children.item(j);
                 String nodeName = sub.getNodeName();
@@ -129,6 +140,26 @@ public class ParseXML {
                             part.setDimensions(dimensions);
                         }
                     }
+                    deck[i].addRole(part, partIndex);
+                    partIndex++;
+                }
+            }
+        }
+        for (int i = 0; i < numCards; i++) {
+            Card current = deck[i];
+            System.out.println("New card: " + current.getName());
+            System.out.println(current.getBudget());
+            System.out.println(current.getImg());
+            System.out.println(current.getSceneNumber());
+            System.out.println(current.getDescription());
+            for (int j = 0; j < current.getOnCardRoles().length; j++) {
+                System.out.println("New role");
+                Role curRole = current.getOnCardRoles()[j];
+                System.out.println(curRole.getDescription());
+                System.out.println(curRole.getMinRank());
+                System.out.println(curRole.getLine());
+                for (int k = 0; k < 4; k++) {
+                    System.out.println(curRole.getDimensions()[k]);
                 }
             }
         }
