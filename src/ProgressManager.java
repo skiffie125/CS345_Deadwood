@@ -114,7 +114,7 @@ public class ProgressManager {
         //Method to take a turn
     //Preconditions: It is the players turn
     //Postcondition: Turn is over 
-    public void takeATurn(Player player){
+    public boolean takeATurn(Player player){
         /*
         take user input from choices: 
         Move, Upgrade, Take a role, Work, End Turn
@@ -142,10 +142,11 @@ public class ProgressManager {
         if end turn:
             termintate
          */
+        boolean gameContinues = true;
         Viewer v = new Viewer();
-         String result = v.getValidComand();
+        String result = v.getValidComand();
          //Scanner s = new Scanner(System.in);
-         System.out.println("Move, Upgrade, Take role, Work, or End turn?");
+        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         String next;
         int newrank;
         Location current;
@@ -181,6 +182,10 @@ public class ProgressManager {
                         case "End turn":
                             System.out.println("Turn ended");
                             break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
                         default:
                             System.out.println("Sorry that's not any of the options, try again on your next turn");
                             break;
@@ -215,6 +220,10 @@ public class ProgressManager {
                         case "End turn":
                             System.out.println("Turn ended");
                             break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
                         default:
                             System.out.println("Sorry that's not any of the options, try again on your next turn");
                             break;
@@ -234,10 +243,19 @@ public class ProgressManager {
                             //need some way to either get current scene or change location to scene?
                             //player.rehearse(player.getLocation(), lm);
                             break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
                         default:
                             System.out.println("Sorry that's not any of the options, try again on your next turn");
                             break;
                     }
+                    break;
+
+                case "End Game":
+                    endGame();
+                    gameContinues = false;
                     break;
                 default:
                     System.out.println("Sorry that's not any of the options, lets try again");
@@ -246,7 +264,7 @@ public class ProgressManager {
             }
         }
             
-         
+        return gameContinues;
     }
 
     public void wrapScene(Scene s){
@@ -273,7 +291,8 @@ public class ProgressManager {
     }
 
     public void endGame(){
-
+        System.out.println("Ending the Game");
+        calculateScore();
     }
 
     // Prepare players for start of day
@@ -307,11 +326,39 @@ public class ProgressManager {
 
     // Calculate score for all players
     public int calculateScore() {
+        int[] score = new int[8];
+        for(int i = 0; i < 8; i++){
+            if(players[i] != null){
+                score[i] = bank.getCredits(i) + bank.getDollars(i) + players[i].getRank()*5;
+            }
+        }
+        int winner =0;
+        boolean tie = false;
+        // find max score
+        for(int i = 0; i < 8; i++){
+            if(score[winner]< score[i]){
+                winner = i;
+            }
+        }
+        //find if tie
+        for(int i = 0; i < 8; i++){
+            if(score[winner] == score[i]){
+                tie = true;
+            }
+        }
+        if(tie == false){
+            System.out.println("Congratualtions Player " + winner + ", You win the game");
+        } else{
+            //why did you have to tie, i don't like you
+            System.out.println("Looks like we have a Tie! The players that tied are: ");
+            for(int i = 0; i < 8; i++){
+                if(score[winner] == score[i]){
+                    System.out.println("Player" + i);
+                }
+            }
+        }
+
         return 0;
     }
 
-    // Returns who wins, who loses, etc.
-    public String reportOutcome() {
-        return "";
-    }
 }
