@@ -3,6 +3,7 @@ public class Location{
     private Location[] neighbors;
     private int[] players;
     private int[] dimensions;
+    private Scene scene;
 
     //constructors
     public Location() {
@@ -39,6 +40,9 @@ public class Location{
     }
     public int[] getDimensions() {
         return dimensions;
+    }
+    public Scene getScene() {
+        return scene;
     }
 
     //class methods

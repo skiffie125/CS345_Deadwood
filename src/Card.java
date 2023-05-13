@@ -58,4 +58,8 @@ public class Card {
     public Role[] getOnCardRoles() {
         return this.onCardRoles;
     }
+    
+    public void addRole(Role role, int i) {
+        this.onCardRoles[i] = role;
+    }
 }
