@@ -273,8 +273,15 @@ public class ProgressManager {
                     next = v.getValidComand();
                     switch (next){
                         case "Act":
+                            if(lm.checkLocation(player.getLocation(), player.getId())){
+                                if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
+                                    wrapScene(lm.LocationToScene(player.getLocation()));
+                                } 
+                            }
+                            
                             break;
                         case "Rehearse":
+                            player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
                             //need some way to either get current scene or change location to scene?
                             //player.rehearse(player.getLocation(), lm);
                             break;
