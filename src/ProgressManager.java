@@ -274,17 +274,34 @@ public class ProgressManager {
     public void wrapScene(Scene s){
         if(s.getShotCountersLeft() == 0){
             //check if an on card
-            boolean bonuses = false;
+            int numOnCardPlayers = 0;
             Role[] onCardRoles = s.getCard().getOnCardRoles();
             for (int i = 0; i<onCardRoles.length; i++){
                 if(onCardRoles[i].getPlayer() != null){
                     if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
-                        bonuses = true;
+                        numOnCardPlayers++;
                     }
                 }
             }
-            if(bonuses){
+            if(numOnCardPlayers>0){
                 //go through the on card roles by rank and give dice 
+                Dice d = new Dice();
+                int[] payout = d.rollN(s.getCard().getBudget());
+                int payoutIndex = 0;
+                
+                while(payoutIndex<payout.length){
+                    //becuase all roles are sorted from lowest to highest already we just go through them backwards!
+                    for (int i = onCardRoles.length - 1; i >= 0; i--){
+                        if(onCardRoles[i].getPlayer() != null){
+                            if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
+                                if(payoutIndex<payout.length){
+                                    bank.pay(onCardRoles[i].getPlayer().getId(), payout[payoutIndex] ,0);
+                                    payoutIndex++;
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 //off card roles bonuses 
                 Role[] offCardRoles = s.getOffCardRoles();
@@ -295,10 +312,16 @@ public class ProgressManager {
                 }
             }
             if(lm.ScenesWrapped() == 9){
-                //time to end the day. 
+                //time to end the day.
+                if(daysPlayed + 1 == totalDays){
+                    //end game time
+                    endGame();
+                } else{
+                    daysPlayed++;
+                    System.out.println("End of Day "+ daysPlayed);
+                    setUpDay(players.length);
+                }
             }
-  
-            
         }
         //check if all shot counters are removed
         //get all on card players
