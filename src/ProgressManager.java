@@ -302,7 +302,6 @@ public class ProgressManager {
                         }
                     }
                 }
-                
                 //off card roles bonuses 
                 Role[] offCardRoles = s.getOffCardRoles();
                 for(int i = 0; i < offCardRoles.length; i++){
