@@ -44,6 +44,10 @@ public class Location{
     public Scene getScene() {
         return scene;
     }
+    public void setPlayers(int numPlayers) {
+        players = new int[numPlayers];
+    }
+
 
     //class methods
     //honestly should be in lm

@@ -40,6 +40,6 @@ public class Deadwood {
         int numPlayers = s.nextInt();
         ProgressManager game = new ProgressManager(null, null, null);
         game.setUpGame(numPlayers);
-        
+        game.setUpDay(numPlayers);
     }
 }

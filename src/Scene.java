@@ -67,11 +67,20 @@ public class Scene extends Location{
     public int getRehearsal(int player){
         return rehearsals[player];
     }
+    public void setRehearsals(int numPlayers) {
+        rehearsals = new int[numPlayers];
+    }
     public void setDimensions(int[] dim) {
         dimensions = dim;
     }
     public int[] getDimensions() {
         return dimensions;
+    }
+    public void setPlayers(int numPlayers) {
+        players = new int[numPlayers];
+    }
+    public int[] getPlayers() {
+        return players;
     }
 
     //class methods
