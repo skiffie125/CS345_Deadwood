@@ -89,7 +89,7 @@ public class ParseXML {
         }
         // Bind all roles to their appropriate scene
         sceneRoleJoin(scenes, roles);
-        Board board = new Board(scenes, trailer, office, sets, 0, null);
+        Board board = new Board(scenes, trailer, office, sets, null);
         return board;
     }
 

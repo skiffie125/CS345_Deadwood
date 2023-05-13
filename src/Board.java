@@ -1,5 +1,5 @@
-
 import java.util.Random;
+import java.lang.Math;
 
 public class Board {
     // Fields
@@ -11,11 +11,11 @@ public class Board {
     //private Location[] locations;
 
     public Board(Scene[] scenes, Location trailer, Location castingOffice, Location[] locations,
-    int cardsLeft, Card[] deck) {
+     Card[] deck) {
         this.scenes = scenes;
         this.trailer = trailer;
         this.castingOffice = castingOffice;
-        this. cardsLeft = cardsLeft;
+        this. cardsLeft = 40;
         this.deck = deck;
     }
 

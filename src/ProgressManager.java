@@ -56,7 +56,7 @@ public class ProgressManager {
             System.out.println("Incorrect Number of Players; Failed in set Up Game");
         } else{
             this.totalDays = totalDays(numPlayers);
-            Player[] players = new Player[numPlayers];
+            players = new Player[numPlayers];
             Bank b = new Bank(numPlayers);
             bank = b;
             LocationManager l = new LocationManager();
@@ -103,6 +103,14 @@ public class ProgressManager {
             Card[] newDeck = parser.readCards(startCards);
             newBoard.setCards(newDeck);
             lm.setBoard(newBoard);
+            newBoard.getTrailer().setPlayers(numPlayers);
+            newBoard.getCastingOffice().setPlayers(numPlayers);
+            for (int i = 0; i < newBoard.getScenes().length; i ++) {
+                newBoard.getScenes()[i].setPlayers(numPlayers);
+            }
+            for (int i = 0; i < newBoard.getScenes().length; i++) {
+                newBoard.getScenes()[i].setRehearsals(numPlayers);
+            }
         }
         return;
     }
@@ -313,21 +321,18 @@ public class ProgressManager {
     // Prepare players for start of day
     public void setUpDay(int numPlayers) {
         Location castingOffice = lm.getBoard().getCastingOffice();
-        Location trailer = lm.getBoard().getCastingOffice();
-        for(int i = 0; i< 8; i++){
-            if (i<numPlayers){
-                players[i].setLocation(lm.getBoard().getTrailer());
+        Location trailer = lm.getBoard().getTrailer();
+        for (int i = 0; i < numPlayers; i++) {
+            players[i].setLocation(lm.getBoard().getTrailer());
                 players[i].setRole(null);
                 castingOffice.setPlayer(i,0);
                 trailer.setPlayer(i,1);
-            }
+                players[i].setLocation(trailer);
         }
         Scene[] scenes = lm.getBoard().getScenes();
         for(int j = 0; j<scenes.length; j++){
             scenes[j].reset(lm.getBoard().pop());
         }
-        
-        
         return;
     }
 
