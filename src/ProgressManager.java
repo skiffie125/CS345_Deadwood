@@ -154,6 +154,8 @@ public class ProgressManager {
         String next;
         int newrank;
         Location current;
+        Scene currentScene;
+        Role[] totalRoles;
         Location[] currentNeighbors;
         int index;
             //result = s.nextLine();
@@ -236,6 +238,18 @@ public class ProgressManager {
                     break;
                 case "Take role":
                     System.out.println("What role would you like to take?");
+                    currentScene = lm.LocationToScene(player.getLocation());
+                    totalRoles = new Role[currentScene.getOffCardRoles().length + currentScene.getCard().getOnCardRoles().length];
+                    for(int i = 0; i < currentScene.getOffCardRoles().length; i++){
+                        totalRoles[i] = currentScene.getOffCardRoles()[i];
+                    }
+                    for(int i = currentScene.getOffCardRoles().length; i < totalRoles.length; i++){
+                        totalRoles[i] = currentScene.getCard().getOnCardRoles()[i];
+                    }
+                    for(int i = 0; i < totalRoles.length; i++){
+                        System.out.println("["+ i+ "] Role: " + totalRoles[i].getDescription() + " MinRank: " + totalRoles[i].getMinRank() + "Line: " + totalRoles[i].getLine());
+                    }
+
                     break;
                 case "Work":
                     System.out.println("Act or Rehearse?");
