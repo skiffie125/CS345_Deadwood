@@ -184,6 +184,20 @@ public class ProgressManager {
                             player.upgrade(newrank, bank, lm);
                             break;
                         case "Take A Role":
+                            System.out.println("What role would you like to take?");
+                            currentScene = lm.LocationToScene(player.getLocation());
+                            totalRoles = new Role[currentScene.getOffCardRoles().length + currentScene.getCard().getOnCardRoles().length];
+                            for(int i = 0; i < currentScene.getOffCardRoles().length; i++){
+                                totalRoles[i] = currentScene.getOffCardRoles()[i];
+                            }
+                            for(int i = currentScene.getOffCardRoles().length; i < totalRoles.length; i++){
+                                totalRoles[i] = currentScene.getCard().getOnCardRoles()[i];
+                            }
+                            for(int i = 0; i < totalRoles.length; i++){
+                                System.out.println("["+ i+ "] Role: " + totalRoles[i].getDescription() + " MinRank: " + totalRoles[i].getMinRank() + "Line: " + totalRoles[i].getLine());
+                            }
+                            newrank = v.getParameter(totalRoles.length -1);
+                            player.takeRole(currentScene, totalRoles[newrank], lm, player);
                             break;
                         case "End turn":
                             System.out.println("Turn ended");
@@ -249,6 +263,9 @@ public class ProgressManager {
                     for(int i = 0; i < totalRoles.length; i++){
                         System.out.println("["+ i+ "] Role: " + totalRoles[i].getDescription() + " MinRank: " + totalRoles[i].getMinRank() + "Line: " + totalRoles[i].getLine());
                     }
+                    newrank = v.getParameter(totalRoles.length -1);
+                    player.takeRole(currentScene, totalRoles[newrank], lm, player);
+                    
 
                     break;
                 case "Work":
