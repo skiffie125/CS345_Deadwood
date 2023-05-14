@@ -81,6 +81,14 @@ public class Player {
                     
                 }
             }
+            if (location.getName().equals(lm.getBoard().getCastingOffice().getName())) {
+                    location = lm.getBoard().getCastingOffice();
+                    
+            }
+            if (location.getName().equals(lm.getBoard().getTrailer().getName())) {
+                    location = lm.getBoard().getTrailer();
+                    
+            }
             //location.setPlayer(id,1);
             location.setPlayer(id,1);
             currentLocation = location;
