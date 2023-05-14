@@ -71,7 +71,6 @@ public class Player {
         currentLocation = location;
         */
         boolean result = false;
-        System.out.println(lm.checkMove(currentLocation, location, id));
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
             Scene[] scenes = lm.getBoard().getScenes();
@@ -150,13 +149,19 @@ public class Player {
         //else 
             //end turn and return false 
         boolean result = false;
-        if(lm.checkRoleStatus(s, r) && lm.checkLocation(s,id)){
-            if(r.getMinRank() <= rank){
+        if (lm.checkRoleStatus(s,r)) {
+            if (r.getMinRank() <= rank) {
                 result = true;
-                r.take(p);
+                take(r);
+            } else {
+                System.out.println("Rank too low");
             }
         }
         return result;
+    }
+
+    public void take(Role r) {
+        currentRole = r;
     }
 
     public boolean rehearse(Scene s, LocationManager lm){

@@ -42,10 +42,6 @@ public class Role {
         return line;
     }
 
-    public boolean take(Player player) {
-        return true;
-    }
-
     public Player getPlayer() {
         return this.player;
     }

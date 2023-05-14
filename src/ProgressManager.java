@@ -105,9 +105,6 @@ public class ProgressManager {
             lm.setBoard(newBoard);
             newBoard.getTrailer().setPlayers(numPlayers);
             Location[] neighbors = newBoard.getTrailer().getNeighbors();
-            for (int i = 0; i < neighbors.length; i++) {
-                System.out.println(neighbors[i].getName());
-            }
             newBoard.getCastingOffice().setPlayers(numPlayers);
             for (int i = 0; i < newBoard.getScenes().length; i ++) {
                 newBoard.getScenes()[i].setPlayers(numPlayers);
@@ -166,8 +163,61 @@ public class ProgressManager {
         } else{
             switch (result) {
                 case "Current":
-                    System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName());
-                    result = v.getValidComand();
+                    System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName() + ", Rank: " + player.getRank());
+                    System.out.println("Move, Upgrade, Take role or End turn?");
+                    next = v.getValidComand();
+                    switch (next){
+                        case "Upgrade":
+                            System.out.println("What rank would you like to upgrade to?");
+                            newrank = v.getParameter(5);
+                            player.upgrade(newrank, bank, lm);
+                            break;
+                        case "Move":
+                            System.out.println("Here are your options:");
+                            current = player.getLocation();
+                            currentNeighbors = current.getNeighbors();
+                            int numNeighbors = currentNeighbors.length;
+                            for(int i = 0; i < numNeighbors; i++){
+                                System.out.println("["+ i +"] " + currentNeighbors[i].getName());
+                            }
+                            System.out.println("Please type the coresponding number");
+                            index = v.getParameter(numNeighbors);
+                            System.out.println(index + " " + currentNeighbors[index].getName());
+                            player.move(currentNeighbors[index], lm);
+                            System.out.println("Upgrade, Take role or End turn?");
+                            next = v.getValidComand();
+                            switch (next){
+                                case "Upgrade":
+                                    System.out.println("What rank would you like to upgrade to?");
+                                    newrank = v.getParameter(5);
+                                    player.upgrade(newrank, bank, lm);
+                                    break;
+                                case "Take A Role":
+                                    break;
+                                case "End turn":
+                                    System.out.println("Turn ended");
+                                    break;
+                                case "End Game":
+                                    endGame();
+                                    gameContinues = false;
+                                    break;
+                                default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                        }
+                        case "Take A Role":
+                            break;
+                        case "End turn":
+                            System.out.println("Turn ended");
+                            break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
                     break;
                 case "Move":
                     System.out.println("Here are your options:");
@@ -179,7 +229,6 @@ public class ProgressManager {
                     }
                     System.out.println("Please type the coresponding number");
                     index = v.getParameter(numNeighbors);
-                    System.out.println(index + " " + currentNeighbors[index].getName());
                     player.move(currentNeighbors[index], lm);
                     System.out.println("Upgrade, Take role or End turn?");
                     next = v.getValidComand();
@@ -189,6 +238,31 @@ public class ProgressManager {
                             newrank = v.getParameter(5);
                             player.upgrade(newrank, bank, lm);
                             break;
+<<<<<<< HEAD
+                        case "Take role":
+                            Location curLoc = player.getLocation();
+                            if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
+                                System.out.println("No roles available at current location");
+                            }
+                            System.out.println("What role would you like to take?");
+                            Scene[] scenes = lm.getBoard().getScenes();
+                            Scene curScene = null;
+                            for (int i = 0; i < scenes.length; i++) {
+                                if (curLoc.getName().equals(scenes[i].getName())) {
+                                    curScene = scenes[i];
+                                }
+                            }
+                            Role[] validRoles = curScene.getOffCardRoles();
+                            System.out.println("Here are your options:");
+                            for (int i = 0; i < validRoles.length; i++) {
+                                System.out.println("[" + i + "]" + validRoles[i].getDescription() + " Minimum rank: " + validRoles[i].getMinRank());
+                            }
+                            System.out.println("Enter the corresponding number:");
+                            index = v.getParameter(validRoles.length);
+                            Role role = validRoles[index];
+                            player.takeRole(curScene, role, lm, player);
+                            System.out.println("Your role: " + player.getRole().getDescription());
+=======
                         case "Take A Role":
                             System.out.println("What role would you like to take?");
                             currentScene = lm.LocationToScene(player.getLocation());
@@ -204,6 +278,7 @@ public class ProgressManager {
                             }
                             newrank = v.getParameter(totalRoles.length -1);
                             player.takeRole(currentScene, totalRoles[newrank], lm, player);
+>>>>>>> main
                             break;
                         case "End turn":
                             System.out.println("Turn ended");
@@ -250,7 +325,32 @@ public class ProgressManager {
 
                     break;
                 case "Take role":
+                    current = player.getLocation();
+                    if (current.getName().equals("trailer") || current.getName().equals("office")) {
+                        System.out.println("No roles available at current location. Try again on your next turn");
+                        break;
+                    }
                     System.out.println("What role would you like to take?");
+<<<<<<< HEAD
+                    System.out.println("What role would you like to take?");
+                    Scene[] scenes = lm.getBoard().getScenes();
+                    Scene curScene = null;
+                    for (int i = 0; i < scenes.length; i++) {
+                        if (current.getName().equals(scenes[i].getName())) {
+                            curScene = scenes[i];
+                        }
+                    }
+                    Role[] validRoles = curScene.getOffCardRoles();
+                    System.out.println("Here are your options:");
+                    for (int i = 0; i < validRoles.length; i++) {
+                        System.out.println("[" + i + "]" + validRoles[i].getDescription() + " Minimum rank: " + validRoles[i].getMinRank());
+                    }
+                    System.out.println("Enter the corresponding number:");
+                    index = v.getParameter(validRoles.length);
+                    Role role = validRoles[index];
+                    player.takeRole(curScene, role, lm, player);
+                    System.out.println("Your role: " + player.getRole().getDescription());
+=======
                     currentScene = lm.LocationToScene(player.getLocation());
                     totalRoles = new Role[currentScene.getOffCardRoles().length + currentScene.getCard().getOnCardRoles().length];
                     for(int i = 0; i < currentScene.getOffCardRoles().length; i++){
@@ -266,6 +366,7 @@ public class ProgressManager {
                     player.takeRole(currentScene, totalRoles[newrank], lm, player);
                     
 
+>>>>>>> main
                     break;
                 case "Work":
                     System.out.println("Act or Rehearse?");
