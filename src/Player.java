@@ -71,6 +71,7 @@ public class Player {
         currentLocation = location;
         */
         boolean result = false;
+        System.out.println(lm.checkMove(currentLocation, location, id));
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
             location.setPlayer(id,1);

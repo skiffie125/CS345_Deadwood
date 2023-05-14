@@ -48,17 +48,18 @@ public class Location{
         players = new int[numPlayers];
     }
 
-
-    //class methods
-    //honestly should be in lm
+    // is location l1 a neighbor of l
     public boolean checkIfNeighbor(Location l){
-        boolean result = false;
-        for(int i = 0; i < neighbors.length; i++){
-            if (l == neighbors[i]){
-                result = true;
+        String destName = l.getName();
+        System.out.println("Requested destination: " + l.getName());
+        for (int i = 0; i < neighbors.length; i++) {
+            if(neighbors[i].equals(destName)) {
+                System.out.println("Neighbor check passed");
+                return true;
             }
         }
-        return result;
+        return false;
     }
+
 
 }
