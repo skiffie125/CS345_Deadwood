@@ -50,11 +50,11 @@ public class ProgressManager {
 
     // Set up board for play
     public void setUpGame(int numPlayers) {
-        // This wasnt compiling, commented out so i can do some Viewer tests - JB
         System.out.println("Welcome to Deadwood");
          if(numPlayers > 8 || numPlayers < 2){
             System.out.println("Incorrect Number of Players; Failed in set Up Game");
         } else{
+            //sets up feilds 
             this.totalDays = totalDays(numPlayers);
             players = new Player[numPlayers];
             Bank b = new Bank(numPlayers);
@@ -89,7 +89,7 @@ public class ProgressManager {
                 }
             }
 
-            //set up location manager and board here 
+            //set up location manager and board from XML files  
             ParseXML parser = new ParseXML();
             Document startBoard = null;
             Document startCards = null;
@@ -121,33 +121,6 @@ public class ProgressManager {
     //Preconditions: It is the players turn
     //Postcondition: Turn is over 
     public boolean takeATurn(Player player){
-        /*
-        take user input from choices: 
-        Move, Upgrade, Take a role, Work, End Turn
-        
-        if Move:
-            go to move method 
-            take user input from choices: 
-            End Turn, Upgrade, Take a role
-            go to coresponding method or end turn
-
-        if Upgrade:
-            get desired rank  
-            go to upgrade method
-            take user input from choices:
-            Move, End Turn
-            go to coresponding method or end turn
-        
-        if Take a role:
-            show roles on current scence
-            take user input for which role 
-            go to take role method
-
-        if Work
-            go work method 
-        if end turn:
-            termintate
-         */
         System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         boolean gameContinues = true;
         Viewer v = new Viewer();
@@ -163,6 +136,7 @@ public class ProgressManager {
             System.out.println("Turn ended");
         } else{
             switch (result) {
+                //get information and then have an action
                 case "Current":
                     System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName() + ", Rank: " + player.getRank());
                     System.out.println("Move, Upgrade, Take role or End turn?");
@@ -220,6 +194,7 @@ public class ProgressManager {
                             break;
                     }
                     break;
+                // Move and then choose from take a role upgrade or end turn
                 case "Move":
                     System.out.println("Here are your options:");
                     current = player.getLocation();
@@ -252,7 +227,13 @@ public class ProgressManager {
                                     curScene = scenes[i];
                                 }
                             }
-                            Role[] validRoles = curScene.getOffCardRoles();
+                            Role[] validRoles = new Role[curScene.getOffCardRoles().length + curScene.getCard().getOnCardRoles().length];
+                            for (int i = 0; i < curScene.getOffCardRoles().length; i++){
+                                validRoles[i] = curScene.getOffCardRoles()[i];
+                            }
+                            for (int i = curScene.getOffCardRoles().length; i < validRoles.length; i++){
+                                validRoles[i] = curScene.getCard().getOnCardRoles()[i- curScene.getOffCardRoles().length];
+                            }
                             System.out.println("Here are your options:");
                             for (int i = 0; i < validRoles.length; i++) {
                                 System.out.println("[" + i + "]" + validRoles[i].getDescription() + " Minimum rank: " + validRoles[i].getMinRank());
@@ -275,6 +256,7 @@ public class ProgressManager {
                             break;
                     }
                     break;
+                // Upgrade and then choose to move or end turn
                 case "Upgrade":
                     System.out.println("What rank would you like to upgrade to?");
                     newrank = v.getParameter(5);
@@ -307,13 +289,13 @@ public class ProgressManager {
                     }
 
                     break;
+                // take a role 
                 case "Take role":
                     current = player.getLocation();
                     if (current.getName().equals("trailer") || current.getName().equals("office")) {
                         System.out.println("No roles available at current location. Try again on your next turn");
                         break;
                     }
-                    System.out.println("What role would you like to take?");
                     System.out.println("What role would you like to take?");
                     Scene[] scenes = lm.getBoard().getScenes();
                     Scene curScene = null;
@@ -322,7 +304,13 @@ public class ProgressManager {
                             curScene = scenes[i];
                         }
                     }
-                    Role[] validRoles = curScene.getOffCardRoles();
+                    Role[] validRoles = new Role[curScene.getOffCardRoles().length + curScene.getCard().getOnCardRoles().length];
+                    for (int i = 0; i < curScene.getOffCardRoles().length; i++){
+                        validRoles[i] = curScene.getOffCardRoles()[i];
+                    }
+                    for (int i = curScene.getOffCardRoles().length; i < validRoles.length; i++){
+                        validRoles[i] = curScene.getCard().getOnCardRoles()[i- curScene.getOffCardRoles().length];
+                    }
                     System.out.println("Here are your options:");
                     for (int i = 0; i < validRoles.length; i++) {
                         System.out.println("[" + i + "]" + validRoles[i].getDescription() + " Minimum rank: " + validRoles[i].getMinRank());
@@ -376,6 +364,7 @@ public class ProgressManager {
         return gameContinues;
     }
 
+    // Wrap Scene s
     public void wrapScene(Scene s){
         if(s.getShotCountersLeft() == 0){
             //check if an on card
@@ -428,19 +417,9 @@ public class ProgressManager {
                 }
             }
         }
-        //check if all shot counters are removed
-        //get all on card players
-        // if no on card players, no bonuses
-        // else 
-            // rolln(budget)
-            //distribute dollars based on rank
-            // give off card bonuses 
-        //check if that was the 2nd to last scene
-        // if it was end game
-        // else end turn 
-        
     }
 
+    //End the game 
     public void endGame(){
         System.out.println("Ending the Game");
         calculateScore();
@@ -482,7 +461,7 @@ public class ProgressManager {
             }
         }
         int winner =0;
-        boolean tie = false;
+        int tie = 0;
         // find max score
         for(int i = 0; i < players.length; i++){
             if(score[winner]< score[i]){
@@ -492,10 +471,10 @@ public class ProgressManager {
         //find if tie
         for(int i = 0; i < players.length; i++){
             if(score[winner] == score[i]){
-                tie = true;
+                tie++;
             }
         }
-        if(tie == false){
+        if(tie == 1){
             System.out.println("Congratualtions Player " + winner + ", You win the game");
         } else{
             //why did you have to tie, i don't like you

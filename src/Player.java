@@ -54,27 +54,13 @@ public class Player {
     //actual class methods 
 
    
-
+    //Moves from current location to Location given in parameters 
     public boolean move(Location location, LocationManager lm){
-        // check current location is accurate
-        // check location given is a neighbor 
-        // if both true move and return true
-        // else stay and return false
-        /*Location[] neighbors = currentLocation.getNeighbors();
-        int len = neighbors.length;
-        
-        for (int i = 0; i < len; i++) {
-            if (neighbors[i].getName().equals(location.getName())) {
-                return true;
-            }
-        }
-        currentLocation = location;
-        */
         boolean result = false;
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
+            //to have them all be the same objects we grab them from location manager 
             Scene[] scenes = lm.getBoard().getScenes();
-            //Scene dest = null;
             for (int i = 0; i < scenes.length; i++) {
                 if (location.getName().equals(scenes[i].getName())) {
                     location = scenes[i];
@@ -89,13 +75,12 @@ public class Player {
                     location = lm.getBoard().getTrailer();
                     
             }
-            //location.setPlayer(id,1);
             location.setPlayer(id,1);
             currentLocation = location;
         }
         return result;
     }
-
+    // Upgrade to new rank 
     public boolean upgrade(int newRank, Bank b, LocationManager lm){
         int dollars;
         int credits;
@@ -140,24 +125,11 @@ public class Player {
         } else {
             System.out.println("Wrong Location");
         }
-        
-        // check location is casting office
-        //check they have enough money for desired rank
-        // if both true
-            // upgrade rank and subtract money return true
-        // else 
-            // don't upgrade and keep money, return false
         return result;
     }
-
+    
+    //Take role r 
     public boolean takeRole(Scene s, Role r, LocationManager lm, Player p){
-        //check if they are at scene
-        //check if the role is open
-        //check if the role is within their rank 
-        //if all true, take role 
-            //end turn and return true
-        //else 
-            //end turn and return false 
         boolean result = false;
         if (lm.checkRoleStatus(s,r)) {
             if (r.getMinRank() <= rank) {
@@ -175,6 +147,7 @@ public class Player {
         currentRole = r;
     }
 
+    //add a rehearsal to Scene s
     public boolean rehearse(Scene s, LocationManager lm){
         boolean result = false;
         if(lm.checkLocation(s, id)){
@@ -182,10 +155,9 @@ public class Player {
             s.addRehearsal(id);
         }
         return result;
-        // check they are the scence 
-        // add a resheal for that player to the scene
     }
 
+    //act on scene s with role r
     public boolean act(Scene s, Role r, Player p, Bank b){
         boolean result = false;
         boolean onCardRole = true;
@@ -199,7 +171,6 @@ public class Player {
             Dice d = new Dice();
             int roll = d.roll();
             roll += s.getRehearsal(id);
-           // need to figure out where budget is
             System.out.println("Roll: "+ roll + " Budget: " + s.getCard().getBudget());
             if(roll >= s.getCard().getBudget()){
                 s.removeAShotCounter();
@@ -220,17 +191,6 @@ public class Player {
         } else{
             System.out.println("Things didn't go your way today, you failed");
         }
-        // check have taken that role
-        // if true
-            // get bonuses from reheasals
-            // roll dice 
-            // if successful
-                // give money
-                //check if you wrapped scence
-                    // if so go to wrap scene
-                //return true
-            //else
-                // give any money and return false
         return result;
     }
 

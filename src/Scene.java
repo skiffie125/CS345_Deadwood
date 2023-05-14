@@ -77,6 +77,7 @@ public class Scene extends Location{
   
 
     //class methods
+    // resets for each new day
     public void reset(Card newCard){
         card = newCard;
         shotCountersLeft = shotCountersMax; 

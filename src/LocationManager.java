@@ -56,6 +56,10 @@ public class LocationManager{
 
     //does this location have the player 
     public boolean checkLocation(Location l, int playerID){
+        if(l == null){
+            System.out.println("Null location in check Location");
+            return false;
+        }
         int[] players = l.getPlayers();
         if (players == null){
             System.out.println("Null players in check Location");
@@ -66,7 +70,7 @@ public class LocationManager{
             return false;
         } 
     }
-
+    //Returns the number of scenes that are wrapped 
     public int ScenesWrapped(){
         int result =  0;
         Scene[] s =board.getScenes();
@@ -78,6 +82,7 @@ public class LocationManager{
         return result;
     }
     
+    //Gets the coresponding scence from a location 
     public Scene LocationToScene(Location l){
         Scene s = null;
         Scene[] allScenes =board.getScenes();

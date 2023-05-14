@@ -6,7 +6,7 @@ public class Role {
     private String line;
     private int[] dimensions;
 
-    // Methods
+    // Constructors
     public Role(String description, int minRank, Player player) {
         this.description = description;
         this.minRank = minRank;
@@ -17,7 +17,8 @@ public class Role {
         this.description = description;
         this.minRank = minRank;
     }
-
+    
+    //Setters and Getters 
     public void setDescription(String desc) {
         this.description = desc;
     }
