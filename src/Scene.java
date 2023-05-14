@@ -82,6 +82,9 @@ public class Scene extends Location{
     public int[] getPlayers() {
         return players;
     }
+    public void setPlayer(int player, int value){
+        players[player] = value;
+    }
 
     //class methods
     public void reset(Card newCard){

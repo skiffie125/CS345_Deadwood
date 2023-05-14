@@ -74,7 +74,14 @@ public class Player {
         System.out.println(lm.checkMove(currentLocation, location, id));
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
-            location.setPlayer(id,1);
+            Scene[] scenes = lm.getBoard().getScenes();
+            Scene dest = null;
+            for (int i = 0; i < scenes.length; i++) {
+                if (location.getName().equals(scenes[i].getName())) {
+                    dest = scenes[i];
+                }
+            }
+            dest.setPlayer(id,1);
             currentLocation = location;
         }
         return result;

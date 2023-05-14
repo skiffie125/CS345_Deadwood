@@ -179,7 +179,6 @@ public class ProgressManager {
                     index = v.getParameter(numNeighbors);
                     System.out.println(index + " " + currentNeighbors[index].getName());
                     player.move(currentNeighbors[index], lm);
-                    System.out.println(player.getLocation().getName());
                     System.out.println("Upgrade, Take role or End turn?");
                     next = v.getValidComand();
                     switch (next){
