@@ -82,6 +82,9 @@ public class Scene extends Location{
         card = newCard;
         shotCountersLeft = shotCountersMax; 
         faceUp = false;
+        for(int i = 0; i < offCardRoles.length; i++){
+            offCardRoles[i].setPlayer(null);
+        }
         int[] players = this.getPlayers();
         for(int i = 0; i< players.length; i++){
             rehearsals[i] = 0;

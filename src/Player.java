@@ -217,7 +217,7 @@ class Dice{
             a[i]= r.nextInt(6)+1;
         }
         //sorting
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n -1; i++){
             int value = a[i+1];
             int currentIndex = i;
             while(currentIndex >= 0 && value>a[currentIndex]){

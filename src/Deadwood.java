@@ -48,6 +48,7 @@ public class Deadwood {
             if(currentPlayer == numPlayers){
                 currentPlayer = 0;
             }
+            System.out.println();
             System.out.println("It is Player"+ currentPlayer+ "'s turn");
         }
         // for (int i = 0; i < game.getPlayers().length; i++) {
