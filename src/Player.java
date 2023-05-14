@@ -71,16 +71,23 @@ public class Player {
         currentLocation = location;
         */
         boolean result = false;
+        if(location.getPlayers() == null){
+            System.out.println("location players is null, this is bad");
+        } else{
+            System.out.println("location players is not null, this is good");
+        }
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
             Scene[] scenes = lm.getBoard().getScenes();
-            Scene dest = null;
+            //Scene dest = null;
             for (int i = 0; i < scenes.length; i++) {
                 if (location.getName().equals(scenes[i].getName())) {
-                    dest = scenes[i];
+                    location = scenes[i];
+                    
                 }
             }
-            dest.setPlayer(id,1);
+            //location.setPlayer(id,1);
+            location.setPlayer(id,1);
             currentLocation = location;
         }
         return result;
@@ -175,19 +182,6 @@ public class Player {
         // add a resheal for that player to the scene
     }
 
-    public void work(){
-        //check that they are on a scene 
-        //get user input if they want to act or rehearse
-        // if rehearse 
-            //go to rehearse method
-        // if act 
-            //check they have a current role
-            //go to act method
-            //check if they wrapped scene
-                //if true, go to wrap scene
-                //else end turn
-    }
-
     public boolean act(Scene s, Role r, Player p, Bank b){
         boolean result = false;
         boolean onCardRole = true;
@@ -215,6 +209,11 @@ public class Player {
                     b.add(id, 1, 0);
                 }
             }
+        }
+        if (result){
+            System.out.println("You did a great job, you succeded");
+        } else{
+            System.out.println("Things didn't go your way today, you failed");
         }
         // check have taken that role
         // if true

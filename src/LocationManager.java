@@ -57,6 +57,9 @@ public class LocationManager{
     //does this location have the player 
     public boolean checkLocation(Location l, int playerID){
         int[] players = l.getPlayers();
+        if (players == null){
+            System.out.println("Null players in check Location");
+        }
         if (players[playerID] == 1){
             return true;
         } else{

@@ -1,7 +1,5 @@
 public class Scene extends Location{
-    private String name;
-    private Location[] neighbors;
-    private int[] players;
+
     private int shotCountersMax;
     private int shotCountersLeft;
     private Card card;
@@ -76,24 +74,17 @@ public class Scene extends Location{
     public int[] getDimensions() {
         return dimensions;
     }
-    public void setPlayers(int numPlayers) {
-        players = new int[numPlayers];
-    }
-    public int[] getPlayers() {
-        return players;
-    }
-    public void setPlayer(int player, int value){
-        players[player] = value;
-    }
+  
 
     //class methods
     public void reset(Card newCard){
         card = newCard;
         shotCountersLeft = shotCountersMax; 
         faceUp = false;
+        int[] players = this.getPlayers();
         for(int i = 0; i< players.length; i++){
             rehearsals[i] = 0;
-            players[i] = 0;
+            this.setPlayer(i, 0);
         }
 
     }

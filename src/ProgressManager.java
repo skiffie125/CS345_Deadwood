@@ -102,16 +102,17 @@ public class ProgressManager {
             Board newBoard = parser.readBoard(startBoard);
             Card[] newDeck = parser.readCards(startCards);
             newBoard.setCards(newDeck);
-            lm.setBoard(newBoard);
+            
             newBoard.getTrailer().setPlayers(numPlayers);
             Location[] neighbors = newBoard.getTrailer().getNeighbors();
             newBoard.getCastingOffice().setPlayers(numPlayers);
-            for (int i = 0; i < newBoard.getScenes().length; i ++) {
+            for (int i = 0; i < newBoard.getScenes().length; i++) {
                 newBoard.getScenes()[i].setPlayers(numPlayers);
             }
             for (int i = 0; i < newBoard.getScenes().length; i++) {
                 newBoard.getScenes()[i].setRehearsals(numPlayers);
             }
+            lm.setBoard(newBoard);
         }
         return;
     }
@@ -229,6 +230,9 @@ public class ProgressManager {
                     }
                     System.out.println("Please type the coresponding number");
                     index = v.getParameter(numNeighbors);
+                    if(currentNeighbors[index].getPlayers() == null){
+                        System.out.print("problem starts here");
+                    }
                     player.move(currentNeighbors[index], lm);
                     System.out.println("Upgrade, Take role or End turn?");
                     next = v.getValidComand();
@@ -376,6 +380,7 @@ public class ProgressManager {
     public void wrapScene(Scene s){
         if(s.getShotCountersLeft() == 0){
             //check if an on card
+            System.out.println("wrapping scene " + s.getName());
             int numOnCardPlayers = 0;
             Role[] onCardRoles = s.getCard().getOnCardRoles();
             for (int i = 0; i<onCardRoles.length; i++){
@@ -452,6 +457,7 @@ public class ProgressManager {
                 castingOffice.setPlayer(i,0);
                 trailer.setPlayer(i,1);
                 players[i].setLocation(trailer);
+                
         }
         Scene[] scenes = lm.getBoard().getScenes();
         for(int j = 0; j<scenes.length; j++){
