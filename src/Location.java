@@ -50,15 +50,19 @@ public class Location{
 
     // is location l1 a neighbor of l
     public boolean checkIfNeighbor(Location l){
+        boolean result = false;
         String destName = l.getName();
         System.out.println("Requested destination: " + l.getName());
+        System.out.println("Number of neighbors: " + neighbors.length);
         for (int i = 0; i < neighbors.length; i++) {
-            if(neighbors[i].equals(destName)) {
+            System.out.println("Neighbor " + i + " name: " + neighbors[i].getName());
+            if(neighbors[i].getName().equals(destName)) {
                 System.out.println("Neighbor check passed");
-                return true;
+                result = true;
+                break;
             }
         }
-        return false;
+        return result;
     }
 
 
