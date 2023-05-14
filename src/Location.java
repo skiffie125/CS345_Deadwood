@@ -52,12 +52,8 @@ public class Location{
     public boolean checkIfNeighbor(Location l){
         boolean result = false;
         String destName = l.getName();
-        System.out.println("Requested destination: " + l.getName());
-        System.out.println("Number of neighbors: " + neighbors.length);
         for (int i = 0; i < neighbors.length; i++) {
-            System.out.println("Neighbor " + i + " name: " + neighbors[i].getName());
             if(neighbors[i].getName().equals(destName)) {
-                System.out.println("Neighbor check passed");
                 result = true;
                 break;
             }
