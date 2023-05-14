@@ -45,6 +45,9 @@ public class Role {
     public Player getPlayer() {
         return this.player;
     }
+     public void setPlayer(Player p) {
+        player = p;
+    }
     public int[] getDimensions() {
         return dimensions;
     }

@@ -71,11 +71,6 @@ public class Player {
         currentLocation = location;
         */
         boolean result = false;
-        if(location.getPlayers() == null){
-            System.out.println("location players is null, this is bad");
-        } else{
-            System.out.println("location players is not null, this is good");
-        }
         if (lm.checkMove(currentLocation, location, id)){
             currentLocation.setPlayer(id,0);
             Scene[] scenes = lm.getBoard().getScenes();
@@ -159,6 +154,7 @@ public class Player {
         if (lm.checkRoleStatus(s,r)) {
             if (r.getMinRank() <= rank) {
                 result = true;
+                r.setPlayer(p);
                 take(r);
             } else {
                 System.out.println("Rank too low");
@@ -196,6 +192,7 @@ public class Player {
             int roll = d.roll();
             roll += s.getRehearsal(id);
            // need to figure out where budget is
+            System.out.println("Roll: "+ roll + " Budget: " + s.getCard().getBudget());
             if(roll >= s.getCard().getBudget()){
                 s.removeAShotCounter();
                 if(onCardRole){

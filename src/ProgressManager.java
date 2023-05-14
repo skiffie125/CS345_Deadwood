@@ -230,9 +230,6 @@ public class ProgressManager {
                     }
                     System.out.println("Please type the coresponding number");
                     index = v.getParameter(numNeighbors);
-                    if(currentNeighbors[index].getPlayers() == null){
-                        System.out.print("problem starts here");
-                    }
                     player.move(currentNeighbors[index], lm);
                     System.out.println("Upgrade, Take role or End turn?");
                     next = v.getValidComand();
@@ -345,6 +342,8 @@ public class ProgressManager {
                                 if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
                                     wrapScene(lm.LocationToScene(player.getLocation()));
                                 } 
+                            } else{
+                                System.out.println("Location Error");
                             }
                             
                             break;
