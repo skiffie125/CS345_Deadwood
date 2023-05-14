@@ -119,8 +119,10 @@ public class Player {
                 rank=newRank;
                 result = true;
             } else{
-                 System.out.print("Insuffient funds");          
+                 System.out.println("Insuffient funds");          
             }
+        } else {
+            System.out.println("Wrong Location");
         }
         
         // check location is casting office
