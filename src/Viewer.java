@@ -3,6 +3,8 @@ public class Viewer {
     // Command constants
     static final String[] commands = {"Current", "Locate all", "Move", "Work", "Upgrade",
         "Rehearse", "Act", "End turn", "End game"};
+
+    static Scanner s = new Scanner(System.in);
     
     // Variable Fields
     //private String buffer; <- with the current implementation of playText this can be eliminated
@@ -74,39 +76,43 @@ public class Viewer {
 
     public String getValidComand() {
         String result = null;
-        Scanner s = new Scanner(System.in);
+        //Scanner s = new Scanner(System.in);
         result = s.nextLine();
-        switch (result){
-            case "Current":
-                break;
-            case "Locate all":
-                break;
-            case "Move":
-                break;
-            case "Work":
-                break;
-            case "Upgrade":
-                break;
-            case "Rehearse":
-                break;
-            case "Act":
-                break;
-            case "End turn":
-                break;
-            case "End game":
-                break;
-            default:
-                System.out.println("Invalid command, please try again");
-                result = getValidComand();
-                break;
-        }
-        s.close();
+        //while (s.hasNextLine()) {
+            switch (result){
+                case "Current":
+                    break;
+                case "Locate all":
+                    break;
+                case "Move":
+                    break;
+                case "Work":
+                    break;
+                case "Upgrade":
+                    break;
+                case "Rehearse":
+                    break;
+                case "Act":
+                    break;
+                case "Take role":
+                    break;
+                case "End turn":
+                    break;
+                case "End game":
+                    break;
+                default:
+                    System.out.println("Invalid command, please try again");
+                    result = getValidComand();
+                    break;
+            }
+        //}
+        //s.close();
         return result;
 
     }
     public int getParameter(int max){
         int result;
-        Scanner s = new Scanner(System.in);
+        //Scanner s = new Scanner(System.in);
         String input = s.nextLine();
         Scanner s1 = new Scanner(input);
         if(!s1.hasNextInt()){
@@ -119,6 +125,8 @@ public class Viewer {
                 result = getParameter(max);
             }
         }
+        //s.close();
+        s1.close();
         return result;
     }
         

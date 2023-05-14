@@ -43,13 +43,17 @@ public class LocationManager{
 
     //would a player be able to make this move
     public boolean checkMove(Location start, Location end, int playerID){
+
         boolean result = false;
         if (start.checkIfNeighbor(end) && end.checkIfNeighbor(start)){
+            System.out.println("True");
             int[] players = start.getPlayers();
             if (players[playerID] == 1){
+                System.out.println("Player is here!");
                 result = true;
             }
         }
+        System.out.println("Neighbor test failed");
         return result;
     }
 

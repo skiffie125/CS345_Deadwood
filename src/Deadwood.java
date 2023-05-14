@@ -41,5 +41,10 @@ public class Deadwood {
         ProgressManager game = new ProgressManager(null, null, null);
         game.setUpGame(numPlayers);
         game.setUpDay(numPlayers);
+        game.takeATurn(game.getPlayer(0));
+        // for (int i = 0; i < game.getPlayers().length; i++) {
+        //     Player current = game.getPlayer(i);
+        //     boolean turn = true;
+        // }
     }
 }

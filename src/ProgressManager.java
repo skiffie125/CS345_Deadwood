@@ -104,6 +104,10 @@ public class ProgressManager {
             newBoard.setCards(newDeck);
             lm.setBoard(newBoard);
             newBoard.getTrailer().setPlayers(numPlayers);
+            Location[] neighbors = newBoard.getTrailer().getNeighbors();
+            for (int i = 0; i < neighbors.length; i++) {
+                System.out.println(neighbors[i].getName());
+            }
             newBoard.getCastingOffice().setPlayers(numPlayers);
             for (int i = 0; i < newBoard.getScenes().length; i ++) {
                 newBoard.getScenes()[i].setPlayers(numPlayers);
@@ -146,11 +150,10 @@ public class ProgressManager {
         if end turn:
             termintate
          */
+        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         boolean gameContinues = true;
         Viewer v = new Viewer();
         String result = v.getValidComand();
-         //Scanner s = new Scanner(System.in);
-        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
         String next;
         int newrank;
         Location current;
@@ -158,23 +161,27 @@ public class ProgressManager {
         Role[] totalRoles;
         Location[] currentNeighbors;
         int index;
-            //result = s.nextLine();
         if (result.equals("End turn")) {
             System.out.println("Turn ended");
         } else{
             switch (result) {
+                case "Current":
+                    System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName());
+                    result = v.getValidComand();
+                    break;
                 case "Move":
-                    //System.out.println("Enter destination: ");
                     System.out.println("Here are your options:");
                     current = player.getLocation();
                     currentNeighbors = current.getNeighbors();
-
-                    for(int i = 0; currentNeighbors[i] != null; i++){
+                    int numNeighbors = currentNeighbors.length;
+                    for(int i = 0; i < numNeighbors; i++){
                         System.out.println("["+ i +"] " + currentNeighbors[i].getName());
                     }
                     System.out.println("Please type the coresponding number");
-                    index = v.getParameter(5);
+                    index = v.getParameter(numNeighbors);
+                    System.out.println(index + " " + currentNeighbors[index].getName());
                     player.move(currentNeighbors[index], lm);
+                    System.out.println(player.getLocation().getName());
                     System.out.println("Upgrade, Take role or End turn?");
                     next = v.getValidComand();
                     switch (next){
@@ -210,13 +217,6 @@ public class ProgressManager {
                             System.out.println("Sorry that's not any of the options, try again on your next turn");
                             break;
                     }
-                    //String destName = s.nextLine();
-                    // Need to get location from string
-                    // while(!move()) {
-                    //     System.out.println("Invalid destination. New destination: ");
-                    //     dest = s.nextLine();
-                    // }
-                    // currentLocation = dest;
                     break;
                 case "Upgrade":
                     System.out.println("What rank would you like to upgrade to?");
@@ -295,7 +295,7 @@ public class ProgressManager {
                     }
                     break;
 
-                case "End Game":
+                case "End game":
                     endGame();
                     gameContinues = false;
                     break;
