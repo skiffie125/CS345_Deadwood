@@ -154,6 +154,8 @@ public class ProgressManager {
         String next;
         int newrank;
         Location current;
+        Scene currentScene;
+        Role[] totalRoles;
         Location[] currentNeighbors;
         int index;
         if (result.equals("End turn")) {
@@ -236,6 +238,7 @@ public class ProgressManager {
                             newrank = v.getParameter(5);
                             player.upgrade(newrank, bank, lm);
                             break;
+<<<<<<< HEAD
                         case "Take role":
                             Location curLoc = player.getLocation();
                             if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
@@ -259,6 +262,23 @@ public class ProgressManager {
                             Role role = validRoles[index];
                             player.takeRole(curScene, role, lm, player);
                             System.out.println("Your role: " + player.getRole().getDescription());
+=======
+                        case "Take A Role":
+                            System.out.println("What role would you like to take?");
+                            currentScene = lm.LocationToScene(player.getLocation());
+                            totalRoles = new Role[currentScene.getOffCardRoles().length + currentScene.getCard().getOnCardRoles().length];
+                            for(int i = 0; i < currentScene.getOffCardRoles().length; i++){
+                                totalRoles[i] = currentScene.getOffCardRoles()[i];
+                            }
+                            for(int i = currentScene.getOffCardRoles().length; i < totalRoles.length; i++){
+                                totalRoles[i] = currentScene.getCard().getOnCardRoles()[i];
+                            }
+                            for(int i = 0; i < totalRoles.length; i++){
+                                System.out.println("["+ i+ "] Role: " + totalRoles[i].getDescription() + " MinRank: " + totalRoles[i].getMinRank() + "Line: " + totalRoles[i].getLine());
+                            }
+                            newrank = v.getParameter(totalRoles.length -1);
+                            player.takeRole(currentScene, totalRoles[newrank], lm, player);
+>>>>>>> main
                             break;
                         case "End turn":
                             System.out.println("Turn ended");
@@ -311,6 +331,7 @@ public class ProgressManager {
                         break;
                     }
                     System.out.println("What role would you like to take?");
+<<<<<<< HEAD
                     System.out.println("What role would you like to take?");
                     Scene[] scenes = lm.getBoard().getScenes();
                     Scene curScene = null;
@@ -329,14 +350,38 @@ public class ProgressManager {
                     Role role = validRoles[index];
                     player.takeRole(curScene, role, lm, player);
                     System.out.println("Your role: " + player.getRole().getDescription());
+=======
+                    currentScene = lm.LocationToScene(player.getLocation());
+                    totalRoles = new Role[currentScene.getOffCardRoles().length + currentScene.getCard().getOnCardRoles().length];
+                    for(int i = 0; i < currentScene.getOffCardRoles().length; i++){
+                        totalRoles[i] = currentScene.getOffCardRoles()[i];
+                    }
+                    for(int i = currentScene.getOffCardRoles().length; i < totalRoles.length; i++){
+                        totalRoles[i] = currentScene.getCard().getOnCardRoles()[i];
+                    }
+                    for(int i = 0; i < totalRoles.length; i++){
+                        System.out.println("["+ i+ "] Role: " + totalRoles[i].getDescription() + " MinRank: " + totalRoles[i].getMinRank() + "Line: " + totalRoles[i].getLine());
+                    }
+                    newrank = v.getParameter(totalRoles.length -1);
+                    player.takeRole(currentScene, totalRoles[newrank], lm, player);
+                    
+
+>>>>>>> main
                     break;
                 case "Work":
                     System.out.println("Act or Rehearse?");
                     next = v.getValidComand();
                     switch (next){
                         case "Act":
+                            if(lm.checkLocation(player.getLocation(), player.getId())){
+                                if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
+                                    wrapScene(lm.LocationToScene(player.getLocation()));
+                                } 
+                            }
+                            
                             break;
                         case "Rehearse":
+                            player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
                             //need some way to either get current scene or change location to scene?
                             //player.rehearse(player.getLocation(), lm);
                             break;
@@ -367,18 +412,34 @@ public class ProgressManager {
     public void wrapScene(Scene s){
         if(s.getShotCountersLeft() == 0){
             //check if an on card
-            boolean bonuses = false;
+            int numOnCardPlayers = 0;
             Role[] onCardRoles = s.getCard().getOnCardRoles();
             for (int i = 0; i<onCardRoles.length; i++){
                 if(onCardRoles[i].getPlayer() != null){
                     if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
-                        bonuses = true;
+                        numOnCardPlayers++;
                     }
                 }
             }
-            if(bonuses){
+            if(numOnCardPlayers>0){
                 //go through the on card roles by rank and give dice 
+                Dice d = new Dice();
+                int[] payout = d.rollN(s.getCard().getBudget());
+                int payoutIndex = 0;
                 
+                while(payoutIndex<payout.length){
+                    //becuase all roles are sorted from lowest to highest already we just go through them backwards!
+                    for (int i = onCardRoles.length - 1; i >= 0; i--){
+                        if(onCardRoles[i].getPlayer() != null){
+                            if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
+                                if(payoutIndex<payout.length){
+                                    bank.pay(onCardRoles[i].getPlayer().getId(), payout[payoutIndex] ,0);
+                                    payoutIndex++;
+                                }
+                            }
+                        }
+                    }
+                }
                 //off card roles bonuses 
                 Role[] offCardRoles = s.getOffCardRoles();
                 for(int i = 0; i < offCardRoles.length; i++){
@@ -388,10 +449,16 @@ public class ProgressManager {
                 }
             }
             if(lm.ScenesWrapped() == 9){
-                //time to end the day. 
+                //time to end the day.
+                if(daysPlayed + 1 == totalDays){
+                    //end game time
+                    endGame();
+                } else{
+                    daysPlayed++;
+                    System.out.println("End of Day "+ daysPlayed);
+                    setUpDay(players.length);
+                }
             }
-  
-            
         }
         //check if all shot counters are removed
         //get all on card players
