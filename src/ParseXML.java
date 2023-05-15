@@ -61,6 +61,12 @@ public class ParseXML {
             scenes[i] = new Scene(sets[i].getName());
             scenes[i].setNeighbors(sets[i].getNeighbors());
             scenes[i].setDimensions(sets[i].getDimensions());
+            // for (int j = 0; j <setLen; j++) {
+            //     System.out.println("Scene name:" + scenes[i].getName());
+            //     for (int k = 0; k < scenes[i].getNeighbors().length; k++) {
+            //         System.out.println("Neighbor " + k + ":" + scenes[k].getNeighbors()[k].getName());
+            //     }
+            // }
         }
         // Get & set shot counters of takes
         NodeList takes = d.getElementsByTagName("take");
@@ -336,10 +342,11 @@ public class ParseXML {
                 }
                 source.setNeighbors(tempNeighbors);
             } else if (source.getName().equals("Saloon")) {
-                Location[] tempNeighbors = new Location[3];
+                Location[] tempNeighbors = new Location[4];
                 tempNeighbors[0] = new Location("Main street");
-                tempNeighbors[1] = new Location("Saloon");
-                tempNeighbors[2] = new Location("Hotel");
+                tempNeighbors[1] = new Location("General Store");
+                tempNeighbors[2] = new Location("Bank");
+                tempNeighbors[3] = new Location("trailer");
                 source.setNeighbors(tempNeighbors);
             } else {
                 Location[] tempNeighbors = new Location[3];

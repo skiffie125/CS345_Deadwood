@@ -461,6 +461,7 @@ public class ProgressManager {
         Location curLoc = player.getLocation();
         if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
             System.out.println("No roles available at current location");
+            return;
         }
         System.out.println("What role would you like to take?");
         Scene[] scenes = lm.getBoard().getScenes();
