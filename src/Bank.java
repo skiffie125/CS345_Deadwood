@@ -34,7 +34,7 @@ public class Bank {
 
     //we should add a method here to check to make sure a player can't go into the red
     public boolean verifyWithdraw(int player, int dollarAmount, int creditAmount) {
-        return (((dollars[player] - dollarAmount) > 0) || (credits[player] - creditAmount > 0));
+        return (((dollars[player] - dollarAmount) >= 0) || (credits[player] - creditAmount >= 0));
     }
 
     // add given amount(s) to specified player
