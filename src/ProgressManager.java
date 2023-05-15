@@ -121,7 +121,7 @@ public class ProgressManager {
     //Preconditions: It is the players turn
     //Postcondition: Turn is over 
     public boolean takeATurn(Player player){
-        System.out.println("Move, Upgrade, Take role, Work, or End turn?");
+        System.out.println("Current, Locate all, Move, Upgrade, Take role, Work, or End turn?");
         boolean gameContinues = true;
         Viewer v = new Viewer();
         String result = v.getValidComand();
@@ -137,6 +137,54 @@ public class ProgressManager {
         } else{
             switch (result) {
                 //get information and then have an action
+                case "Locate all":
+                    for (int i = 0; i < players.length; i++) {
+                        System.out.println("Player " + i + " Location: " + players[i].getLocation().getName());
+                    }
+                    System.out.println("Move, Upgrade, Take role or End turn?");
+                    next = v.getValidComand();
+                    switch (next){
+                        case "Upgrade":
+                            upgradePM(player);
+                            break;
+                        case "Move":
+                            movePM(player);
+                            System.out.println("Upgrade, Take role or End turn?");
+                            next = v.getValidComand();
+                            switch (next){
+                                case "Upgrade":
+                                    upgradePM( player);
+                                    break;
+                                case "Take role":
+                                    takeARolePM(player);
+                                    break;
+                                case "End turn":
+                                    System.out.println("Turn ended");
+                                    break;
+                                case "End Game":
+                                    endGame();
+                                    gameContinues = false;
+                                    break;
+                                default:
+                                     System.out.println("Sorry that's not any of the options, try again on your next turn");
+                                    break;
+                            }
+                            break;
+                        case "Take role":
+                            takeARolePM(player);
+                            break;
+                        case "End turn":
+                            System.out.println("Turn ended");
+                            break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
+                    break;
                 case "Current":
                     System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName() + ", Rank: " + player.getRank());
                     System.out.println("Move, Upgrade, Take role or End turn?");
@@ -153,7 +201,7 @@ public class ProgressManager {
                                 case "Upgrade":
                                     upgradePM( player);
                                     break;
-                                case "Take A Role":
+                                case "Take role":
                                     takeARolePM(player);
                                     break;
                                 case "End turn":
@@ -168,7 +216,7 @@ public class ProgressManager {
                                     break;
                             }
                             break;
-                        case "Take A Role":
+                        case "Take role":
                             takeARolePM(player);
                             break;
                         case "End turn":
