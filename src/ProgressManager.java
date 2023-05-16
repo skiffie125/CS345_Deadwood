@@ -315,6 +315,9 @@ public class ProgressManager {
                             if(lm.checkLocation(player.getLocation(), player.getId())){
                                 if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
                                     wrapScene(lm.LocationToScene(player.getLocation()));
+                                    if(lm.ScenesWrapped() == 9){
+                                        gameContinues = false;
+                                    }
                                 } 
                             } else{
                                 System.out.println("Location Error");
