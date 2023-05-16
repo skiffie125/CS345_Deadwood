@@ -7,5 +7,7 @@ A makefile has been made to allow for easier compilation
 
 ## Command Line Interaction
 Valid commands:
-	Current: Displays the currently active player.  return
-	Locate all: Displays the location of all players.  return
+	Current: Displays the currently active player.\
+	Locate all: Displays the location of all players.\
+	Move: The player will be prompted with a list of valid destinations to move to, and will then be moved to wherever they select.\
+	
