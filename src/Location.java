@@ -40,9 +40,7 @@ public class Location{
     public int[] getDimensions() {
         return dimensions;
     }
-    public Scene getScene() {
-        return scene;
-    }
+
     public void setPlayers(int numPlayers) {
         players = new int[numPlayers];
     }

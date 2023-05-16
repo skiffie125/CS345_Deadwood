@@ -143,6 +143,7 @@ public class Player {
             if(s.getRehearsal(id)<6){
                 result = true;
                 s.addRehearsal(id);
+                System.out.print("You have " + s.getRehearsal(id) + " rehearsal(s) at Scene " + s.getName());
             } else {
                 System.out.println("You have already rehearsed enough, try acting next turn");
             }

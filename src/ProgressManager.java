@@ -212,6 +212,7 @@ public class ProgressManager {
                     break;
                 case "Current":
                     System.out.println("Active player: Player " + player.getId() + ", Location: " + player.getLocation().getName() + ", Rank: " + player.getRank());
+                    System.out.println("Dollars: "+ bank.getDollars(player.getId()) + " Credits: " + bank.getCredits(player.getId()));
                     System.out.println("Move, Upgrade, Take role or End turn?");
                     next = v.getValidComand();
                     switch (next){
@@ -528,6 +529,8 @@ public class ProgressManager {
 
     private void upgradePM(Player player){
         Viewer v = new Viewer();
+        System.out.println("Your current rank: " + player.getRank());
+        System.out.println("Your current funds are " + bank.getDollars(player.getId()) + " dollars and " + bank.getCredits(player.getId()) + " credits");
         System.out.println("What rank would you like to upgrade to?");
         int newrank = v.getParameter(5);
         player.upgrade(newrank, bank, lm);
@@ -535,6 +538,7 @@ public class ProgressManager {
     }
     private void movePM(Player player){
         Viewer v = new Viewer();
+        System.out.println("You are currently at "+ player.getLocation().getName());
         System.out.println("Here are your options:");
         Location current = player.getLocation();
         Location[] currentNeighbors = current.getNeighbors();
