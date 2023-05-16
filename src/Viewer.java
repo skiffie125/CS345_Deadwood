@@ -5,15 +5,7 @@ public class Viewer {
         "Rehearse", "Act", "End turn", "End game"};
 
     static Scanner s = new Scanner(System.in);
-    
-    // Variable Fields
-    private ProgressManager game;
 
-    // Methods
-    // public Viewer(String buffer, ProgressManager game) {
-    public Viewer(ProgressManager game) {
-        this.game = game;
-    }
     public Viewer() {
     }
 
