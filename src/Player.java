@@ -5,8 +5,6 @@ public class Player {
     private Location currentLocation;
     private int rank;
     private int id;
-    private int dollars;
-    private int credits;
 
     //Constructors
     public Player(int rank, int id) {
@@ -38,22 +36,8 @@ public class Player {
     public int getId(){
         return id;
     }
-    public void setDollars(int amount) {
-        dollars = amount;
-    }
-    public int getDollars() {
-        return dollars;
-    }
-    public void setCredits(int amount) {
-        credits = amount;
-    }
-    public int getCredits() {
-        return credits;
-    }
-
     //actual class methods 
 
-   
     //Moves from current location to Location given in parameters 
     public boolean move(Location location, LocationManager lm){
         boolean result = false;
@@ -188,9 +172,9 @@ public class Player {
         if(r.getPlayer() == p){
             Dice d = new Dice();
             int roll = d.roll();
-            roll += s.getRehearsal(id);
-            System.out.println("Roll: "+ roll + " Budget: " + s.getCard().getBudget());
-            if(roll >= s.getCard().getBudget()){
+            int totalRoll = roll + s.getRehearsal(id);
+            System.out.println("Roll: "+ roll + " + Rehearsal chip(s): " + s.getRehearsal(id) + " Budget: " + s.getCard().getBudget());
+            if(totalRoll >= s.getCard().getBudget()){
                 s.removeAShotCounter();
                 if(onCardRole){
                     b.add(id, 0, 2);
