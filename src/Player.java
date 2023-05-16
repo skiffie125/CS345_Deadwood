@@ -140,14 +140,23 @@ public class Player {
         }
         boolean result = false;
         if(lm.checkLocation(s, id)){
-            result = true;
-            s.addRehearsal(id);
+            if(s.getRehearsal(id)<6){
+                result = true;
+                s.addRehearsal(id);
+            } else {
+                System.out.println("You have already rehearsed enough, try acting next turn");
+            }
+            
         }
         return result;
     }
 
     //act on scene s with role r
     public boolean act(Scene s, Role r, Player p, Bank b){
+        if(s.getShotCountersLeft()<= 0){
+            System.out.println("Scene already wrapped, try a different one");
+            return false;
+        }
         if (currentRole == null) {
             System.out.println("You do not currently have a role. Try again on your next turn");
             return false;

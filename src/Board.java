@@ -75,8 +75,14 @@ public class Board {
         Random r = new Random();
         int cardIndex =  r.nextInt(cardsLeft);
         Card temp = deck[cardIndex];
-        deck[cardIndex] = deck[cardsLeft -1];
-        deck[cardsLeft -1] = temp;
+        cardsLeft--;
+        if (cardsLeft >= 0){
+            deck[cardIndex] = deck[cardsLeft];
+            deck[cardsLeft] = temp;
+        } else{
+            reset();
+        }
+        
         return temp;
     }
 
