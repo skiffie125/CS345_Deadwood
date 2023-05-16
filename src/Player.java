@@ -77,6 +77,7 @@ public class Player {
             }
             location.setPlayer(id,1);
             currentLocation = location;
+            currentRole = null;
         }
         return result;
     }
@@ -149,6 +150,10 @@ public class Player {
 
     //add a rehearsal to Scene s
     public boolean rehearse(Scene s, LocationManager lm){
+        if (currentRole == null) {
+            System.out.println("You do not currently have a role. Try again on your next turn");
+            return false;
+        }
         boolean result = false;
         if(lm.checkLocation(s, id)){
             result = true;
@@ -159,11 +164,15 @@ public class Player {
 
     //act on scene s with role r
     public boolean act(Scene s, Role r, Player p, Bank b){
+        if (currentRole == null) {
+            System.out.println("You do not currently have a role. Try again on your next turn");
+            return false;
+        }
         boolean result = false;
         boolean onCardRole = true;
         Role[] offCardRoles =  s.getOffCardRoles();
         for(int i = 0; i< offCardRoles.length; i++){
-            if(r == offCardRoles[i]){
+            if(r.getDescription() == offCardRoles[i].getDescription()){
                 onCardRole = false;
             }
         }

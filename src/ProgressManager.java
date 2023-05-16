@@ -141,7 +141,7 @@ public class ProgressManager {
                     for (int i = 0; i < players.length; i++) {
                         System.out.println("Player " + i + " Location: " + players[i].getLocation().getName());
                     }
-                    System.out.println("Move, Upgrade, Take role or End turn?");
+                    System.out.println("Move, Upgrade, Take role, Work or End turn?");
                     next = v.getValidComand();
                     switch (next){
                         case "Upgrade":
@@ -173,6 +173,31 @@ public class ProgressManager {
                         case "Take role":
                             takeARolePM(player);
                             break;
+                        case "Work":
+                            System.out.println("Act or Rehearse?");
+                            next = v.getValidComand();
+                            switch (next){
+                                case "Act":
+                                    if(lm.checkLocation(player.getLocation(), player.getId())){
+                                        if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
+                                            wrapScene(lm.LocationToScene(player.getLocation()));
+                                        } 
+                                    } else{
+                                        System.out.println("Location Error");
+                                    }
+                                break;
+                        case "Rehearse":
+                            player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
+                            break;
+                        case "End Game":
+                            endGame();
+                            gameContinues = false;
+                            break;
+                        default:
+                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            break;
+                    }
+                    break;
                         case "End turn":
                             System.out.println("Turn ended");
                             break;
