@@ -312,7 +312,7 @@ public class ProgressManager {
                     next = v.getValidComand();
                     switch (next){
                         case "Act":
-                            if(lm.checkLocation(player.getLocation(), player.getId())){
+                            if(lm.checkLocation(player.getLocation(), player.getId()) && lm.LocationToScene(player.getLocation()) != null){
                                 if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
                                     wrapScene(lm.LocationToScene(player.getLocation()));
                                     if(lm.ScenesWrapped() == 9){
@@ -324,7 +324,12 @@ public class ProgressManager {
                             }
                             break;
                         case "Rehearse":
-                            player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
+                            if(lm.LocationToScene(player.getLocation()) != null){
+                                player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
+                            } else {
+                                System.out.println("You need to be on set to rehearse, try moving on your next turn");
+                            }
+                            
                             break;
                         case "End Game":
                             endGame();
