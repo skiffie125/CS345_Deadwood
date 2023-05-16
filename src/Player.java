@@ -172,9 +172,9 @@ public class Player {
         if(r.getPlayer() == p){
             Dice d = new Dice();
             int roll = d.roll();
-            roll += s.getRehearsal(id);
-            System.out.println("Roll: "+ roll + " Budget: " + s.getCard().getBudget());
-            if(roll >= s.getCard().getBudget()){
+            int totalRoll = roll + s.getRehearsal(id);
+            System.out.println("Roll: "+ roll + " + Rehearsal chip(s): " + s.getRehearsal(id) + " Budget: " + s.getCard().getBudget());
+            if(totalRoll >= s.getCard().getBudget()){
                 s.removeAShotCounter();
                 if(onCardRole){
                     b.add(id, 0, 2);
