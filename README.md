@@ -15,5 +15,5 @@ Valid commands: \
 	&ensp; &ensp;Rehearse: The player rehearses a role. \
 	&ensp; &ensp;Upgrade: The player will be asked what rank they wish to ascend to. \
 	&ensp; &ensp;End turn: Control is passed to the next player in the turn order. \
-	&ensp; &ensp;End game: Prematurely ends a game. \
+	&ensp; &ensp;End game: Prematurely ends a game.
 	
