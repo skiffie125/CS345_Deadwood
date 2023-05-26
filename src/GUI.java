@@ -19,21 +19,39 @@ public class GUI extends JFrame{
 
     // Methods
     public GUI() {
-        super("Deadwood");
+        
+        JFrame frame = new JFrame("Deadwood");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //add stuff 
+        bPane = new JLayeredPane();
+        
+
+        boardLabel = new JLabel();
+        ImageIcon boardIcon = new ImageIcon("images/board.jpg");
+        boardLabel.setIcon(boardIcon);
+        boardLabel.setBounds(0,0,boardIcon.getIconWidth(), boardIcon.getIconHeight());
+        
+        bPane.setPreferredSize(new Dimension(boardIcon.getIconWidth(), boardIcon.getIconHeight()));
+        bPane.setBorder(BorderFactory.createTitledBorder("Board"));
+        bPane.add(boardLabel, new Integer(1));
+        //bPane.addMouseListener(new MouseListener());
+
+        frame.pack();
+        frame.setVisible(true);
+
+
+        /*super("Deadwood");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Create background
         bPane = getLayeredPane();
 
         // Create board
-        boardLabel = newJlabel();
-        ImageIcon boardIcon = new ImageIcon("images/baord.jpg");
-        boardLabel.setIcon(boardIcon);
-        boardlabel.setBounds(0,0,boardIcon.getIconWidth(), boardIcon.getIconHeight());
+        
 
         // send it to the background
-        bPane.add(boardLabel, new Integer(0));
+        
 
-        setSize(boardIcon.getIconWidth()+200, boardIcon.getIconHeight());
+        setSize(boardIcon.getIconWidth()+200, boardIcon.getIconHeight());*/
     }
 }

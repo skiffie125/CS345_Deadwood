@@ -9,6 +9,7 @@ public class Deadwood {
         game.setUpDay(numPlayers);
         int currentPlayer = 0;
         System.out.println("It is Player"+ currentPlayer+ "'s turn");
+        //GUI view = new GUI();
         while(game.takeATurn(game.getPlayer(currentPlayer))){
             currentPlayer++;
             if(currentPlayer == numPlayers){
