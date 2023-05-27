@@ -20,12 +20,15 @@ public class GUI extends JFrame {
     JLayeredPane bPane;
     int belowBoard;
     int rightBoard;
+
+    ProgressManager game;
     // Constructor
-    public GUI() {
+    public GUI(ProgressManager game) {
         // Set the title of the JFrame
         super("Deadwood");
         // Set the exit option for the JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.game = game;
         // Create the JLayeredPane to hold the display, cards, dice and buttons
         bPane = getLayeredPane();
         // Create the deadwood board
@@ -63,23 +66,24 @@ public class GUI extends JFrame {
         bPane.add(mLabel,2);
     
         // Create Action buttons
-        bAct = new JButton("ACT");
+        bAct = new JButton("WORK");
         bAct.setBackground(Color.white);
-        bAct.setBounds(icon.getIconWidth()+10, 30,100, 20);
+        bAct.setBounds(icon.getIconWidth()+30, 60,100, 20);
         bAct.addMouseListener(new boardMouseListener());
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(icon.getIconWidth()+10,60,100, 20);
+        bRehearse.setBounds(icon.getIconWidth()+30,90,100, 20);
         bRehearse.addMouseListener(new boardMouseListener());
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
-        bMove.setBounds(icon.getIconWidth()+10,90,100, 20);
+        bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
         bMove.addMouseListener(new boardMouseListener());
         // Place the action buttons in the top layer
         bPane.add(bAct,2);
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
     }
+
     public void createPlayerLabels(Player[] players){
         playersDisplay = new JLabel[players.length];
         playerPieces = new JLabel[players.length];
@@ -109,13 +113,24 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent e) {
             if (e.getSource()== bAct){
                 //playerlabel.setVisible(true);
-                System.out.println("Acting is Selected\n");
+                bMove.setVisible(false);
+                bRehearse.setVisible(false);
+
+                // JButton bAct = new JButton("ACT");
+                // JButton bRehearse = new JButton("REHEARSE");
+                // bAct.setBackground(Color.white);
+                // bRehearse.setBackground(Color.white);
+                // bAct.setVisible(true);
+                // bRehearse.setVisible(true);
+                // //bAct
             }
             else if (e.getSource()== bRehearse){
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                System.out.println("Move is Selected\n");
+                String[] neighbors = game.getNeighbors(game.getCurPlayer());
+                JComboBox options = new JComboBox(neighbors);
+                
             }
         }
     public void mousePressed(MouseEvent e) {
