@@ -1,6 +1,7 @@
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
+import javax.swing.JOptionPane;
 public class ProgressManager {
     // Fields
     private Player[] players;
@@ -8,6 +9,7 @@ public class ProgressManager {
     private Bank bank;
     private int daysPlayed;
     private int totalDays;
+    private GUI gui;
 
     // Methods
     public ProgressManager(Player[] players, LocationManager lm, Bank bank) {
@@ -48,11 +50,18 @@ public class ProgressManager {
         return this.totalDays;
     }
 
+    public void setGui(GUI g) {
+        this.gui = g;
+    }
+
+    public GUI getGui() {
+        return this.gui;
+    }
+
     // Set up board for play
     public void setUpGame(int numPlayers) {
-        System.out.println("Welcome to Deadwood");
          if(numPlayers > 8 || numPlayers < 2){
-            System.out.println("Incorrect Number of Players; Failed in set Up Game");
+            JOptionPane.showMessageDialog(null, "Incorrect number of players! Please relaunch game.");
         } else{
             //sets up feilds 
             this.totalDays = totalDays(numPlayers);

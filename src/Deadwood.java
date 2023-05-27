@@ -1,4 +1,6 @@
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 public class Deadwood {
     public static void main(String[] args) {
         // Scanner s = new Scanner(System.in);
@@ -20,6 +22,13 @@ public class Deadwood {
         // }
         
         // GUI Testing
-        GUI gui = new GUI();
+        //GUI gui = new GUI();
+        GUI board = new GUI();
+        board.setVisible(true);
+        // Take input from the user about number of players
+        int numPlayers = Integer.parseInt(JOptionPane.showInputDialog(board, "How many players?"));
+        ProgressManager game = new ProgressManager(null, null, null);
+        game.setGui(board);
+        game.setUpGame(numPlayers);
     }
 }
