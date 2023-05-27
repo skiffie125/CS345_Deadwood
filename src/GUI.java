@@ -8,6 +8,9 @@ public class GUI extends JFrame{
     // Fields
     // Labels
     JLabel boardLabel;
+    JLabel cardLabel;
+    JLabel playerLabel;
+    JLabel mLabel;
 
     // Buttons
     JButton bAct;
@@ -19,7 +22,8 @@ public class GUI extends JFrame{
 
     // Methods
     public GUI() {
-        
+        Integer argument;
+        // Set title & exit operation
         JFrame frame = new JFrame("Deadwood");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //add stuff 
@@ -30,10 +34,11 @@ public class GUI extends JFrame{
         ImageIcon boardIcon = new ImageIcon("images/board.jpg");
         boardLabel.setIcon(boardIcon);
         boardLabel.setBounds(0,0,boardIcon.getIconWidth(), boardIcon.getIconHeight());
+        bPane.add(boardLabel, (Integer) 0);
         
         bPane.setPreferredSize(new Dimension(boardIcon.getIconWidth(), boardIcon.getIconHeight()));
         bPane.setBorder(BorderFactory.createTitledBorder("Board"));
-        bPane.add(boardLabel, new Integer(1));
+        //bPane.add(boardLabel, (Integer) 1);
         //bPane.addMouseListener(new MouseListener());
 
         frame.pack();
