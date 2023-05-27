@@ -143,7 +143,6 @@ public class GUI extends JFrame {
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                //cOptions.setVisible(true);
                 
             }
         }

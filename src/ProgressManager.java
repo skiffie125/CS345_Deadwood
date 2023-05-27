@@ -143,7 +143,7 @@ public class ProgressManager {
         //Method to take a turn
     //Preconditions: It is the players turn
     //Postcondition: Turn is over 
-    public boolean takeATurn(Player player){
+    /*public boolean takeATurn(Player player){
         System.out.println("Current, Locate all, Move, Upgrade, Take role, Work, or End turn?");
         boolean gameContinues = true;
         Viewer v = new Viewer();
@@ -377,7 +377,7 @@ public class ProgressManager {
         }
             
         return gameContinues;
-    }
+    }*/
 
     // Wrap Scene s
     public void wrapScene(Scene s){
@@ -513,8 +513,8 @@ public class ProgressManager {
     Methods interior methods for take a turn
      */
 
-    private void takeARolePM(Player player){
-        Viewer v = new Viewer();
+    private boolean takeARolePM(Player player, Role newRole){
+        /*Viewer v = new Viewer();
         Location curLoc = player.getLocation();
         if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
             System.out.println("No roles available at current location");
@@ -541,26 +541,27 @@ public class ProgressManager {
         }
         System.out.println("Enter the corresponding number:");
         int index = v.getParameter(validRoles.length);
-        Role role = validRoles[index];
-        if (player.takeRole(curScene, role, lm, player)){
-            System.out.println("Your role: " + player.getRole().getDescription());
-        } else{
-            System.out.println("Not the role for you, sorry");
-        }
+        Role role = validRoles[index];*/
+        boolean result = false; 
+        if (player.takeRole(lm.LocationToScene(player.getLocation()), newRole, lm, player)){
+            result = true;
+        } return result;
+
         
     }
 
-    private void upgradePM(Player player){
-        Viewer v = new Viewer();
+    private boolean upgradePM(Player player, Integer rank){
+        /*Viewer v = new Viewer();
         System.out.println("Your current rank: " + player.getRank());
         System.out.println("Your current funds are " + bank.getDollars(player.getId()) + " dollars and " + bank.getCredits(player.getId()) + " credits");
         System.out.println("What rank would you like to upgrade to?");
-        int newrank = v.getParameter(5);
-        player.upgrade(newrank, bank, lm);
-
+        int newrank = v.getParameter(5);*/
+        return player.upgrade(rank, bank, lm);
     }
-    private void movePM(Player player){
-        Viewer v = new Viewer();
+
+
+    private boolean movePM(Player player, Location newLocation){
+        /*Viewer v = new Viewer();
         System.out.println("You are currently at "+ player.getLocation().getName());
         System.out.println("Here are your options:");
         Location current = player.getLocation();
@@ -570,17 +571,41 @@ public class ProgressManager {
             System.out.println("["+ i +"] " + currentNeighbors[i].getName());
         }
         System.out.println("Please type the coresponding number");
-        int index = v.getParameter(numNeighbors);
-        player.move(currentNeighbors[index], lm);
+        int index = v.getParameter(numNeighbors);*/
+        return player.move(newLocation, lm);
     }
 
-    public String[] getNeighbors(Player player) {
-        int numNeighbors = player.getLocation().getNeighbors().length;
-        String[] neighbors = new String[numNeighbors];
-        for (int i = 0; i < numNeighbors; i++) {
-            neighbors[i] = player.getLocation().getNeighbors()[i].getName();
+    public Location[] getNeighbors(Player player) {
+        return player.getLocation().getNeighbors();
+    }
+
+    public Role[] getRoles(Player player){
+        Location curLoc = player.getLocation();
+        if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
+            //Replace with GUI Error
+            System.out.println("No roles available at current location");
+            return null;
         }
-        return neighbors;
+        Scene[] scenes = lm.getBoard().getScenes();
+        Scene curScene = null;
+        for (int i = 0; i < scenes.length; i++) {
+            if (curLoc.getName().equals(scenes[i].getName())) {
+                curScene = scenes[i];
+            }
+        }
+        Role[] validRoles = new Role[curScene.getOffCardRoles().length + curScene.getCard().getOnCardRoles().length];
+        for (int i = 0; i < curScene.getOffCardRoles().length; i++){
+            validRoles[i] = curScene.getOffCardRoles()[i];
+        }
+        for (int i = curScene.getOffCardRoles().length; i < validRoles.length; i++){
+            validRoles[i] = curScene.getCard().getOnCardRoles()[i- curScene.getOffCardRoles().length];
+        }
+        return validRoles;
+    }
+
+    public Integer[] getUpgradeLevels(){
+        Integer[] upgrades = {2, 3, 4, 5, 6};
+        return upgrades;
     }
 
 }
