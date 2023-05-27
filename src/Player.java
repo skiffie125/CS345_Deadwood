@@ -5,11 +5,46 @@ public class Player {
     private Location currentLocation;
     private int rank;
     private int id;
+    private String displayName;
+
+    /* 
+    public enum Colors{
+        Red, Orange, Yellow, Green, Cyan, Blue, Pink, White
+    }*/
 
     //Constructors
     public Player(int rank, int id) {
         this.rank = rank;
         this.id = id;
+        switch(id){
+            case 0:
+                displayName = "Red";
+                break;
+            case 1:
+                displayName = "Orange";    
+                break;
+            case 2:
+                displayName = "Yellow";
+                break;
+            case 3:
+                displayName = "Green";
+                break;
+            case 4:
+                displayName = "Cyan";
+                break;
+            case 5:
+                displayName = "Blue";
+                break;
+            case 6:
+                displayName = "Pink";
+                break;
+            case 7:
+                displayName = "White";
+                break;
+            default:
+                displayName = "Magenta";
+                break;
+        }
     }
     //Getters and Setters For Fields 
     public void setRole(Role role){
@@ -35,6 +70,12 @@ public class Player {
     }
     public int getId(){
         return id;
+    }
+    public void setName(String newName){
+        displayName = newName;
+    }
+    public String getName(){
+        return displayName;
     }
     //actual class methods 
 

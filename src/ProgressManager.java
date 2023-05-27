@@ -97,7 +97,7 @@ public class ProgressManager {
                      }
                 }
             }
-
+            gui.createPlayerLabels(players);
             //set up location manager and board from XML files  
             ParseXML parser = new ParseXML();
             Document startBoard = null;

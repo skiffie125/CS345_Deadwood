@@ -8,14 +8,17 @@ public class GUI extends JFrame {
     // JLabels
     JLabel boardlabel;
     JLabel cardlabel;
-    JLabel playerlabel;
+    JLabel[] playerPieces;
     JLabel mLabel;
+    JLabel[] playersDisplay;
     //JButtons
     JButton bAct;
     JButton bRehearse;
     JButton bMove;
     // JLayered Pane
     JLayeredPane bPane;
+    int belowBoard;
+    int rightBoard;
     // Constructor
     public GUI() {
         // Set the title of the JFrame
@@ -30,7 +33,7 @@ public class GUI extends JFrame {
         boardlabel.setIcon(icon);
         boardlabel.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight());
         // Add the board to the lowest layer
-        bPane.add(boardlabel, 0);
+        bPane.add(boardlabel, 3);
         // Set the size of the GUI
         setSize(icon.getIconWidth()+200,icon.getIconHeight() + 200);
         // Add a scene card to this room
@@ -43,14 +46,17 @@ public class GUI extends JFrame {
         bPane.add(cardlabel, 1);
         // Add a dice to represent a player.
         // Role for Crusty the prospector. The x and y co-ordiantes are taken from
-        playerlabel = new JLabel();
-        ImageIcon pIcon = new ImageIcon("images/r2.png");
-        playerlabel.setIcon(pIcon);
+
+        //playerlabel = new JLabel();
+        //ImageIcon pIcon = new ImageIcon("images/r2.png");
+        //playerlabel.setIcon(pIcon);
         //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());
-        playerlabel.setBounds(114,227,46,46);
-        playerlabel.setVisible(false);
-        bPane.add(playerlabel,3);
+        //playerlabel.setBounds(114,227,46,46);
+        //playerlabel.setVisible(true);
+        //bPane.add(playerlabel,3);
         // Create the Menu for action buttons
+        belowBoard = icon.getIconHeight();
+        rightBoard = icon.getIconWidth();
         mLabel = new JLabel("MENU");
         mLabel.setBounds(icon.getIconWidth()+40,0,100,20);
         bPane.add(mLabel,2);
@@ -72,12 +78,32 @@ public class GUI extends JFrame {
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
     }
+    public void createPlayerLabels(Player[] players){
+        playersDisplay = new JLabel[players.length];
+        playerPieces = new JLabel[players.length];
+        for(int i = 0; i < playersDisplay.length; i++){
+            playersDisplay[i] = new JLabel("Player " + players[i].getName()+ "\n Rank " + players[i].getRank());
+            playersDisplay[i].setBounds( i* 170 +5, belowBoard +5, 170,50);
+            playersDisplay[i].setVisible(true);
+            bPane.add(playersDisplay[i],3);
+            String s = "images/dice/" + players[i].getName().toLowerCase().charAt(0)+ players[i].getRank()+".png";
+            //System.out.println(s);
+            ImageIcon pIcon = new ImageIcon(s);
+            //ImageIcon pIcon = new ImageIcon("images/r2.png");
+            playerPieces[i] = new JLabel();
+            playerPieces[i].setIcon(pIcon);
+            playerPieces[i].setBounds(rightBoard -150 +((i)%2)*50 ,255 + ((i)/2)*50 ,pIcon.getIconWidth(),pIcon.getIconHeight());
+            //playerPieces[i].setBounds(114+i *46,belowBoard -20,46,46);
+            playerPieces[i].setVisible(true);
+            bPane.add(playerPieces[i],0);
+        }
+    }
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener{
         // Code for the different button clicks
         public void mouseClicked(MouseEvent e) {
             if (e.getSource()== bAct){
-                playerlabel.setVisible(true);
+                //playerlabel.setVisible(true);
                 System.out.println("Acting is Selected\n");
             }
             else if (e.getSource()== bRehearse){
