@@ -144,6 +144,7 @@ public class GUI extends JFrame {
             }
             else if (e.getSource()== bMove){
                 //cOptions.setVisible(true);
+                
             }
         }
     public void mousePressed(MouseEvent e) {
