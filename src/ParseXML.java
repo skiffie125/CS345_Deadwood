@@ -44,6 +44,8 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
+        setTrailerDimensions(trailer);
+        setOfficeDimensions(office);
         //Get & set all dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
@@ -93,6 +95,16 @@ public class ParseXML {
         sceneRoleJoin(scenes, roles);
         Board board = new Board(scenes, trailer, office, sets, null);
         return board;
+    }
+
+    private void setOfficeDimensions(Location office) {
+        int[] dim = {9, 459, 208, 209};
+        office.setDimensions(dim);
+    }
+
+    private void setTrailerDimensions(Location trailer) {
+        int[] dim = {991, 248, 194, 201};
+        trailer.setDimensions(dim);
     }
 
     public Card[] readCards(Document d) {
