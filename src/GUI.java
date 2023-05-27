@@ -128,8 +128,6 @@ public class GUI extends JFrame {
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                String[] neighbors = game.getNeighbors(game.getCurPlayer());
-                JComboBox options = new JComboBox(neighbors);
                 
             }
         }
