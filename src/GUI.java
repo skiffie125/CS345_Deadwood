@@ -63,15 +63,15 @@ public class GUI extends JFrame {
         // Create Action buttons
         bAct = new JButton("ACT");
         bAct.setBackground(Color.white);
-        bAct.setBounds(icon.getIconWidth()+10, 30,100, 20);
+        bAct.setBounds(icon.getIconWidth()+30, 60,100, 20);
         bAct.addMouseListener(new boardMouseListener());
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(icon.getIconWidth()+10,60,100, 20);
+        bRehearse.setBounds(icon.getIconWidth()+30,90,100, 20);
         bRehearse.addMouseListener(new boardMouseListener());
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
-        bMove.setBounds(icon.getIconWidth()+10,90,100, 20);
+        bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
         bMove.addMouseListener(new boardMouseListener());
         // Place the action buttons in the top layer
         bPane.add(bAct,2);

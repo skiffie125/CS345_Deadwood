@@ -71,11 +71,11 @@ public class ParseXML {
         for (int i = 0; i < takesLen; i++) {
             allShotCounters[i] = getShotCounter(takes.item(i));
         }
-        setTakeDimensions(scenes);
         int[] parsedShots = parseShotCounters(allShotCounters);
         for (int i = 0; i < setLen; i++) {
             scenes[i].setShotCountersMax(parsedShots[i]);
         }
+        setTakeDimensions(scenes);
         // Get all roles
         NodeList parts = d.getElementsByTagName("part");
         int partsLen = parts.getLength();
@@ -435,6 +435,8 @@ public class ParseXML {
         dim[3] = hw;
         for (int i = 0; i < scenes.length; i++) {
             int ceiling = scenes[i].getShotCountersMax();
+            int[][] shotDim = new int[ceiling][];
+            scenes[i].setShotDimensions(shotDim);
             switch (i) {
                 case 0:
                 // Train station
