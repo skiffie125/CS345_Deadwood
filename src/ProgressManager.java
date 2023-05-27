@@ -10,6 +10,7 @@ public class ProgressManager {
     private int daysPlayed;
     private int totalDays;
     private GUI gui;
+    private Player curPlayer;
 
     // Methods
     public ProgressManager(Player[] players, LocationManager lm, Bank bank) {
@@ -30,6 +31,19 @@ public class ProgressManager {
     // get player with specified ID
     public Player getPlayer(int id) {
         return this.players[id];
+    }
+
+    public void setCurPlayer(int id) {
+        this.curPlayer = this.players[id];
+    }
+
+    public Player getCurPlayer() {
+        return this.curPlayer;
+    }
+
+    public void iterCurPlayer() {
+        int cur = (this.curPlayer.getId() +1) % (this.players.length);
+        this.setCurPlayer(cur);
     }
 
     public void setDaysPlayed(int days) {
@@ -558,6 +572,15 @@ public class ProgressManager {
         System.out.println("Please type the coresponding number");
         int index = v.getParameter(numNeighbors);
         player.move(currentNeighbors[index], lm);
+    }
+
+    public String[] getNeighbors(Player player) {
+        int numNeighbors = player.getLocation().getNeighbors().length;
+        String[] neighbors = new String[numNeighbors];
+        for (int i = 0; i < numNeighbors; i++) {
+            neighbors[i] = player.getLocation().getNeighbors()[i].getName();
+        }
+        return neighbors;
     }
 
 }

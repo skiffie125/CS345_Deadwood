@@ -23,12 +23,12 @@ public class Deadwood {
         
         // GUI Testing
         //GUI gui = new GUI();
-        GUI board = new GUI();
-        board.setVisible(true);
         // Take input from the user about number of players
-        int numPlayers = Integer.parseInt(JOptionPane.showInputDialog(board, "How many players?"));
         ProgressManager game = new ProgressManager(null, null, null);
+        GUI board = new GUI(game);
         game.setGui(board);
+        board.setVisible(true);
+        int numPlayers = Integer.parseInt(JOptionPane.showInputDialog(board, "How many players?"));
         game.setUpGame(numPlayers);
     }
 }
