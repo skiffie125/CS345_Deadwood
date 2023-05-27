@@ -10,6 +10,7 @@ public class GUI extends JFrame {
     JLabel cardlabel;
     JLabel[] playerPieces;
     JLabel mLabel;
+    JLabel currentPlayersDisplay;
     JLabel[] playersDisplay;
     //JButtons
     JButton bAct;
@@ -60,6 +61,7 @@ public class GUI extends JFrame {
         mLabel = new JLabel("MENU");
         mLabel.setBounds(icon.getIconWidth()+40,0,100,20);
         bPane.add(mLabel,2);
+    
         // Create Action buttons
         bAct = new JButton("ACT");
         bAct.setBackground(Color.white);
@@ -97,6 +99,9 @@ public class GUI extends JFrame {
             playerPieces[i].setVisible(true);
             bPane.add(playerPieces[i],0);
         }
+    }
+    public void setUpDay(){
+        
     }
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener{
