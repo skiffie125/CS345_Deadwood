@@ -120,6 +120,9 @@ public class GUI extends JFrame {
 
     public JComboBox updateBox(JComboBox box, Object[] contents) {
         // TODO(Justice)
+        for (int i = 0; i < contents.length; i++) {
+            box.addItem(contents[i]);
+        }
         return null;
     }
     // This class implements Mouse Events
