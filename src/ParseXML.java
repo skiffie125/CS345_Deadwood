@@ -44,6 +44,8 @@ public class ParseXML {
         Location office = new Location("office");
         setTrailerNeighbors(trailer);
         setOfficeNeighbors(office);
+        setTrailerDimensions(trailer);
+        setOfficeDimensions(office);
         //Get & set all dimensions
         NodeList dimList = d.getElementsByTagName("area");
         int dimLength = dimList.getLength();
@@ -61,12 +63,6 @@ public class ParseXML {
             scenes[i] = new Scene(sets[i].getName());
             scenes[i].setNeighbors(sets[i].getNeighbors());
             scenes[i].setDimensions(sets[i].getDimensions());
-            // for (int j = 0; j <setLen; j++) {
-            //     System.out.println("Scene name:" + scenes[i].getName());
-            //     for (int k = 0; k < scenes[i].getNeighbors().length; k++) {
-            //         System.out.println("Neighbor " + k + ":" + scenes[k].getNeighbors()[k].getName());
-            //     }
-            // }
         }
         // Get & set shot counters of takes
         NodeList takes = d.getElementsByTagName("take");
@@ -75,6 +71,7 @@ public class ParseXML {
         for (int i = 0; i < takesLen; i++) {
             allShotCounters[i] = getShotCounter(takes.item(i));
         }
+        setTakeDimensions(scenes);
         int[] parsedShots = parseShotCounters(allShotCounters);
         for (int i = 0; i < setLen; i++) {
             scenes[i].setShotCountersMax(parsedShots[i]);
@@ -86,6 +83,7 @@ public class ParseXML {
         for (int i = 0; i < partsLen; i++) {
             roles[i] = getRole(parts.item(i));
         }
+        setBoardRoleDimensions(roles);
         // Get & set all lines
         NodeList linesList = d.getElementsByTagName("line");
         int lineLen = linesList.getLength();
@@ -97,6 +95,16 @@ public class ParseXML {
         sceneRoleJoin(scenes, roles);
         Board board = new Board(scenes, trailer, office, sets, null);
         return board;
+    }
+
+    private void setOfficeDimensions(Location office) {
+        int[] dim = {9, 459, 208, 209};
+        office.setDimensions(dim);
+    }
+
+    private void setTrailerDimensions(Location trailer) {
+        int[] dim = {991, 248, 194, 201};
+        trailer.setDimensions(dim);
     }
 
     public Card[] readCards(Document d) {
@@ -151,24 +159,6 @@ public class ParseXML {
                 }
             }
         }
-        // for (int i = 0; i < numCards; i++) {
-        //     Card current = deck[i];
-        //     System.out.println("New card: " + current.getName());
-        //     System.out.println(current.getBudget());
-        //     System.out.println(current.getImg());
-        //     System.out.println(current.getSceneNumber());
-        //     System.out.println(current.getDescription());
-        //     for (int j = 0; j < current.getOnCardRoles().length; j++) {
-        //         System.out.println("New role");
-        //         Role curRole = current.getOnCardRoles()[j];
-        //         System.out.println(curRole.getDescription());
-        //         System.out.println(curRole.getMinRank());
-        //         System.out.println(curRole.getLine());
-        //         for (int k = 0; k < 4; k++) {
-        //             System.out.println(curRole.getDimensions()[k]);
-        //         }
-        //     }
-        // }
         return deck;
     }
 
@@ -241,6 +231,377 @@ public class ParseXML {
     private int getShotCounter(Node take) {
         return Integer.parseInt(take.getAttributes().getNamedItem("number").getNodeValue());
     }
+
+    private void setBoardRoleDimensions(Role[] roles) {
+        int height = 46;
+        int width = 46;
+        int[] dim = new int[4];
+        dim[2] = height;
+        dim[3] = width;
+        for (int i = 0; i < roles.length; i++) {
+            switch (i) {
+                // Train Station
+                case 0:
+                    // Crusty
+                    dim[0] = 114;
+                    dim[1] = 227;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 1:
+                // Dragged
+                    dim[0] = 51;
+                    dim[1] = 268;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 2:
+                // Preacher
+                    dim[0] = 114;
+                    dim[1] = 320;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 3: 
+                // Cyrus
+                    dim[0] = 49;
+                    dim[1] = 356;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Secret Hideout
+                case 4:
+                // Clumsy
+                    dim[0] = 435;
+                    dim[1] = 719;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 5:
+                // Thug
+                    dim[0] = 521;
+                    dim[1] = 719;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 6:
+                // Dangerous
+                    dim[0] = 435;
+                    dim[1] = 719;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 7:
+                // Penny
+                    dim[0] = 521;
+                    dim[1] = 808;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Church
+                case 8:
+                // Dead
+                    dim[0] = 857;
+                    dim[1] = 730;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 9:
+                // Crying
+                    dim[0] = 858;
+                    dim[1] = 809;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Hotel
+                case 10:
+                // Sleeping
+                    dim[0] = 1111;
+                    dim[1] = 469;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 11:
+                // Faro
+                    dim[0] = 1044;
+                    dim[1] = 509;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 12:
+                // Falls
+                    dim[0] = 1111;
+                    dim[1] = 557;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 13:
+                // Australian
+                    dim[0] = 1046;
+                    dim[1] = 596;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Main street
+                case 14:
+                // Railroad
+                    dim[0] = 637;
+                    dim[1] = 22;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 15:
+                // Falls
+                    dim[0] = 720;
+                    dim[1] = 22;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 16:
+                // Woman
+                    dim[0] = 637;
+                    dim[1] = 105;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 17:
+                // Mayor
+                    dim[0] = 720;
+                    dim[1] = 105;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Jail
+                case 18:
+                // Prisoner
+                    dim[0] = 519;
+                    dim[1] = 25;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 19:
+                // Feller
+                    dim[0] = 519;
+                    dim[1] = 105;
+                    roles[i].setDimensions(dim);
+                    break;
+                // General store
+                case 20:
+                // Man
+                    dim[0] = 236;
+                    dim[1] = 276;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 21:
+                // Mister
+                    dim[0] = 236;
+                    dim[1] = 358;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Ranch
+                case 22:
+                    // Shot
+                    dim[0] = 412;
+                    dim[1] = 608;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 23:
+                    // Saucy
+                    dim[0] = 488;
+                    dim[1] = 608;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 24:
+                    // Man under horse
+                    dim[0] = 488;
+                    dim[1] = 525;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Bank
+                case 25:
+                    // Suspicious
+                    dim[0] = 911;
+                    dim[1] = 554;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 26:
+                    // Flustered
+                    dim[0] = 911;
+                    dim[1] = 470;
+                    roles[i].setDimensions(dim);
+                    break;
+                // Saloon
+                case 27:
+                // Reluctant
+                    dim[0] = 877;
+                    dim[1] = 352;
+                    roles[i].setDimensions(dim);
+                    break;
+                case 28:
+                // Woman
+                    dim[0] = 877;
+                    dim[1] = 276;
+                    roles[i].setDimensions(dim);
+                    break;
+            }
+        }
+    }
+
+    private void setTakeDimensions(Scene[] scenes) {
+        int hw = 47;
+        int[] dim = new int[4];
+        dim[2] = hw;
+        dim[3] = hw;
+        for (int i = 0; i < scenes.length; i++) {
+            int ceiling = scenes[i].getShotCountersMax();
+            switch (i) {
+                case 0:
+                // Train station
+                    dim[1] = 11;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                // take 3
+                                dim[0] = 36;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                // take 2
+                                dim[0] = 89;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 2:
+                            // take 1
+                                dim[0] = 141;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 1:
+                // Secret hideout
+                    dim[1] = 764;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                // take 3
+                                dim[0] = 244;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                // take 2
+                                dim[0] = 299;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 2:
+                            // take 1
+                                dim[0] = 354;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 2:
+                // Church
+                    dim[1] = 675;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                // take 2
+                                dim[0] = 623;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                // take 1
+                                dim[0] = 682;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 3:
+                // Hotel
+                    dim[1] = 683;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                // take 3
+                                dim[0] = 1005;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                // take 2
+                                dim[0] = 1058;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 2:
+                                // take 1
+                                dim[0] = 1111;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 4:
+                // Main street
+                    dim[1] = 23;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                // take 3
+                                dim[0] = 912;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                // take 2
+                                dim[0] = 858;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 2:
+                                // take 1
+                                dim[0] = 804;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 5:
+                // General store
+                    dim[0] = 313;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch(j) {
+                            case 0:
+                                dim[1] = 277;
+                                scenes[i].setShotDimension(j, dim); 
+                                break;
+                            case 1:
+                                dim[1] = 330;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 6:
+                // Ranch
+                    dim[1] = 473;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch(j) {
+                            case 0:
+                                dim[1] = 472;
+                                scenes[i].setShotDimension(j, dim); 
+                                break;
+                            case 1:
+                                dim[1] = 525;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+                    break;
+                case 7:
+                // Bank
+                    dim[0] = 840;
+                    dim[1] = 549;
+                    scenes[i].setShotDimension(0, dim);
+                    break; 
+                case 8:
+                // Saloon
+                    dim[1] = 216;
+                    for (int j = 0; j < ceiling; j++) {
+                        switch (j) {
+                            case 0:
+                                dim[0] = 626;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                            case 1:
+                                dim[0] = 679;
+                                scenes[i].setShotDimension(j, dim);
+                                break;
+                        }
+                    }
+            }
+        }
+        }
 
     // Manually set office neighbors bc i cant figure out the bug
     private void setOfficeNeighbors(Location office) {
