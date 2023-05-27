@@ -13,9 +13,12 @@ public class GUI extends JFrame {
     JLabel currentPlayersDisplay;
     JLabel[] playersDisplay;
     //JButtons
+    JButton bWork;
     JButton bAct;
     JButton bRehearse;
     JButton bMove;
+    JButton bUpgrade;
+    JButton bRole;
     // JLayered Pane
     JLayeredPane bPane;
     int belowBoard;
@@ -66,7 +69,7 @@ public class GUI extends JFrame {
         bPane.add(mLabel,2);
     
         // Create Action buttons
-        bAct = new JButton("WORK");
+        bWork = new JButton("WORK");
         bAct.setBackground(Color.white);
         bAct.setBounds(icon.getIconWidth()+30, 60,100, 20);
         bAct.addMouseListener(new boardMouseListener());
@@ -82,6 +85,13 @@ public class GUI extends JFrame {
         bPane.add(bAct,2);
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
+
+        // Conditionally visible buttons
+        JComboBox cOptions = new JComboBox();
+        cOptions.setBounds(icon.getIconWidth()+ 30, 150, 100, 20);
+        bPane.add(cOptions, 2);
+        cOptions.setVisible(true);
+        
     }
 
     public void createPlayerLabels(Player[] players){
@@ -106,6 +116,11 @@ public class GUI extends JFrame {
     }
     public void setUpDay(){
         
+    }
+
+    public JComboBox updateBox(JComboBox box, Object[] contents) {
+        // TODO(Justice)
+        return null;
     }
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener{
