@@ -7,6 +7,7 @@ public class Scene extends Location{
     private Role[] offCardRoles;
     private int[] rehearsals;
     private int[] dimensions;
+    private int[][] shotDimensions;
 
     //Constructors 
     public Scene(String name) {
@@ -29,7 +30,6 @@ public class Scene extends Location{
         return shotCountersMax;
     }
     
-
     public void setCard(Card newCard){
         card = newCard;
     }
@@ -73,6 +73,24 @@ public class Scene extends Location{
     }
     public int[] getDimensions() {
         return dimensions;
+    }
+
+    public void setShotDimensions(int[][] dim) {
+        shotDimensions = dim;
+    }
+
+    public void setShotDimension(int index, int[] dim) {
+        this.shotDimensions[index] = dim;
+    }
+
+    // Returns dimensions of all shot counters
+    public int[][] getShotDimensions() {
+        return shotDimensions;
+    }
+
+    // Returns the dimensions of a specific shot counter
+    public int[] getShotCounterDimensions(int index) {
+        return shotDimensions[index];
     }
   
 
