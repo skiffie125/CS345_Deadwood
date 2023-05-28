@@ -24,9 +24,9 @@ public class GUI extends JFrame {
     int belowBoard;
     int rightBoard;
     // JComboBox
-    JComboBox cMove;
-    JComboBox cRole;
-    JComboBox cUpgrade;
+    JComboBox<String> cMove;
+    JComboBox<Role> cRole;
+    JComboBox<Integer> cUpgrade;
 
     ProgressManager game;
     // Constructor
@@ -91,10 +91,12 @@ public class GUI extends JFrame {
         bPane.add(bMove, 2);
 
         // Conditionally visible buttons
-        cMove = new JComboBox<Location>();
+        cMove = new JComboBox<String>();
         cMove.setBounds(icon.getIconWidth()+ 30, 150, 100, 20);
         bPane.add(cMove, 2);
         cMove.setVisible(false);
+        cMove.setSelectedIndex(-1);
+        cMove.addActionListener(new boardMouseListener());
 
         cRole = new JComboBox<Role>();
         // TODO: Adjust locations of these
@@ -133,17 +135,43 @@ public class GUI extends JFrame {
     }
 
     public void updateNeighborsBox(Location[] contents) {
-        // TODO(Justice)
+        cMove.removeAllItems();
+        for (int i = 0; i < contents.length; i++) {
+            cMove.addItem(contents[i].getName());
+        }
+        
+    }
+    private Location stringToLocation(String s) {
+        if (s.equals("trailer")) {
+            return game.getLocationManager().getBoard().getTrailer();
+        } else if (s.equals("office")) {
+            return game.getLocationManager().getBoard().getCastingOffice();
+        } else {
+            Location[] loc = game.getLocationManager().getBoard().getScenes();
+            for (int i = 0; i < loc.length; i++) {
+                if (s.equals(loc[i].getName())) {
+                    return loc[i];
+                }
+            }
+        }
+        return null;
     }
     public void updateRolesBox(Role[] roles) {
-
+        cRole.removeAllItems();
+        for (int i = 0; i < roles.length; i++) {
+            cRole.addItem(roles[i]);
+        }
     }
     public void updateUpgradeBox(Integer[] contents) {
+        cRole.removeAllItems();
+        for (int i = 0; i < contents.length; i++) {
+            cUpgrade.addItem(contents[i]);
+        }
         
     }
     // This class implements Mouse Events
-    class boardMouseListener implements MouseListener{
-        // Code for the different button clicks
+    class boardMouseListener implements MouseListener,ActionListener{
+        // Button interaction
         public void mouseClicked(MouseEvent e) {
             if (e.getSource()== bWork){
                 //playerlabel.setVisible(true);
@@ -162,16 +190,31 @@ public class GUI extends JFrame {
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                
+                System.out.println("Move is selected");
+                updateNeighborsBox(game.getNeighbors(game.getCurPlayer()));
+                cMove.setVisible(true);
+            } 
+        }
+        // ComboBox interaction 
+        public void actionPerformed(ActionEvent e) {
+            JComboBox src = (JComboBox)e.getSource();
+            if (src == cMove) {
+                String dst = (String)src.getSelectedItem();
+                System.out.println(dst);
+            } else if (src == cRole) {
+
+            } else if (src == cUpgrade) {
+
             }
         }
-    public void mousePressed(MouseEvent e) {
+        public void mousePressed(MouseEvent e) {
+        }
+        public void mouseReleased(MouseEvent e) {
+        }
+        public void mouseEntered(MouseEvent e) {
+        }
+        public void mouseExited(MouseEvent e) {
+        }
     }
-    public void mouseReleased(MouseEvent e) {
-    }
-    public void mouseEntered(MouseEvent e) {
-    }
-    public void mouseExited(MouseEvent e) {
-    }
-    }
+
 }

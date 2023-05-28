@@ -27,6 +27,9 @@ public class ProgressManager {
     public Player[] getPlayers() {
         return this.players;
     }
+    public LocationManager getLocationManager() {
+        return this.lm;
+    } 
 
     // get player with specified ID
     public Player getPlayer(int id) {
@@ -127,8 +130,8 @@ public class ProgressManager {
             newBoard.setCards(newDeck);
             
             newBoard.getTrailer().setPlayers(numPlayers);
-            this.curPlayer = getPlayer(0);
             Location[] neighbors = newBoard.getTrailer().getNeighbors();
+            setCurPlayer(0);
             newBoard.getCastingOffice().setPlayers(numPlayers);
             for (int i = 0; i < newBoard.getScenes().length; i++) {
                 newBoard.getScenes()[i].setPlayers(numPlayers);
