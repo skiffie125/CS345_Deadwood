@@ -162,8 +162,7 @@ public class GUI extends JFrame {
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                updateBox(game.getNeighbors(game.getCurPlayer()));
-                cOptions.setVisible(true);
+                
             }
         }
     public void mousePressed(MouseEvent e) {
