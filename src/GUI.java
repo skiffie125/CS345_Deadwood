@@ -82,27 +82,55 @@ public class GUI extends JFrame {
         bEndTurn.setBounds(icon.getIconWidth()+30, 60,100, 20);
         bEndTurn.addMouseListener(new boardMouseListener());
         bEndTurn.setVisible(true);
+        
         bWork = new JButton("WORK");
         bWork.setBackground(Color.white);
         bWork.setBounds(icon.getIconWidth()+30, 90,100, 20);
         bWork.addMouseListener(new boardMouseListener());
-        bRehearse = new JButton("REHEARSE");
-        bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(icon.getIconWidth()+30,120,100, 20);
-        bRehearse.addMouseListener(new boardMouseListener());
+        bWork.setVisible(true);
+        
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
-        bMove.setBounds(icon.getIconWidth()+30,150,100, 20);
+        bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
         bMove.addMouseListener(new boardMouseListener());
+        bMove.setVisible(true);
+
+        bUpgrade = new JButton("UPGRADE");
+        bUpgrade.setBackground(Color.white);
+        bUpgrade.setBounds(icon.getIconWidth()+30,150,100, 20);
+        bUpgrade.addMouseListener(new boardMouseListener());
+        bUpgrade.setVisible(true);
+
+        bRole = new JButton("TAKE ROLE");
+        bRole.setBackground(Color.white);
+        bRole.setBounds(icon.getIconWidth()+30,180,100, 20);
+        bRole.addMouseListener(new boardMouseListener());
+        bRole.setVisible(true);
+
+        bRehearse = new JButton("REHEARSE");
+        bRehearse.setBackground(Color.white);
+        bRehearse.setBounds(icon.getIconWidth()+30,210,100, 20);
+        bRehearse.addMouseListener(new boardMouseListener());
+        bRehearse.setVisible(false);
+
+        bAct = new JButton("ACT");
+        bAct.setBackground(Color.white);
+        bAct.setBounds(icon.getIconWidth()+30,240,100, 20);
+        bAct.addMouseListener(new boardMouseListener());
+        bAct.setVisible(false);
+        
         // Place the action buttons in the top layer
         bPane.add(bWork,2);
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
         bPane.add(bEndTurn, 2);
+        bPane.add(bAct, 2);
+        bPane.add(bRole, 2);
+        bPane.add(bUpgrade, 2);
 
         // Conditionally visible buttons
         cMove = new JComboBox<String>();
-        cMove.setBounds(icon.getIconWidth()+ 30, 150, 100, 20);
+        cMove.setBounds(icon.getIconWidth()+ 30, 210, 100, 20);
         bPane.add(cMove, 2);
         cMove.setVisible(false);
         cMove.setSelectedIndex(-1);
@@ -110,12 +138,12 @@ public class GUI extends JFrame {
 
         cRole = new JComboBox<Role>();
         // TODO: Adjust locations of these
-        cRole.setBounds(icon.getIconWidth() + 30, 150, 100, 20);
+        cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
         bPane.add(cRole, 2);
         cRole.setVisible(false);
 
         cUpgrade = new JComboBox<Integer>();
-        cRole.setBounds(icon.getIconWidth() + 30, 150, 100, 20);
+        cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
         bPane.add(cUpgrade, 2);
         cUpgrade.setVisible(false);
     }
@@ -190,8 +218,13 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent e) {
             if (e.getSource()== bWork){
                 //playerlabel.setVisible(true);
+                System.out.println("Work is Selected\n");
                 bMove.setVisible(false);
-                bRehearse.setVisible(false);
+                bRole.setVisible(false);
+                bUpgrade.setVisible(false);
+                bWork.setVisible(false);
+                bRehearse.setVisible(true);
+                bAct.setVisible(true);
 
                 // JButton bAct = new JButton("ACT");
                 // JButton bRehearse = new JButton("REHEARSE");
@@ -203,20 +236,48 @@ public class GUI extends JFrame {
             }
             else if (e.getSource()== bRehearse){
                 System.out.println("Rehearse is Selected\n");
+                bRehearse.setVisible(false);
+                bAct.setVisible(false);
             }
             else if (e.getSource()== bMove){
                 System.out.println("Move is selected");
                 updateNeighborsBox(game.getNeighbors(game.getCurPlayer()));
-                bRehearse.setVisible(false);
+                
                 bWork.setVisible(false);
+                bMove.setVisible(false);
                 cMove.setVisible(true);
 
             } else if (e.getSource() == bEndTurn){
                 game.iterCurPlayer();
                 currentPlayersDisplay.setText("Player "+ game.getCurPlayer().getName());
-                bWork.setVisible(true);
                 bMove.setVisible(true);
-                bRehearse.setVisible(true);
+                bRole.setVisible(true);
+                bUpgrade.setVisible(true);
+                bRehearse.setVisible(false);
+                bAct.setVisible(false);
+                bWork.setVisible(true);
+            } else if( e.getSource() == bAct){
+                System.out.println("Act is Selected\n");
+                bRehearse.setVisible(false);
+                bAct.setVisible(false);
+
+            } else if (e.getSource() == bUpgrade){
+                System.out.println("Upgrade is Selected\n");
+                cUpgrade.setVisible(true);
+                bUpgrade.setVisible(false);
+                bWork.setVisible(false);
+                bRole.setVisible(false);
+
+
+            } else if (e.getSource() == bRole){
+                System.out.println("take role is Selected\n");
+                cRole.setVisible(true);
+                bMove.setVisible(false);
+                bRole.setVisible(false);
+                bUpgrade.setVisible(false);
+                bWork.setVisible(false);
+
+
             }
         }
         // ComboBox interaction 
@@ -236,9 +297,12 @@ public class GUI extends JFrame {
                 }
                 System.out.println(dst);
             } else if (src == cRole) {
+                String dst = (String)src.getSelectedItem();
+                cRole.setVisible(false);
 
             } else if (src == cUpgrade) {
-
+                String dst = (String)src.getSelectedItem();
+                cUpgrade.setVisible(false);
             }
         }
         public void mousePressed(MouseEvent e) {
