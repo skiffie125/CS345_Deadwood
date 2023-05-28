@@ -23,6 +23,10 @@ public class GUI extends JFrame {
     JLayeredPane bPane;
     int belowBoard;
     int rightBoard;
+    // JComboBox
+    JComboBox cMove;
+    JComboBox cRole;
+    JComboBox cUpgrade;
 
     ProgressManager game;
     // Constructor
@@ -70,9 +74,9 @@ public class GUI extends JFrame {
     
         // Create Action buttons
         bWork = new JButton("WORK");
-        bAct.setBackground(Color.white);
-        bAct.setBounds(icon.getIconWidth()+30, 60,100, 20);
-        bAct.addMouseListener(new boardMouseListener());
+        bWork.setBackground(Color.white);
+        bWork.setBounds(icon.getIconWidth()+30, 60,100, 20);
+        bWork.addMouseListener(new boardMouseListener());
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
         bRehearse.setBounds(icon.getIconWidth()+30,90,100, 20);
@@ -82,16 +86,26 @@ public class GUI extends JFrame {
         bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
         bMove.addMouseListener(new boardMouseListener());
         // Place the action buttons in the top layer
-        bPane.add(bAct,2);
+        bPane.add(bWork,2);
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
 
         // Conditionally visible buttons
-        JComboBox cOptions = new JComboBox();
-        cOptions.setBounds(icon.getIconWidth()+ 30, 150, 100, 20);
-        bPane.add(cOptions, 2);
-        cOptions.setVisible(true);
-        
+        cMove = new JComboBox<Location>();
+        cMove.setBounds(icon.getIconWidth()+ 30, 150, 100, 20);
+        bPane.add(cMove, 2);
+        cMove.setVisible(false);
+
+        cRole = new JComboBox<Role>();
+        // TODO: Adjust locations of these
+        cRole.setBounds(icon.getIconWidth() + 30, 150, 100, 20);
+        bPane.add(cRole, 2);
+        cRole.setVisible(false);
+
+        cUpgrade = new JComboBox<Integer>();
+        cRole.setBounds(icon.getIconWidth() + 30, 150, 100, 20);
+        bPane.add(cUpgrade, 2);
+        cUpgrade.setVisible(false);
     }
 
     public void createPlayerLabels(Player[] players){
@@ -118,18 +132,18 @@ public class GUI extends JFrame {
         
     }
 
-    public JComboBox updateBox(JComboBox box, Object[] contents) {
+    public void updateBox(Object[] contents) {
         // TODO(Justice)
+        cOptions.removeAllItems();
         for (int i = 0; i < contents.length; i++) {
-            box.addItem(contents[i]);
+            cOptions.addItem(contents[i]);
         }
-        return null;
     }
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener{
         // Code for the different button clicks
         public void mouseClicked(MouseEvent e) {
-            if (e.getSource()== bAct){
+            if (e.getSource()== bWork){
                 //playerlabel.setVisible(true);
                 bMove.setVisible(false);
                 bRehearse.setVisible(false);
@@ -146,7 +160,8 @@ public class GUI extends JFrame {
                 System.out.println("Rehearse is Selected\n");
             }
             else if (e.getSource()== bMove){
-                
+                updateBox(game.getNeighbors(game.getCurPlayer()));
+                cOptions.setVisible(true);
             }
         }
     public void mousePressed(MouseEvent e) {

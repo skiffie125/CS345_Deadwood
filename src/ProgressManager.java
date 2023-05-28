@@ -127,6 +127,7 @@ public class ProgressManager {
             newBoard.setCards(newDeck);
             
             newBoard.getTrailer().setPlayers(numPlayers);
+            this.curPlayer = getPlayer(0);
             Location[] neighbors = newBoard.getTrailer().getNeighbors();
             newBoard.getCastingOffice().setPlayers(numPlayers);
             for (int i = 0; i < newBoard.getScenes().length; i++) {
@@ -221,7 +222,7 @@ public class ProgressManager {
                             break;
                     }
                     break;
-                        case "End turn":
+                        case "End turn":true
                             System.out.println("Turn ended");
                             break;
                         case "End Game":
@@ -302,7 +303,7 @@ public class ProgressManager {
                             gameContinues = false;
                             break;
                         default:
-                            System.out.println("Sorry that's not any of the options, try again on your next turn");
+                            System.out.println("Sorry that's notruet any of the options, try again on your next turn");
                             break;
                     }
                     break;
