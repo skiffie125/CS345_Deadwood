@@ -30,5 +30,6 @@ public class Deadwood {
         board.setVisible(true);
         int numPlayers = Integer.parseInt(JOptionPane.showInputDialog(board, "How many players?"));
         game.setUpGame(numPlayers);
+        game.setUpDay(numPlayers);
     }
 }
