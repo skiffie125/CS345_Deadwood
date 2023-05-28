@@ -100,9 +100,13 @@ public class Player {
                     location = lm.getBoard().getTrailer();
                     
             }
+            result = true;
             location.setPlayer(id,1);
             currentLocation = location;
             currentRole = null;
+        } else{
+            System.out.println("Check move failed");
+            System.out.println(currentLocation.getName()+ " "+ location.getName());
         }
         return result;
     }

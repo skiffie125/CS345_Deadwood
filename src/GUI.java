@@ -19,10 +19,14 @@ public class GUI extends JFrame {
     JButton bMove;
     JButton bUpgrade;
     JButton bRole;
+    JButton bEndTurn;
     // JLayered Pane
     JLayeredPane bPane;
+    //Size refrences
     int belowBoard;
     int rightBoard;
+    int diceHeight;
+    int diceWidth;
     // JComboBox
     JComboBox<String> cMove;
     JComboBox<Role> cRole;
@@ -71,24 +75,30 @@ public class GUI extends JFrame {
         mLabel = new JLabel("MENU");
         mLabel.setBounds(icon.getIconWidth()+40,0,100,20);
         bPane.add(mLabel,2);
-    
+
         // Create Action buttons
+        bEndTurn = new JButton("END TURN");
+        bEndTurn.setBackground(Color.white);
+        bEndTurn.setBounds(icon.getIconWidth()+30, 60,100, 20);
+        bEndTurn.addMouseListener(new boardMouseListener());
+        bEndTurn.setVisible(true);
         bWork = new JButton("WORK");
         bWork.setBackground(Color.white);
-        bWork.setBounds(icon.getIconWidth()+30, 60,100, 20);
+        bWork.setBounds(icon.getIconWidth()+30, 90,100, 20);
         bWork.addMouseListener(new boardMouseListener());
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(icon.getIconWidth()+30,90,100, 20);
+        bRehearse.setBounds(icon.getIconWidth()+30,120,100, 20);
         bRehearse.addMouseListener(new boardMouseListener());
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
-        bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
+        bMove.setBounds(icon.getIconWidth()+30,150,100, 20);
         bMove.addMouseListener(new boardMouseListener());
         // Place the action buttons in the top layer
         bPane.add(bWork,2);
         bPane.add(bRehearse,2);
         bPane.add(bMove, 2);
+        bPane.add(bEndTurn, 2);
 
         // Conditionally visible buttons
         cMove = new JComboBox<String>();
@@ -121,6 +131,8 @@ public class GUI extends JFrame {
             String s = "images/dice/" + players[i].getName().toLowerCase().charAt(0)+ players[i].getRank()+".png";
             //System.out.println(s);
             ImageIcon pIcon = new ImageIcon(s);
+            diceHeight = pIcon.getIconHeight();
+            diceWidth = pIcon.getIconWidth(); 
             //ImageIcon pIcon = new ImageIcon("images/r2.png");
             playerPieces[i] = new JLabel();
             playerPieces[i].setIcon(pIcon);
@@ -129,6 +141,9 @@ public class GUI extends JFrame {
             playerPieces[i].setVisible(true);
             bPane.add(playerPieces[i],0);
         }
+        currentPlayersDisplay = new JLabel("Player "+ players[0].getName());
+        currentPlayersDisplay.setBounds(rightBoard+40,30,100,20);
+        bPane.add(currentPlayersDisplay,2);
     }
     public void setUpDay(){
         
@@ -192,14 +207,33 @@ public class GUI extends JFrame {
             else if (e.getSource()== bMove){
                 System.out.println("Move is selected");
                 updateNeighborsBox(game.getNeighbors(game.getCurPlayer()));
+                bRehearse.setVisible(false);
+                bWork.setVisible(false);
                 cMove.setVisible(true);
-            } 
+
+            } else if (e.getSource() == bEndTurn){
+                game.iterCurPlayer();
+                currentPlayersDisplay.setText("Player "+ game.getCurPlayer().getName());
+                bWork.setVisible(true);
+                bMove.setVisible(true);
+                bRehearse.setVisible(true);
+            }
         }
         // ComboBox interaction 
         public void actionPerformed(ActionEvent e) {
             JComboBox src = (JComboBox)e.getSource();
             if (src == cMove) {
                 String dst = (String)src.getSelectedItem();
+                cMove.setVisible(false);
+                if (game.movePM(game.getCurPlayer(), stringToLocation(dst))){
+                    System.out.println("Moved");
+                    int[] sceneDimensions = stringToLocation(dst).getDimensions();
+                    //Icon icon =playersDisplay[game.getCurPlayer().getId()].getIcon();
+                    System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] );
+                    playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
+                } else{
+                    System.out.println("Move failed");
+                }
                 System.out.println(dst);
             } else if (src == cRole) {
 
