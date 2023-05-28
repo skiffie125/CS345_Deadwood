@@ -514,7 +514,33 @@ public class ProgressManager {
     Methods interior methods for take a turn
      */
 
-    private boolean takeARolePM(Player player, Role newRole){
+    public boolean actPM(Player player){
+        boolean result = false;
+        if(lm.checkLocation(player.getLocation(), player.getId()) && lm.LocationToScene(player.getLocation()) != null){
+            if(player.act(lm.LocationToScene(player.getLocation()), player.getRole(), player, bank)){
+                result = true;
+                wrapScene(lm.LocationToScene(player.getLocation()));
+            } 
+        } else{
+            //replace with GUI based error message
+            System.out.println("Location Error");
+        }
+
+        
+        return result;
+    }
+    public boolean reahearsePM(Player player){
+        boolean result = false;
+        if(lm.LocationToScene(player.getLocation()) != null){
+            result = player.rehearse(lm.LocationToScene(player.getLocation()),  lm);
+        } else {
+            // replace with GUI based error message 
+            System.out.println("You need to be on set to rehearse, try moving on your next turn");
+        }
+        return result;
+    }
+
+    public boolean takeARolePM(Player player, Role newRole){
         /*Viewer v = new Viewer();
         Location curLoc = player.getLocation();
         if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
@@ -551,7 +577,7 @@ public class ProgressManager {
         
     }
 
-    private boolean upgradePM(Player player, Integer rank){
+    public boolean upgradePM(Player player, Integer rank){
         /*Viewer v = new Viewer();
         System.out.println("Your current rank: " + player.getRank());
         System.out.println("Your current funds are " + bank.getDollars(player.getId()) + " dollars and " + bank.getCredits(player.getId()) + " credits");
@@ -561,7 +587,7 @@ public class ProgressManager {
     }
 
 
-    private boolean movePM(Player player, Location newLocation){
+    public boolean movePM(Player player, Location newLocation){
         /*Viewer v = new Viewer();
         System.out.println("You are currently at "+ player.getLocation().getName());
         System.out.println("Here are your options:");
