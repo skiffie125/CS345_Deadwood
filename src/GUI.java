@@ -132,12 +132,14 @@ public class GUI extends JFrame {
         
     }
 
-    public void updateBox(Object[] contents) {
+    public void updateNeighborsBox(Location[] contents) {
         // TODO(Justice)
-        cOptions.removeAllItems();
-        for (int i = 0; i < contents.length; i++) {
-            cOptions.addItem(contents[i]);
-        }
+    }
+    public void updateRolesBox(Role[] roles) {
+
+    }
+    public void updateUpgradeBox(Integer[] contents) {
+        
     }
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener{
