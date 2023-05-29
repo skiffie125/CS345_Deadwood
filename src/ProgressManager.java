@@ -532,7 +532,7 @@ public class ProgressManager {
         
         return result;
     }
-    public boolean reahearsePM(Player player){
+    public boolean rehearsePM(Player player){
         boolean result = false;
         if(lm.LocationToScene(player.getLocation()) != null){
             result = player.rehearse(lm.LocationToScene(player.getLocation()),  lm);

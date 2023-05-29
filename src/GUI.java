@@ -50,6 +50,7 @@ public class GUI extends JFrame {
         this.game = game;
         // Create the JLayeredPane to hold the display, cards, dice and buttons
         bPane = getLayeredPane();
+        bPane.setLayout(null);
         // Create the deadwood board
         boardlabel = new JLabel();
         ImageIcon icon = new ImageIcon("images/board.jpg");
@@ -164,6 +165,7 @@ public class GUI extends JFrame {
         // TODO: Adjust location and size as appropriate
         output = new JTextField(20);
         bPane.add(output, 2);
+        bPane.validate();
     }
 
     public void createPlayerLabels(Player[] players){
@@ -190,6 +192,7 @@ public class GUI extends JFrame {
         currentPlayersDisplay = new JLabel("Player "+ players[0].getName());
         currentPlayersDisplay.setBounds(rightBoard+40,30,100,20);
         bPane.add(currentPlayersDisplay,2);
+        bPane.validate();
     }
     public void setUpDay(){
         
@@ -202,7 +205,9 @@ public class GUI extends JFrame {
         }
     }
     private Location stringToLocation(String s) {
-        if (s.equals("trailer")) {
+        if (s == null){
+            return null;
+        } else if (s.equals("trailer")) {
             return game.getLocationManager().getBoard().getTrailer();
         } else if (s.equals("office")) {
             return game.getLocationManager().getBoard().getCastingOffice();
@@ -300,6 +305,7 @@ public class GUI extends JFrame {
             }
             else if (e.getSource()== bRehearse){
                 System.out.println("Rehearse is Selected\n");
+                game.rehearsePM(game.getCurPlayer());
                 bRehearse.setVisible(false);
                 bAct.setVisible(false);
             }
@@ -336,6 +342,7 @@ public class GUI extends JFrame {
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
                 cUpgrade.setVisible(true);
+                updateUpgradeBox(game.getUpgradeLevels());
                 bUpgrade.setVisible(false);
                 bWork.setVisible(false);
                 bRole.setVisible(false);
@@ -362,12 +369,25 @@ public class GUI extends JFrame {
                 String dst = (String)src.getSelectedItem();
                 cMove.setVisible(false);
                 Location dest = stringToLocation(dst);
-                if (game.movePM(game.getCurPlayer(), dest)){
+                if (dest == null){
+                    System.out.println("Move failed");
+                } else if (game.movePM(game.getCurPlayer(), dest)){
                     System.out.println("Moved");
                     int[] sceneDimensions = dest.getDimensions();
                     //Icon icon =playersDisplay[game.getCurPlayer().getId()].getIcon();
-                    System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] );
-                    playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
+                    System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] + " id: " + game.getCurPlayer().getId());
+                    //playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
+                    playerPieces[game.getCurPlayer().getId()].setVisible(false);
+                    
+                    
+                    //bPane.remove(playerPieces[game.getCurPlayer().getId()]);
+                    //bPane.validate();
+                    playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] -5, sceneDimensions[1] -5);
+                    playerPieces[game.getCurPlayer().getId()].validate();
+                    playerPieces[game.getCurPlayer().getId()].setVisible(true);
+                   // bPane.add(playerPieces[game.getCurPlayer().getId()]);
+                    bPane.validate(); 
+                    //System.out.println("is this getting here");
                 } else{
                     System.out.println("Move failed");
                 }
@@ -379,8 +399,12 @@ public class GUI extends JFrame {
                 System.out.println("Selected role: " + dest.getDescription());
                 if (game.takeARolePM(game.getCurPlayer(), dest)) {
                     System.out.println("Took role: " + dest.getDescription());
+<<<<<<< HEAD
                     System.out.println(game.getCurPlayer().getRole().getDescription());
                     playersDisplay[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
+=======
+                    playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
+>>>>>>> main
                     dest.getDimensions()[1], diceWidth, diceHeight);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid role");
