@@ -135,11 +135,13 @@ public class ProgressManager {
             newBoard.getCastingOffice().setPlayers(numPlayers);
             for (int i = 0; i < newBoard.getScenes().length; i++) {
                 newBoard.getScenes()[i].setPlayers(numPlayers);
+                newBoard.getScenes()[i].setIndex(i);
             }
             for (int i = 0; i < newBoard.getScenes().length; i++) {
                 newBoard.getScenes()[i].setRehearsals(numPlayers);
             }
             lm.setBoard(newBoard);
+            gui.setUpDay();
         }
         return;
     }
@@ -466,6 +468,8 @@ public class ProgressManager {
         for(int j = 0; j<scenes.length; j++){
             scenes[j].reset(lm.getBoard().pop());
         }
+        //untested
+        gui.setUpDay();
         return;
     }
 
