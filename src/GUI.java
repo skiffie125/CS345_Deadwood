@@ -44,6 +44,7 @@ public class GUI extends JFrame {
     public GUI(ProgressManager game) {
         // Set the title of the JFrame
         super("Deadwood");
+        super.setLayout(null);
         // Set the exit option for the JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.game = game;
@@ -327,8 +328,10 @@ public class GUI extends JFrame {
 
                if(game.actPM(game.getCurPlayer())) {
                     //TODO: Show some hooray bullshit
+                    System.out.println("Act success!");
                } else {
                     //TODO: Show some boohoo bullshit
+                    System.out.println("Act failed :(");
                }
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
