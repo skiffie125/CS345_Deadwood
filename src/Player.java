@@ -234,11 +234,11 @@ public class Player {
                 }
             }
         }
-        if (result){
-            System.out.println("You did a great job, you succeded");
-        } else{
-            System.out.println("Things didn't go your way today, you failed");
-        }
+        // if (result){
+        //     System.out.println("You did a great job, you succeded");
+        // } else{
+        //     System.out.println("Things didn't go your way today, you failed");
+        // }
         return result;
     }
 
