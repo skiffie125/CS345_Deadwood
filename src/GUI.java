@@ -401,6 +401,12 @@ public class GUI extends JFrame {
                     bPane.validate(); 
                     if(game.getLocationManager().LocationToScene(dest) != null){
                         Scene s = game.getLocationManager().LocationToScene(dest);
+                        Role[] roles = s.getCard().getOnCardRoles();
+                        for (int i = 0; i < roles.length; i++) {
+                            int[] rDim = roles[i].getDimensions();
+                            int[] sDim = s.getDimensions();
+                            roles[i].setEachDimensions(rDim[0] + sDim[0], rDim[1] + sDim[1], rDim[2], rDim[3]);
+                        }
                         if(s.cardFaceUp() == false){
                             s.flipCard(true);
                             uncoverCard(s);
