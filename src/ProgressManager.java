@@ -642,8 +642,8 @@ public class ProgressManager {
         return validRoles;
     }
 
-    public Integer[] getUpgradeLevels(){
-        Integer[] upgrades = {2, 3, 4, 5, 6};
+    public String[] getUpgradeLevels(){
+        String[] upgrades = {"2", "3", "4", "5", "6"};
         return upgrades;
     }
 
