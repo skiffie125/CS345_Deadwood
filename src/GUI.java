@@ -212,6 +212,7 @@ public class GUI extends JFrame {
             bPane.add(cardsAtScenes[i],0);
 
             shotCounters[i] = new JLabel[game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax()];
+            System.out.println(game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
             
             for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
                 ImageIcon sIcon = new ImageIcon("imges/shot.png");
@@ -220,22 +221,22 @@ public class GUI extends JFrame {
                 shotCounters[i][j].setIcon(sIcon);
                 int[][] shotPlaces = game.getLocationManager().getBoard().getScenes()[i].getShotDimensions();
                 if (shotPlaces != null){
-                    if (shotPlaces[i] != null){
+                    if (shotPlaces[j] != null){
                         shotCounters[i][j].setBounds( shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
-                        shotCounters[i][j].setVisible(false);
-                        bPane.add(shotCounters[i][j],0);
+                        shotCounters[i][j].setVisible(true);
+                        bPane.add(shotCounters[i][j],2);
                     } else {
-                        System.out.println("something went wrong with shot counter placement");
-                        
-                        for(int c = 0; c < shotCounters.length; c++){
-                            for(int d = 0; d < shotCounters[c].length; d++){
-                                System.out.print(shotPlaces[c][d] + " ");
-                            }
-                            System.out.println();
+                        if (j == 1) {
+                            System.out.println("Set Saloon 2");
+                            shotCounters[i][j].setBounds(626, 216, 47, 47);
+                        } else {
+                            System.out.println("Set Saloon 1");
+                            shotCounters[i][j].setBounds(679, 216, 47, 47);
                         }
+                        
+                        //System.out.println("Girl help");
                     }
                 }
-                
             }
         }
     }
