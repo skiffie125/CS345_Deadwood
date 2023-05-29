@@ -206,13 +206,14 @@ public class GUI extends JFrame {
             cardsAtScenes[i].setBounds(game.getLocationManager().getBoard().getScenes()[i].getDimensions()[0],
             game.getLocationManager().getBoard().getScenes()[i].getDimensions()[1], pIcon.getIconWidth(),pIcon.getIconHeight());
             cardsAtScenes[i].setVisible(true);
-            bPane.add(cardsAtScenes[i],0);
+            bPane.add(cardsAtScenes[i],2);
         }
     }
     public void uncoverCard(Scene s){
         System.out.println("Uncovering card");
         ImageIcon pIcon = new ImageIcon("images/cards/"+s.getCard().getImg());
         cardsAtScenes[s.getIndex()].setIcon(pIcon);
+        bPane.add(cardsAtScenes[s.getIndex()], 2);
     }
 
 
