@@ -68,24 +68,7 @@ public class GUI extends JFrame {
         
         // Set the size of the GUI
         setSize(icon.getIconWidth()+250,icon.getIconHeight() + 200);
-        // Add a scene card to this room
-        /*cardlabel = new JLabel();
-        ImageIcon cIcon = new ImageIcon("images/01.png");
-        cardlabel.setIcon(cIcon);
-        cardlabel.setBounds(20,65,cIcon.getIconWidth()+2,cIcon.getIconHeight());
-        cardlabel.setOpaque(true);
-        // Add the card to the lower layer
-        bPane.add(cardlabel, 1);*/
-        // Add a dice to represent a player.
-        // Role for Crusty the prospector. The x and y co-ordiantes are taken from
 
-        //playerlabel = new JLabel();
-        //ImageIcon pIcon = new ImageIcon("images/r2.png");
-        //playerlabel.setIcon(pIcon);
-        //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());
-        //playerlabel.setBounds(114,227,46,46);
-        //playerlabel.setVisible(true);
-        //bPane.add(playerlabel,3);
         // Create the Menu for action buttons
         belowBoard = icon.getIconHeight();
         rightBoard = icon.getIconWidth();
@@ -389,13 +372,6 @@ public class GUI extends JFrame {
                 bRehearse.setVisible(true);
                 bAct.setVisible(true);
 
-                // JButton bAct = new JButton("ACT");
-                // JButton bRehearse = new JButton("REHEARSE");
-                // bAct.setBackground(Color.white);
-                // bRehearse.setBackground(Color.white);
-                // bAct.setVisible(true);
-                // bRehearse.setVisible(true);
-                // //bAct
             }
             else if (e.getSource()== bRehearse){
                 System.out.println("Rehearse is Selected\n");
@@ -501,29 +477,39 @@ public class GUI extends JFrame {
                     System.out.println("Move failed");
                 }
                 System.out.println(dst);
-            } else if (src == cRole) {
-                String dst = (String)src.getSelectedItem();
-                cRole.setVisible(false);
-                Role dest = stringToRole(dst);
-                System.out.println("Selected role: " + dest.getDescription());
-                if (game.takeARolePM(game.getCurPlayer(), dest)) {
-                    System.out.println("Took role: " + dest.getDescription());
-                    playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
-                    dest.getDimensions()[1], diceWidth, diceHeight);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid role");
-                }
-
-            } else if (src == cUpgrade) {
+            }  else if (src == cUpgrade) {
                
                 Integer dst = (Integer) src.getSelectedItem(); 
                 cUpgrade.setVisible(false);
                 int newRank = dst.intValue();
                 if(game.upgradePM(game.getCurPlayer(), newRank)){
                     System.out.println("Rank updated");
+                    String s = "images/dice/" + game.getCurPlayer().getName().charAt(0)+ game.getCurPlayer().getRank()+".png";
+                    ImageIcon sIcon = new ImageIcon(s);
+                    playerPieces[game.getCurPlayer().getId()].setIcon(sIcon);
                 } else {
                     System.out.println("Rank not updated");
                 }
+            }else if (src == cRole) {
+                String dst = (String)src.getSelectedItem();
+                
+                if(dst == null){
+                    //do nothing
+                    System.out.println("Upgrade screwed up");
+                }else{
+                    cRole.setVisible(false);
+                    Role dest = stringToRole(dst);
+                    System.out.println("Selected role: " + dest.getDescription());
+                    if (game.takeARolePM(game.getCurPlayer(), dest)) {
+                        System.out.println("Took role: " + dest.getDescription());
+                        playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
+                        dest.getDimensions()[1], diceWidth, diceHeight);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid role");
+                    }
+                }
+                
+
             }
         }
         public void mousePressed(MouseEvent e) {
