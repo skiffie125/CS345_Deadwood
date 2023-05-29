@@ -167,7 +167,8 @@ public class GUI extends JFrame {
         cRole.addActionListener(lRole);
 
         cUpgrade = new JComboBox<Integer>();
-        cRole.setBounds(icon.getIconWidth() + 30, 210, 120, 20);
+        // cUpgrade = new JComboBox<String>();
+        cUpgrade.setBounds(icon.getIconWidth() + 30, 210, 120, 20);
         bPane.add(cUpgrade, 2);
         cUpgrade.setVisible(false);
         lUpgrade = new boardMouseListener();
@@ -442,8 +443,10 @@ public class GUI extends JFrame {
                }
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
-                cUpgrade.setVisible(true);
+                cUpgrade.removeActionListener(lUpgrade);
                 updateUpgradeBox(game.getUpgradeLevels());
+                cUpgrade.addActionListener(lUpgrade);
+                cUpgrade.setVisible(true);
                 bUpgrade.setVisible(false);
                 bWork.setVisible(false);
                 bRole.setVisible(false);
@@ -514,9 +517,15 @@ public class GUI extends JFrame {
                 }
 
             } else if (src == cUpgrade) {
+               
+                Integer dst = (Integer) src.getSelectedItem(); 
                 cUpgrade.setVisible(false);
-                Integer dst = (Integer) src.getSelectedItem();
                 int newRank = dst.intValue();
+                if(game.upgradePM(game.getCurPlayer(), newRank)){
+                    System.out.println("Rank updated");
+                } else {
+                    System.out.println("Rank not updated");
+                }
             }
         }
         public void mousePressed(MouseEvent e) {
