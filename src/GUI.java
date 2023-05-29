@@ -67,7 +67,7 @@ public class GUI extends JFrame {
         
         
         // Set the size of the GUI
-        setSize(icon.getIconWidth()+200,icon.getIconHeight() + 200);
+        setSize(icon.getIconWidth()+250,icon.getIconHeight() + 200);
         // Add a scene card to this room
         /*cardlabel = new JLabel();
         ImageIcon cIcon = new ImageIcon("images/01.png");
@@ -90,49 +90,49 @@ public class GUI extends JFrame {
         belowBoard = icon.getIconHeight();
         rightBoard = icon.getIconWidth();
         mLabel = new JLabel("MENU");
-        mLabel.setBounds(icon.getIconWidth()+40,0,100,20);
+        mLabel.setBounds(icon.getIconWidth()+40,0,120,20);
         bPane.add(mLabel,2);
 
         // Create Action buttons
         bEndTurn = new JButton("END TURN");
         bEndTurn.setBackground(Color.white);
-        bEndTurn.setBounds(icon.getIconWidth()+30, 60,100, 20);
+        bEndTurn.setBounds(icon.getIconWidth()+30, 60,120, 20);
         bEndTurn.addMouseListener(new boardMouseListener());
         bEndTurn.setVisible(true);
         
         bWork = new JButton("WORK");
         bWork.setBackground(Color.white);
-        bWork.setBounds(icon.getIconWidth()+30, 90,100, 20);
+        bWork.setBounds(icon.getIconWidth()+30, 90,120, 20);
         bWork.addMouseListener(new boardMouseListener());
         bWork.setVisible(true);
         
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
-        bMove.setBounds(icon.getIconWidth()+30,120,100, 20);
+        bMove.setBounds(icon.getIconWidth()+30,120,120, 20);
         bMove.addMouseListener(new boardMouseListener());
         bMove.setVisible(true);
 
         bUpgrade = new JButton("UPGRADE");
         bUpgrade.setBackground(Color.white);
-        bUpgrade.setBounds(icon.getIconWidth()+30,150,100, 20);
+        bUpgrade.setBounds(icon.getIconWidth()+30,150,120, 20);
         bUpgrade.addMouseListener(new boardMouseListener());
         bUpgrade.setVisible(true);
 
         bRole = new JButton("TAKE ROLE");
         bRole.setBackground(Color.white);
-        bRole.setBounds(icon.getIconWidth()+30,180,100, 20);
+        bRole.setBounds(icon.getIconWidth()+30,180,120, 20);
         bRole.addMouseListener(new boardMouseListener());
         bRole.setVisible(true);
 
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(icon.getIconWidth()+30,210,100, 20);
+        bRehearse.setBounds(icon.getIconWidth()+30,210,120, 20);
         bRehearse.addMouseListener(new boardMouseListener());
         bRehearse.setVisible(false);
 
         bAct = new JButton("ACT");
         bAct.setBackground(Color.white);
-        bAct.setBounds(icon.getIconWidth()+30,240,100, 20);
+        bAct.setBounds(icon.getIconWidth()+30,240,120, 20);
         bAct.addMouseListener(new boardMouseListener());
         bAct.setVisible(false);
         
@@ -149,21 +149,21 @@ public class GUI extends JFrame {
         // Conditionally visible comboBoxes
         // TODO: Adjust locations of these
         cMove = new JComboBox<String>();
-        cMove.setBounds(icon.getIconWidth()+ 30, 210, 100, 20);
+        cMove.setBounds(icon.getIconWidth()+ 30, 210, 120, 20);
         bPane.add(cMove, 2);
         cMove.setVisible(false);
         lMove = new boardMouseListener();
         cMove.addActionListener(lMove);
 
         cRole = new JComboBox<String>();
-        cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
+        cRole.setBounds(icon.getIconWidth() + 30, 210, 120, 20);
         bPane.add(cRole, 2);
         cRole.setVisible(false);
         lRole = new boardMouseListener();
         cRole.addActionListener(lRole);
 
         cUpgrade = new JComboBox<Integer>();
-        cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
+        cRole.setBounds(icon.getIconWidth() + 30, 210, 120, 20);
         bPane.add(cUpgrade, 2);
         cUpgrade.setVisible(false);
         lUpgrade = new boardMouseListener();
@@ -411,6 +411,7 @@ public class GUI extends JFrame {
                if(game.actPM(game.getCurPlayer())) {
                     //TODO: Show some hooray bullshit
                     markOffShotCounter(game.getLocationManager().LocationToScene(game.getCurPlayer().getLocation()));
+                    
                     System.out.println("Act success!");
                } else {
                     //TODO: Show some boohoo bullshit
@@ -453,7 +454,12 @@ public class GUI extends JFrame {
                     int[] sceneDimensions = dest.getDimensions();
                     System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] + " id: " + game.getCurPlayer().getId());
                     playerPieces[game.getCurPlayer().getId()].setVisible(false);
-                    playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] -5, sceneDimensions[1] -5);
+                    if (game.getLocationManager().LocationToScene(dest) != null){
+                        playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] + game.getCurPlayer().getId()*25, sceneDimensions[1] +120);
+                    }
+                    else{
+                        playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] + ((game.getCurPlayer().getId())%2)*50, sceneDimensions[1] + (game.getCurPlayer().getId()/2)*50);
+                    }
                     playerPieces[game.getCurPlayer().getId()].validate();
                     playerPieces[game.getCurPlayer().getId()].setVisible(true);
                     bPane.validate(); 
