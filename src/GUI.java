@@ -12,6 +12,10 @@ public class GUI extends JFrame {
     JLabel mLabel;
     JLabel currentPlayersDisplay;
     JLabel[] playersDisplay;
+    JLabel currentCashDisplay;
+    JLabel[] cashDisplay;
+    JLabel currentCreditDisplay;
+    JLabel[] creditDisplay;
 
     JLabel[] cardsAtScenes;
     JLabel[][] shotCounters;
@@ -36,7 +40,7 @@ public class GUI extends JFrame {
     JComboBox<String> cRole;
     JComboBox<Integer> cUpgrade;
 
-    JTextField output;
+    JTextArea output;
 
     //CBox action Listeners
     boardMouseListener lMove;
@@ -170,8 +174,13 @@ public class GUI extends JFrame {
         cUpgrade.addActionListener(lUpgrade);
 
         // Game state output
-        // TODO: Adjust location and size as appropriate
-        output = new JTextField(20);
+        JLabel oLabel = new JLabel("GAME OUTPUT");
+        oLabel.setBounds(icon.getIconWidth()+40,580,120,20);
+        output = new JTextArea(100, 100);
+        bPane.setVisible(true);
+        bPane.add(oLabel, 2);
+        output.setBounds(icon.getIconWidth() + 60, 600, 120, 20);
+        output.setVisible(true);
         bPane.add(output, 2);
         bPane.validate();
     }
@@ -180,8 +189,12 @@ public class GUI extends JFrame {
         playersDisplay = new JLabel[players.length];
         playerPieces = new JLabel[players.length];
         for(int i = 0; i < playersDisplay.length; i++){
-            playersDisplay[i] = new JLabel("Player " + players[i].getName()+ "\n Rank " + players[i].getRank());
-            playersDisplay[i].setBounds( i* 170 +5, belowBoard +5, 170,50);
+            playersDisplay[i] = new JLabel("<html>Player " + players[i].getName()+
+            "<br/>Rank " + players[i].getRank()
+            + "<br/>Cash " + game.getBank().getDollars(players[i].getId())
+            + "<br/>Credit " + game.getBank().getCredits(players[i].getId())
+            + "<html>");
+            playersDisplay[i].setBounds( i* 170 +5, belowBoard +5, 170,200);
             playersDisplay[i].setVisible(true);
             bPane.add(playersDisplay[i],3);
             String s = "images/dice/" + players[i].getName().toLowerCase().charAt(0)+ players[i].getRank()+".png";
@@ -201,6 +214,9 @@ public class GUI extends JFrame {
         currentPlayersDisplay.setBounds(rightBoard+40,30,100,20);
         bPane.add(currentPlayersDisplay,2);
         bPane.validate();
+
+        // Display currency information
+        cashDisplay = new JLabel[players.length];
     }
 
     public void setUpDay(){
@@ -364,6 +380,10 @@ public class GUI extends JFrame {
         }
         
     }
+    public void updateOutput(String s) {
+        output.setText(null);
+        output.append(s);
+    }
     class boardMouseListener implements MouseListener,ActionListener{
         // Button interaction
         public void mouseClicked(MouseEvent e) {
@@ -415,13 +435,10 @@ public class GUI extends JFrame {
                 bAct.setVisible(false);
 
                if(game.actPM(game.getCurPlayer())) {
-                    //TODO: Show some hooray bullshit
                     markOffShotCounter(game.getLocationManager().LocationToScene(game.getCurPlayer().getLocation()));
-                    
-                    System.out.println("Act success!");
+                    updateOutput("Act success!");
                } else {
-                    //TODO: Show some boohoo bullshit
-                    System.out.println("Act failed :(");
+                    updateOutput("Act failed :(");
                }
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
@@ -430,8 +447,6 @@ public class GUI extends JFrame {
                 bUpgrade.setVisible(false);
                 bWork.setVisible(false);
                 bRole.setVisible(false);
-
-
             } else if (e.getSource() == bRole){
                 System.out.println("take role is Selected\n");
                 cRole.removeActionListener(lRole);
@@ -442,8 +457,6 @@ public class GUI extends JFrame {
                 bRole.setVisible(false);
                 bUpgrade.setVisible(false);
                 bWork.setVisible(false);
-
-
             }
         }
         // ComboBox interaction 

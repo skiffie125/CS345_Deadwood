@@ -75,6 +75,10 @@ public class ProgressManager {
         return this.gui;
     }
 
+    public Bank getBank() {
+        return this.bank;
+    }
+
     // Set up board for play
     public void setUpGame(int numPlayers) {
          if(numPlayers > 8 || numPlayers < 2){
