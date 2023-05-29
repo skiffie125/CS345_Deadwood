@@ -83,7 +83,7 @@ public class ParseXML {
         for (int i = 0; i < partsLen; i++) {
             roles[i] = getRole(parts.item(i));
         }
-        setBoardRoleDimensions(roles);
+        setRoleDim(roles);
         // Get & set all lines
         NodeList linesList = d.getElementsByTagName("line");
         int lineLen = linesList.getLength();
@@ -232,200 +232,70 @@ public class ParseXML {
         return Integer.parseInt(take.getAttributes().getNamedItem("number").getNodeValue());
     }
 
-    private void setBoardRoleDimensions(Role[] roles) {
-        int height = 46;
-        int width = 46;
-        int[] dim = new int[4];
-        dim[2] = height;
-        dim[3] = width;
+    private void setRoleDim(Role[] roles) {
+        int h = 46;
+        int w = 46;
         for (int i = 0; i < roles.length; i++) {
-            switch (i) {
-                // Train Station
-                case 0:
-                    // Crusty
-                    dim[0] = 114;
-                    dim[1] = 227;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 1:
-                // Dragged
-                    dim[0] = 51;
-                    dim[1] = 268;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 2:
-                // Preacher
-                    dim[0] = 114;
-                    dim[1] = 320;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 3: 
-                // Cyrus
-                    dim[0] = 49;
-                    dim[1] = 356;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Secret Hideout
-                case 4:
-                // Clumsy
-                    dim[0] = 435;
-                    dim[1] = 719;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 5:
-                // Thug
-                    dim[0] = 521;
-                    dim[1] = 719;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 6:
-                // Dangerous
-                    dim[0] = 435;
-                    dim[1] = 719;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 7:
-                // Penny
-                    dim[0] = 521;
-                    dim[1] = 808;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Church
-                case 8:
-                // Dead
-                    dim[0] = 857;
-                    dim[1] = 730;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 9:
-                // Crying
-                    dim[0] = 858;
-                    dim[1] = 809;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Hotel
-                case 10:
-                // Sleeping
-                    dim[0] = 1111;
-                    dim[1] = 469;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 11:
-                // Faro
-                    dim[0] = 1044;
-                    dim[1] = 509;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 12:
-                // Falls
-                    dim[0] = 1111;
-                    dim[1] = 557;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 13:
-                // Australian
-                    dim[0] = 1046;
-                    dim[1] = 596;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Main street
-                case 14:
-                // Railroad
-                    dim[0] = 637;
-                    dim[1] = 22;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 15:
-                // Falls
-                    dim[0] = 720;
-                    dim[1] = 22;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 16:
-                // Woman
-                    dim[0] = 637;
-                    dim[1] = 105;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 17:
-                // Mayor
-                    dim[0] = 720;
-                    dim[1] = 105;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Jail
-                case 18:
-                // Prisoner
-                    dim[0] = 519;
-                    dim[1] = 25;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 19:
-                // Feller
-                    dim[0] = 519;
-                    dim[1] = 105;
-                    roles[i].setDimensions(dim);
-                    break;
-                // General store
-                case 20:
-                // Man
-                    dim[0] = 236;
-                    dim[1] = 276;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 21:
-                // Mister
-                    dim[0] = 236;
-                    dim[1] = 358;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Ranch
-                case 22:
-                    // Shot
-                    dim[0] = 412;
-                    dim[1] = 608;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 23:
-                    // Saucy
-                    dim[0] = 488;
-                    dim[1] = 608;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 24:
-                    // Man under horse
-                    dim[0] = 488;
-                    dim[1] = 525;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Bank
-                case 25:
-                    // Suspicious
-                    dim[0] = 911;
-                    dim[1] = 554;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 26:
-                    // Flustered
-                    dim[0] = 911;
-                    dim[1] = 470;
-                    roles[i].setDimensions(dim);
-                    break;
-                // Saloon
-                case 27:
-                // Reluctant
-                    dim[0] = 877;
-                    dim[1] = 352;
-                    roles[i].setDimensions(dim);
-                    break;
-                case 28:
-                // Woman
-                    dim[0] = 877;
-                    dim[1] = 276;
-                    roles[i].setDimensions(dim);
-                    break;
+            if (i == 0) {
+                roles[i].setEachDimensions(114,227,h,w);
+            } else if (i ==1) {
+                roles[i].setEachDimensions(51, 268, h, w);
+            } else if (i == 2) {
+                roles[i].setEachDimensions(114, 320, h, w);
+            } else if (i == 3) {
+                roles[i].setEachDimensions(49, 356, h, w);;
+            } else if (i == 4) {
+                roles[i].setEachDimensions(435,719,h,w);
+            } else if (i == 5) {
+                roles[i].setEachDimensions(521, 719, h, w);
+            } else if (i == 6) {
+                roles[i].setEachDimensions(435, 719, h ,w);
+            } else if (i == 7) {
+                roles[i].setEachDimensions(521, 808, h, w);
+            } else if (i == 8) {
+                roles[i].setEachDimensions(857, 730, h, w);
+            } else if (i == 9) {
+                roles[i].setEachDimensions(858, 809, h, w);
+            } else if (i == 10) {
+                roles[i].setEachDimensions(1111, 469, h, w);
+            } else if (i == 11) {
+                roles[i].setEachDimensions(1044, 509, h, w);
+            } else if (i == 12) {
+                roles[i].setEachDimensions(1111, 557, h, w);
+            } else if (i == 13) {
+                roles[i].setEachDimensions(1049, 596, h, w);
+            } else if (i == 14) {
+                roles[i].setEachDimensions(637, 22, h, w);
+            } else if (i == 15) {
+                roles[i].setEachDimensions(720, 22, h, w);
+            } else if (i == 16) {
+                roles[i].setEachDimensions(637, 105, h, w);
+            } else if (i == 17) {
+                roles[i].setEachDimensions(720, 105, h, w);
+            } else if (i == 18) {
+                roles[i].setEachDimensions(519, 25, h, w);
+            } else if (i == 19) {
+                roles[i].setEachDimensions(519, 105, h, w);
+            } else if (i == 20) {
+                roles[i].setEachDimensions(236, 276, h, w);
+            } else if (i == 21) {
+                roles[i].setEachDimensions(236, 358, h, w);
+            }else if (i == 22) {
+                roles[i].setEachDimensions(412, 608, h, w);
+            } else if (i == 23) {
+                roles[i].setEachDimensions(488, 608, h, w);
+            } else if (i == 24) {
+                roles[i].setEachDimensions(488, 525, h, w);
+            } else if (i == 25) {
+                roles[i].setEachDimensions(911, 554, h, w);
+            } else if (i == 26) {
+                roles[i].setEachDimensions(911, 470, h, w);
+            } else if (i == 27) {
+                roles[i].setEachDimensions(877, 352, h, w);
+            } else if (i == 28) {
+                roles[i].setEachDimensions(877, 276, h, w);
             }
-        }
+        } 
     }
 
     private void setTakeDimensions(Scene[] scenes) {

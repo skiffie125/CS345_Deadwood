@@ -379,7 +379,6 @@ public class GUI extends JFrame {
                     //playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
                     playerPieces[game.getCurPlayer().getId()].setVisible(false);
                     
-                    
                     //bPane.remove(playerPieces[game.getCurPlayer().getId()]);
                     //bPane.validate();
                     playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] -5, sceneDimensions[1] -5);

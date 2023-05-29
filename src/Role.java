@@ -55,4 +55,8 @@ public class Role {
     public void setDimensions(int[] dimensions) {
         this.dimensions = dimensions;
     }
+
+    public void setEachDimensions(int x, int y, int h, int w) {
+        this.dimensions = new int[] {x,y,h,w};
+    }
 }
