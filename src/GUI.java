@@ -219,7 +219,7 @@ public class GUI extends JFrame {
             System.out.println(game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
 
             for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
-                ImageIcon sIcon = new ImageIcon("imges/shot.png");
+                ImageIcon sIcon = new ImageIcon("images/shot.png");
                 System.out.println(game.getLocationManager().getBoard().getScenes()[i].getName()+ " " + game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
                 shotCounters[i][j] = new JLabel();
                 shotCounters[i][j].setIcon(sIcon);
@@ -230,20 +230,26 @@ public class GUI extends JFrame {
                         shotCounters[i][j].setBounds(shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
                         shotCounters[i][j].setVisible(true);
                         bPane.add(shotCounters[i][j], bPane.PALETTE_LAYER);
+                       
                     } else {
                         if (j == 1) {
                             System.out.println("Set Saloon 2");
                             shotCounters[i][j].setBounds(626, 216, 47, 47);
+                            shotCounters[i][j].setVisible(true);
+                            bPane.add(shotCounters[i][j], bPane.PALETTE_LAYER);
                         } else {
                             System.out.println("Set Saloon 1");
                             shotCounters[i][j].setBounds(679, 216, 47, 47);
+                            shotCounters[i][j].setVisible(true);
+                            bPane.add(shotCounters[i][j], bPane.PALETTE_LAYER);
                         }
 
                         //System.out.println("Girl help");
                     }
                 }
             }
-        }
+        } 
+        bPane.validate();
     }
     public void uncoverCard(Scene s){
         System.out.println("Uncovering card");
@@ -253,7 +259,7 @@ public class GUI extends JFrame {
     }
 
     public void markOffShotCounter(Scene s){
-        shotCounters[s.getIndex()][s.getShotCountersLeft()-1].setVisible(true);
+        shotCounters[s.getIndex()][s.getShotCountersLeft()].setVisible(true);
     }
 
     public void resetDay(){
