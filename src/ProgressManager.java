@@ -508,17 +508,25 @@ public class ProgressManager {
                 tie++;
             }
         }
+        String winnerOutcome = "";
         if(tie == 1){
             System.out.println("Congratualtions Player " + winner + ", You win the game");
+            winnerOutcome += "Congratualtions Player " + players[winner].getName() + "! You won!";
+            winnerOutcome += " <br/> Score " + score[winner];
         } else{
             //why did you have to tie, i don't like you
             System.out.println("Looks like we have a Tie! The players that tied are: ");
+            winnerOutcome += "Looks like we have a Tie!<br/>Congatulations to ";
             for(int i = 0; i < players.length; i++){
                 if(score[winner] == score[i]){
                     System.out.println("Player" + i);
+                    winnerOutcome += "Player " + players[winner].getName() + " "; 
                 }
             }
+            winnerOutcome += " <br/> Score " + score[winner];
         }
+        gui.reportOutcome(winnerOutcome);
+
 
         return 0;
     }
@@ -642,9 +650,14 @@ public class ProgressManager {
         return validRoles;
     }
 
-    public String[] getUpgradeLevels(){
+    /*public String[] getUpgradeLevels(){
         String[] upgrades = {"2", "3", "4", "5", "6"};
         return upgrades;
+    }*/
+    public Integer[] getUpgradeLevels(){
+        Integer[] upgrades = {2, 3, 4, 5, 6};
+        return upgrades;
     }
+
 
 }

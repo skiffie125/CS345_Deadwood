@@ -304,7 +304,9 @@ public class GUI extends JFrame {
         }
     }
 
-
+    public void reportOutcome( String s){
+        JOptionPane.showMessageDialog(bPane, "Game Ended <br/>" + s);
+    }
 
     public void updateNeighborsBox(Location[] contents) {
         cMove.removeAllItems();
@@ -384,7 +386,7 @@ public class GUI extends JFrame {
         return null;
     }
     public void updateUpgradeBox(Integer[] contents) {
-        cRole.removeAllItems();
+        cUpgrade.removeAllItems();
         for (int i = 0; i < contents.length; i++) {
             cUpgrade.addItem(contents[i]);
         }
@@ -433,6 +435,9 @@ public class GUI extends JFrame {
                 bRehearse.setVisible(false);
                 bAct.setVisible(false);
                 bWork.setVisible(true);
+                cRole.setVisible(false);
+                cUpgrade.setVisible(false);
+                cMove.setVisible(false);
             } else if( e.getSource() == bAct){
                 System.out.println("Act is Selected\n");
                 bRehearse.setVisible(false);
@@ -515,7 +520,7 @@ public class GUI extends JFrame {
                 int newRank = dst.intValue();
                 if(game.upgradePM(game.getCurPlayer(), newRank)){
                     System.out.println("Rank updated");
-                    String s = "images/dice/" + game.getCurPlayer().getName().charAt(0)+ game.getCurPlayer().getRank()+".png";
+                    String s = "images/dice/" + game.getCurPlayer().getName().toLowerCase().charAt(0)+ game.getCurPlayer().getRank()+".png";
                     ImageIcon sIcon = new ImageIcon(s);
                     playerPieces[game.getCurPlayer().getId()].setIcon(sIcon);
                 } else {
@@ -527,6 +532,7 @@ public class GUI extends JFrame {
                 if(dst == null){
                     //do nothing
                     System.out.println("Upgrade screwed up");
+                    cRole.setVisible(false);
                 }else{
                     cRole.setVisible(false);
                     Role dest = stringToRole(dst);
