@@ -90,6 +90,13 @@ public class Scene extends Location{
         this.shotDimensions[index] = dim;
     }
 
+    public void setEachShotDimension(int index, int x, int y, int h, int w) {
+        this.shotDimensions[index][0] = x;
+        this.shotDimensions[index][1] = y;
+        this.shotDimensions[index][2] = h;
+        this.shotDimensions[index][3] = w;
+    }
+
     // Returns dimensions of all shot counters
     public int[][] getShotDimensions() {
         return shotDimensions;

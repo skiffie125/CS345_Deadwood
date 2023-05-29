@@ -215,8 +215,9 @@ public class GUI extends JFrame {
             cardsAtScenes[i].setVisible(true);
             bPane.add(cardsAtScenes[i], bPane.PALETTE_LAYER);
 
-            /* 
             shotCounters[i] = new JLabel[game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax()];
+            System.out.println(game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
+
             for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
                 ImageIcon sIcon = new ImageIcon("imges/shot.png");
                 System.out.println(game.getLocationManager().getBoard().getScenes()[i].getName()+ " " + game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
@@ -224,29 +225,31 @@ public class GUI extends JFrame {
                 shotCounters[i][j].setIcon(sIcon);
                 int[][] shotPlaces = game.getLocationManager().getBoard().getScenes()[i].getShotDimensions();
                 if (shotPlaces != null){
-                    if (shotPlaces[i] != null){
-                        shotCounters[i][j].setBounds( shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
-                        shotCounters[i][j].setVisible(false);
-                        bPane.add(shotCounters[i][j], bPane.MODAL_LAYER);
+                    if (shotPlaces[j] != null){
+                        System.out.println("Shot counter boundaries: "  + shotPlaces[j][0] + " " + shotPlaces[j][1]);
+                        shotCounters[i][j].setBounds(shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
+                        shotCounters[i][j].setVisible(true);
+                        bPane.add(shotCounters[i][j], bPane.PALETTE_LAYER);
                     } else {
-                        System.out.println("something went wrong with shot counter placement");
-                        
-                        for(int c = 0; c < shotCounters.length; c++){
-                            for(int d = 0; d < shotCounters[c].length; d++){
-                                System.out.print(shotPlaces[c][d] + " ");
-                            }
-                            System.out.println();
+                        if (j == 1) {
+                            System.out.println("Set Saloon 2");
+                            shotCounters[i][j].setBounds(626, 216, 47, 47);
+                        } else {
+                            System.out.println("Set Saloon 1");
+                            shotCounters[i][j].setBounds(679, 216, 47, 47);
                         }
+
+                        //System.out.println("Girl help");
                     }
                 }
-                
-            }*/
+            }
         }
     }
     public void uncoverCard(Scene s){
         System.out.println("Uncovering card");
         ImageIcon pIcon = new ImageIcon("images/cards/"+s.getCard().getImg());
         cardsAtScenes[s.getIndex()].setIcon(pIcon);
+        bPane.add(cardsAtScenes[s.getIndex()], 2);
     }
 
     public void markOffShotCounter(Scene s){
@@ -462,6 +465,12 @@ public class GUI extends JFrame {
                     bPane.validate(); 
                     if(game.getLocationManager().LocationToScene(dest) != null){
                         Scene s = game.getLocationManager().LocationToScene(dest);
+                        Role[] roles = s.getCard().getOnCardRoles();
+                        for (int i = 0; i < roles.length; i++) {
+                            int[] rDim = roles[i].getDimensions();
+                            int[] sDim = s.getDimensions();
+                            roles[i].setEachDimensions(rDim[0] + sDim[0], rDim[1] + sDim[1], rDim[2], rDim[3]);
+                        }
                         if(s.cardFaceUp() == false){
                             s.flipCard(true);
                             uncoverCard(s);
