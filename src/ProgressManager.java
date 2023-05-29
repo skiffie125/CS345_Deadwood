@@ -470,6 +470,7 @@ public class ProgressManager {
         }
         //untested
         //gui.setUpDay();
+        gui.resetDay();
         return;
     }
 
