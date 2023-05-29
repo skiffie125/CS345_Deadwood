@@ -399,12 +399,7 @@ public class GUI extends JFrame {
                 System.out.println("Selected role: " + dest.getDescription());
                 if (game.takeARolePM(game.getCurPlayer(), dest)) {
                     System.out.println("Took role: " + dest.getDescription());
-<<<<<<< HEAD
-                    System.out.println(game.getCurPlayer().getRole().getDescription());
-                    playersDisplay[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
-=======
                     playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
->>>>>>> main
                     dest.getDimensions()[1], diceWidth, diceHeight);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid role");
