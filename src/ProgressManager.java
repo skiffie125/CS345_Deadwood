@@ -469,7 +469,7 @@ public class ProgressManager {
             scenes[j].reset(lm.getBoard().pop());
         }
         //untested
-        gui.setUpDay();
+        //gui.setUpDay();
         return;
     }
 
