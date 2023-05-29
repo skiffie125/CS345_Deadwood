@@ -12,10 +12,6 @@ public class GUI extends JFrame {
     JLabel mLabel;
     JLabel currentPlayersDisplay;
     JLabel[] playersDisplay;
-    JLabel currentCashDisplay;
-    JLabel[] cashDisplay;
-    JLabel currentCreditDisplay;
-    JLabel[] creditDisplay;
 
     JLabel[] cardsAtScenes;
     JLabel[][] shotCounters;
@@ -215,9 +211,6 @@ public class GUI extends JFrame {
         currentPlayersDisplay.setBounds(rightBoard+40,30,100,20);
         bPane.add(currentPlayersDisplay,2);
         bPane.validate();
-
-        // Display currency information
-        cashDisplay = new JLabel[players.length];
     }
 
     public void setUpDay(){
@@ -267,6 +260,39 @@ public class GUI extends JFrame {
             }
         } 
         bPane.validate();
+    }
+    public void updatePlayerDisplay(int p) {
+        Player[] players = game.getPlayers();
+        Scene[] scenes = game.getLocationManager().getBoard().getScenes();
+        Scene curScene = null;
+        for (int i = 0; i < scenes.length; i++) {
+            if (players[p].getLocation().getName().equals(scenes[i].getName())) {
+                curScene = scenes[i];
+            }
+        }
+        if (curScene != null) {
+            bPane.remove(playersDisplay[p]);
+            playersDisplay[p] = new JLabel("<html>Player " + players[p].getName()+
+            "<br/>Rank " + players[p].getRank()
+            + "<br/>Cash " + game.getBank().getDollars(players[p].getId())
+            + "<br/>Credit " + game.getBank().getCredits(players[p].getId())
+            + "<br/>Rehearsal tokens " +curScene.getRehearsal(p) 
+            + "<html>");
+            playersDisplay[p].setBounds( p* 170 +5, belowBoard +5, 170,200);
+            playersDisplay[p].setVisible(true);
+            bPane.add(playersDisplay[p],3);
+        } else {
+            bPane.remove(playersDisplay[p]);
+            playersDisplay[p] = new JLabel("<html>Player " + players[p].getName()+
+            "<br/>Rank " + players[p].getRank()
+            + "<br/>Cash " + game.getBank().getDollars(players[p].getId())
+            + "<br/>Credit " + game.getBank().getCredits(players[p].getId())
+            + "<html>");
+            playersDisplay[p].setBounds( p* 170 +5, belowBoard +5, 170,200);
+            playersDisplay[p].setVisible(true);
+            bPane.add(playersDisplay[p],3);
+        }
+        
     }
     public void uncoverCard(Scene s){
         System.out.println("Uncovering card");
@@ -411,6 +437,7 @@ public class GUI extends JFrame {
                 game.rehearsePM(game.getCurPlayer());
                 bRehearse.setVisible(false);
                 bAct.setVisible(false);
+                updatePlayerDisplay(game.getCurPlayer().getId());
             }
             else if (e.getSource()== bMove){
                 System.out.println("Move is selected");
@@ -438,8 +465,10 @@ public class GUI extends JFrame {
                if(game.actPM(game.getCurPlayer())) {
                     markOffShotCounter(game.getLocationManager().LocationToScene(game.getCurPlayer().getLocation()));
                     updateOutput("Act success!");
+                    updatePlayerDisplay(game.getCurPlayer().getId());
                } else {
                     updateOutput("Act failed :(");
+                    updatePlayerDisplay(game.getCurPlayer().getId());
                }
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
@@ -498,7 +527,7 @@ public class GUI extends JFrame {
                             uncoverCard(s);
                         }
                     }
-
+                    updatePlayerDisplay(game.getCurPlayer().getId());
                 } else{
                     System.out.println("Move failed");
                 }
