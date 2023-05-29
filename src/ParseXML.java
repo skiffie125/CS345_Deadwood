@@ -301,32 +301,32 @@ public class ParseXML {
     private void setTakeDimensions(Scene[] scenes) {
         int hw = 47;
         int[] dim = new int[4];
-        dim[2] = hw;
-        dim[3] = hw;
+                    dim[2] = hw;
+                    dim[3] = hw;
+                    dim[1] = 11;
         for (int i = 0; i < scenes.length; i++) {
             int ceiling = scenes[i].getShotCountersMax();
-            int[][] shotDim = new int[ceiling][];
+            int[][] shotDim = new int[ceiling][4];
             scenes[i].setShotDimensions(shotDim);
             switch (i) {
                 case 0:
                 // Train station
-                    dim[1] = 11;
                     for (int j = 0; j < ceiling; j++) {
                         switch (j) {
                             case 0:
                                 // take 3
                                 dim[0] = 36;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 36, 11, hw, hw);
                                 break;
                             case 1:
                                 // take 2
                                 dim[0] = 89;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 89, 11, hw, hw);
                                 break;
                             case 2:
                             // take 1
                                 dim[0] = 141;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 141, 11 ,hw, hw);
                                 break;
                         }
                     }
@@ -339,17 +339,17 @@ public class ParseXML {
                             case 0:
                                 // take 3
                                 dim[0] = 244;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 244, 764, hw, hw);
                                 break;
                             case 1:
                                 // take 2
                                 dim[0] = 299;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 299, 764, hw, hw);
                                 break;
                             case 2:
                             // take 1
                                 dim[0] = 354;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 354, 764, hw, hw);
                                 break;
                         }
                     }
@@ -362,12 +362,12 @@ public class ParseXML {
                             case 0:
                                 // take 2
                                 dim[0] = 623;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 623, 675, hw, hw);
                                 break;
                             case 1:
                                 // take 1
                                 dim[0] = 682;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 682, 675, hw, hw);
                                 break;
                         }
                     }
@@ -380,17 +380,17 @@ public class ParseXML {
                             case 0:
                                 // take 3
                                 dim[0] = 1005;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 1005, 683, hw, hw);
                                 break;
                             case 1:
                                 // take 2
                                 dim[0] = 1058;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 1058, 683, hw, hw);
                                 break;
                             case 2:
                                 // take 1
                                 dim[0] = 1111;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 1111, 683, hw, hw);
                                 break;
                         }
                     }
@@ -403,71 +403,78 @@ public class ParseXML {
                             case 0:
                                 // take 3
                                 dim[0] = 912;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 912, 23, hw, hw);
                                 break;
                             case 1:
                                 // take 2
                                 dim[0] = 858;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 858, 23, hw, hw);
                                 break;
                             case 2:
                                 // take 1
                                 dim[0] = 804;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 804, 23, hw, hw);
                                 break;
                         }
                     }
                     break;
-                case 5:
+                case 6:
                 // General store
                     dim[0] = 313;
                     for (int j = 0; j < ceiling; j++) {
                         switch(j) {
                             case 0:
                                 dim[1] = 277;
-                                scenes[i].setShotDimension(j, dim); 
+                                scenes[i].setEachShotDimension(j, 313, 277, hw, hw); 
                                 break;
                             case 1:
                                 dim[1] = 330;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 313, 330, hw, hw);
                                 break;
                         }
                     }
                     break;
-                case 6:
-                // Ranch
-                    dim[1] = 473;
-                    for (int j = 0; j < ceiling; j++) {
-                        switch(j) {
-                            case 0:
-                                dim[1] = 472;
-                                scenes[i].setShotDimension(j, dim); 
-                                break;
-                            case 1:
-                                dim[1] = 525;
-                                scenes[i].setShotDimension(j, dim);
-                                break;
-                        }
-                    }
+                case 5:
+                // Jail
+                    scenes[i].setShotCountersMax(1);
+                    scenes[i].setEachShotDimension(0, 442, 156, hw, hw);
                     break;
                 case 7:
+                // Ranch
+                    dim[1] = 473;
+                    scenes[i].setEachShotDimension(0, 472, 473, hw, hw);
+                    scenes[i].setEachShotDimension(1, 525, 473, hw, hw);
+                    // for (int j = 0; j < ceiling; j++) {
+                    //     switch(j) {
+                    //         case 0:
+                    //             dim[1] = 472;
+                    //             scenes[i].setEachShotDimension(j, 472, 473, hw, hw); 
+                    //             break;
+                    //         case 1:
+                    //             dim[1] = 525;
+                    //             scenes[i].setEachShotDimension(j, 525, 473, hw, hw);
+                    //             break;
+                    //     }
+                    // }
+                    break;
+                case 8:
                 // Bank
                     dim[0] = 840;
                     dim[1] = 549;
-                    scenes[i].setShotDimension(0, dim);
+                    scenes[i].setEachShotDimension(0, 840, 549, hw, hw);
                     break; 
-                case 8:
+                case 9:
                 // Saloon
                     dim[1] = 216;
                     for (int j = 0; j < ceiling; j++) {
                         switch (j) {
                             case 0:
                                 dim[0] = 626;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 626, 216, hw, hw);
                                 break;
                             case 1:
                                 dim[0] = 679;
-                                scenes[i].setShotDimension(j, dim);
+                                scenes[i].setEachShotDimension(j, 679, 216, hw, hw);
                                 break;
                         }
                     }

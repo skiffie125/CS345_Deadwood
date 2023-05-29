@@ -61,7 +61,11 @@ public class GUI extends JFrame {
         boardlabel.setIcon(icon);
         boardlabel.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight());
         // Add the board to the lowest layer
-        bPane.add(boardlabel, 3);
+        bPane.add(boardlabel, bPane.DEFAULT_LAYER);
+        
+        //bPane.add(boardlabel, 3);
+        
+        
         // Set the size of the GUI
         setSize(icon.getIconWidth()+200,icon.getIconHeight() + 200);
         // Add a scene card to this room
@@ -191,7 +195,7 @@ public class GUI extends JFrame {
             playerPieces[i].setBounds(rightBoard -150 +((i)%2)*50 ,255 + ((i)/2)*50 ,pIcon.getIconWidth(),pIcon.getIconHeight());
             //playerPieces[i].setBounds(114+i *46,belowBoard -20,46,46);
             playerPieces[i].setVisible(true);
-            bPane.add(playerPieces[i],0);
+            bPane.add(playerPieces[i], bPane.MODAL_LAYER);
         }
         currentPlayersDisplay = new JLabel("Player "+ players[0].getName());
         currentPlayersDisplay.setBounds(rightBoard+40,30,100,20);
@@ -209,11 +213,11 @@ public class GUI extends JFrame {
             cardsAtScenes[i].setBounds(game.getLocationManager().getBoard().getScenes()[i].getDimensions()[0],
             game.getLocationManager().getBoard().getScenes()[i].getDimensions()[1], pIcon.getIconWidth(),pIcon.getIconHeight());
             cardsAtScenes[i].setVisible(true);
-            bPane.add(cardsAtScenes[i],0);
+            bPane.add(cardsAtScenes[i], bPane.PALETTE_LAYER);
 
             shotCounters[i] = new JLabel[game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax()];
             System.out.println(game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
-            
+
             for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
                 ImageIcon sIcon = new ImageIcon("imges/shot.png");
                 System.out.println(game.getLocationManager().getBoard().getScenes()[i].getName()+ " " + game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
@@ -222,9 +226,10 @@ public class GUI extends JFrame {
                 int[][] shotPlaces = game.getLocationManager().getBoard().getScenes()[i].getShotDimensions();
                 if (shotPlaces != null){
                     if (shotPlaces[j] != null){
-                        shotCounters[i][j].setBounds( shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
+                        System.out.println("Shot counter boundaries: "  + shotPlaces[j][0] + " " + shotPlaces[j][1]);
+                        shotCounters[i][j].setBounds(shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
                         shotCounters[i][j].setVisible(true);
-                        bPane.add(shotCounters[i][j],2);
+                        bPane.add(shotCounters[i][j], bPane.PALETTE_LAYER);
                     } else {
                         if (j == 1) {
                             System.out.println("Set Saloon 2");
@@ -233,7 +238,7 @@ public class GUI extends JFrame {
                             System.out.println("Set Saloon 1");
                             shotCounters[i][j].setBounds(679, 216, 47, 47);
                         }
-                        
+
                         //System.out.println("Girl help");
                     }
                 }
@@ -258,6 +263,12 @@ public class GUI extends JFrame {
             for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
                 shotCounters[i][j].setVisible(false);
             }
+        }
+        for( int i = 0; i < game.getPlayers().length; i++){
+            playerPieces[i].setVisible(false);
+            playerPieces[i].setLocation(rightBoard -150 +((i)%2)*50 ,255 + ((i)/2)*50);
+            playerPieces[i].validate();
+            playerPieces[i].setVisible(true);
         }
     }
 
