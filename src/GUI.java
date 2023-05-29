@@ -31,7 +31,7 @@ public class GUI extends JFrame {
     JComboBox<String> cMove;
     JComboBox<String> cRole;
     JComboBox<Integer> cUpgrade;
-    jTextField output;
+    JTextField output;
 
     ProgressManager game;
     // Constructor
@@ -139,7 +139,7 @@ public class GUI extends JFrame {
         cMove.setSelectedIndex(-1);
         cMove.addActionListener(new boardMouseListener());
 
-        cRole = new JComboBox<Role>();
+        cRole = new JComboBox<String>();
         cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
         bPane.add(cRole, 2);
         cRole.setVisible(false);
@@ -151,7 +151,7 @@ public class GUI extends JFrame {
 
         // Game state output
         // TODO: Adjust location and size as appropriate
-        output = new jTextField(20);
+        output = new JTextField(20);
         bPane.add(output, 2);
     }
 
@@ -214,11 +214,6 @@ public class GUI extends JFrame {
     }
     private Role stringToRole(String s) {
         Scene[] scenes = game.getLocationManager().getBoard().getScenes();
-        for (int i = 0; i < scenes.length; i++) {
-            if (s.equals(scenes[i].getDescription())) {
-                return scenes[i];
-            }
-        }
         return null;
     }
     public void updateUpgradeBox(Integer[] contents) {
@@ -320,19 +315,18 @@ public class GUI extends JFrame {
             } else if (src == cRole) {
                 String dst = (String)src.getSelectedItem();
                 cRole.setVisible(false);
-                Role dest = src.getSelectedItem();
+                Role dest = stringToRole(dst);
                 if (game.takeARolePM(game.getCurPlayer(), dest)) {
                     System.out.println("Took role: " + dest.getDescription());
                     playersDisplay[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
                     dest.getDimensions()[1], diceWidth, diceHeight);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Invalid role");
+                    JOptionPane.showMessageDialog(null, "Invalid role");
                 }
 
             } else if (src == cUpgrade) {
-                String dst = (String)src.getSelectedItem();
                 cUpgrade.setVisible(false);
-                Integer dst = src.getSelectedItem();
+                Integer dst = (Integer) src.getSelectedItem();
                 int newRank = dst.intValue();
             }
         }
