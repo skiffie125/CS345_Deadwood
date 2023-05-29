@@ -14,6 +14,8 @@ public class GUI extends JFrame {
     JLabel[] playersDisplay;
 
     JLabel[] cardsAtScenes;
+    JLabel[][] shotCounters;
+
     //JButtons
     JButton bWork;
     JButton bAct;
@@ -199,6 +201,7 @@ public class GUI extends JFrame {
 
     public void setUpDay(){
         cardsAtScenes = new JLabel[game.getLocationManager().getBoard().getScenes().length];
+        shotCounters = new JLabel[game.getLocationManager().getBoard().getScenes().length][];
         for(int i = 0; i< cardsAtScenes.length; i++){
             ImageIcon pIcon = new ImageIcon("images/CardBack-small.jpg");
             cardsAtScenes[i] = new JLabel();
@@ -206,7 +209,34 @@ public class GUI extends JFrame {
             cardsAtScenes[i].setBounds(game.getLocationManager().getBoard().getScenes()[i].getDimensions()[0],
             game.getLocationManager().getBoard().getScenes()[i].getDimensions()[1], pIcon.getIconWidth(),pIcon.getIconHeight());
             cardsAtScenes[i].setVisible(true);
-            bPane.add(cardsAtScenes[i],2);
+            bPane.add(cardsAtScenes[i],0);
+
+            shotCounters[i] = new JLabel[game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax()];
+            
+            for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
+                ImageIcon sIcon = new ImageIcon("imges/shot.png");
+                System.out.println(game.getLocationManager().getBoard().getScenes()[i].getName()+ " " + game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax());
+                shotCounters[i][j] = new JLabel();
+                shotCounters[i][j].setIcon(sIcon);
+                int[][] shotPlaces = game.getLocationManager().getBoard().getScenes()[i].getShotDimensions();
+                if (shotPlaces != null){
+                    if (shotPlaces[i] != null){
+                        shotCounters[i][j].setBounds( shotPlaces[j][0], shotPlaces[j][1],sIcon.getIconWidth(),sIcon.getIconHeight());
+                        shotCounters[i][j].setVisible(false);
+                        bPane.add(shotCounters[i][j],0);
+                    } else {
+                        System.out.println("something went wrong with shot counter placement");
+                        
+                        for(int c = 0; c < shotCounters.length; c++){
+                            for(int d = 0; d < shotCounters[c].length; d++){
+                                System.out.print(shotPlaces[c][d] + " ");
+                            }
+                            System.out.println();
+                        }
+                    }
+                }
+                
+            }
         }
     }
     public void uncoverCard(Scene s){
@@ -214,6 +244,20 @@ public class GUI extends JFrame {
         ImageIcon pIcon = new ImageIcon("images/cards/"+s.getCard().getImg());
         cardsAtScenes[s.getIndex()].setIcon(pIcon);
         bPane.add(cardsAtScenes[s.getIndex()], 2);
+    }
+
+    public void markOffShotCounter(Scene s){
+        shotCounters[s.getIndex()][s.getShotCountersLeft()-1].setVisible(true);
+    }
+
+    public void resetDay(){
+        ImageIcon pIcon = new ImageIcon("images/CardBack-small.jpg");
+        for(int i = 0; i< cardsAtScenes.length; i++){
+            cardsAtScenes[i].setIcon(pIcon);
+            for(int j =0; j < game.getLocationManager().getBoard().getScenes()[i].getShotCountersMax(); j++){
+                shotCounters[i][j].setVisible(false);
+            }
+        }
     }
 
 
@@ -354,6 +398,7 @@ public class GUI extends JFrame {
 
                if(game.actPM(game.getCurPlayer())) {
                     //TODO: Show some hooray bullshit
+                    markOffShotCounter(game.getLocationManager().LocationToScene(game.getCurPlayer().getLocation()));
                     System.out.println("Act success!");
                } else {
                     //TODO: Show some boohoo bullshit
