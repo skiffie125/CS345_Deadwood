@@ -75,6 +75,10 @@ public class ProgressManager {
         return this.gui;
     }
 
+    public Bank getBank() {
+        return this.bank;
+    }
+
     // Set up board for play
     public void setUpGame(int numPlayers) {
          if(numPlayers > 8 || numPlayers < 2){
@@ -638,8 +642,8 @@ public class ProgressManager {
         return validRoles;
     }
 
-    public Integer[] getUpgradeLevels(){
-        Integer[] upgrades = {2, 3, 4, 5, 6};
+    public String[] getUpgradeLevels(){
+        String[] upgrades = {"2", "3", "4", "5", "6"};
         return upgrades;
     }
 
