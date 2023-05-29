@@ -212,7 +212,6 @@ public class GUI extends JFrame {
         }
         
     }
-    // This class implements Mouse Events
     class boardMouseListener implements MouseListener,ActionListener{
         // Button interaction
         public void mouseClicked(MouseEvent e) {
@@ -286,9 +285,10 @@ public class GUI extends JFrame {
             if (src == cMove) {
                 String dst = (String)src.getSelectedItem();
                 cMove.setVisible(false);
-                if (game.movePM(game.getCurPlayer(), stringToLocation(dst))){
+                Location dest = stringToLocation(dst);
+                if (game.movePM(game.getCurPlayer(), dest)){
                     System.out.println("Moved");
-                    int[] sceneDimensions = stringToLocation(dst).getDimensions();
+                    int[] sceneDimensions = dest.getDimensions();
                     //Icon icon =playersDisplay[game.getCurPlayer().getId()].getIcon();
                     System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] );
                     playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
