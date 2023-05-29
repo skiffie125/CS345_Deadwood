@@ -8,6 +8,7 @@ public class Scene extends Location{
     private int[] rehearsals;
     private int[] dimensions;
     private int[][] shotDimensions;
+    int index;
 
     //Constructors 
     public Scene(String name) {
@@ -28,6 +29,12 @@ public class Scene extends Location{
     }
      public int getShotCountersMax(){
         return shotCountersMax;
+    }
+    public int getIndex(){
+        return index;
+    }
+    public void setIndex(int n){
+        index = n;
     }
     
     public void setCard(Card newCard){

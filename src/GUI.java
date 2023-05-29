@@ -12,6 +12,8 @@ public class GUI extends JFrame {
     JLabel mLabel;
     JLabel currentPlayersDisplay;
     JLabel[] playersDisplay;
+
+    JLabel[] cardsAtScenes;
     //JButtons
     JButton bWork;
     JButton bAct;
@@ -61,13 +63,13 @@ public class GUI extends JFrame {
         // Set the size of the GUI
         setSize(icon.getIconWidth()+200,icon.getIconHeight() + 200);
         // Add a scene card to this room
-        cardlabel = new JLabel();
+        /*cardlabel = new JLabel();
         ImageIcon cIcon = new ImageIcon("images/01.png");
         cardlabel.setIcon(cIcon);
         cardlabel.setBounds(20,65,cIcon.getIconWidth()+2,cIcon.getIconHeight());
         cardlabel.setOpaque(true);
         // Add the card to the lower layer
-        bPane.add(cardlabel, 1);
+        bPane.add(cardlabel, 1);*/
         // Add a dice to represent a player.
         // Role for Crusty the prospector. The x and y co-ordiantes are taken from
 
@@ -194,9 +196,26 @@ public class GUI extends JFrame {
         bPane.add(currentPlayersDisplay,2);
         bPane.validate();
     }
+
     public void setUpDay(){
-        
+        cardsAtScenes = new JLabel[game.getLocationManager().getBoard().getScenes().length];
+        for(int i = 0; i< cardsAtScenes.length; i++){
+            ImageIcon pIcon = new ImageIcon("images/CardBack-small.jpg");
+            cardsAtScenes[i] = new JLabel();
+            cardsAtScenes[i].setIcon(pIcon);
+            cardsAtScenes[i].setBounds(game.getLocationManager().getBoard().getScenes()[i].getDimensions()[0],
+            game.getLocationManager().getBoard().getScenes()[i].getDimensions()[1], pIcon.getIconWidth(),pIcon.getIconHeight());
+            cardsAtScenes[i].setVisible(true);
+            bPane.add(cardsAtScenes[i],0);
+        }
     }
+    public void uncoverCard(Scene s){
+        System.out.println("Uncovering card");
+        ImageIcon pIcon = new ImageIcon("images/cards/"+s.getCard().getImg());
+        cardsAtScenes[s.getIndex()].setIcon(pIcon);
+    }
+
+
 
     public void updateNeighborsBox(Location[] contents) {
         cMove.removeAllItems();
@@ -374,20 +393,20 @@ public class GUI extends JFrame {
                 } else if (game.movePM(game.getCurPlayer(), dest)){
                     System.out.println("Moved");
                     int[] sceneDimensions = dest.getDimensions();
-                    //Icon icon =playersDisplay[game.getCurPlayer().getId()].getIcon();
                     System.out.println("Dimensions: " + sceneDimensions[0] + " "+ sceneDimensions[1] + " id: " + game.getCurPlayer().getId());
-                    //playersDisplay[game.getCurPlayer().getId()].setBounds(sceneDimensions[0], sceneDimensions[1], diceWidth, diceHeight);
                     playerPieces[game.getCurPlayer().getId()].setVisible(false);
-                    
-                    
-                    //bPane.remove(playerPieces[game.getCurPlayer().getId()]);
-                    //bPane.validate();
                     playerPieces[game.getCurPlayer().getId()].setLocation(sceneDimensions[0] -5, sceneDimensions[1] -5);
                     playerPieces[game.getCurPlayer().getId()].validate();
                     playerPieces[game.getCurPlayer().getId()].setVisible(true);
-                   // bPane.add(playerPieces[game.getCurPlayer().getId()]);
                     bPane.validate(); 
-                    //System.out.println("is this getting here");
+                    if(game.getLocationManager().LocationToScene(dest) != null){
+                        Scene s = game.getLocationManager().LocationToScene(dest);
+                        if(s.cardFaceUp() == false){
+                            s.flipCard(true);
+                            uncoverCard(s);
+                        }
+                    }
+
                 } else{
                     System.out.println("Move failed");
                 }
