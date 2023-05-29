@@ -31,13 +31,20 @@ public class GUI extends JFrame {
     JComboBox<String> cMove;
     JComboBox<String> cRole;
     JComboBox<Integer> cUpgrade;
+
     JTextField output;
+
+    //CBox action Listeners
+    boardMouseListener lMove;
+    boardMouseListener lRole;
+    boardMouseListener lUpgrade;
 
     ProgressManager game;
     // Constructor
     public GUI(ProgressManager game) {
         // Set the title of the JFrame
         super("Deadwood");
+        super.setLayout(null);
         // Set the exit option for the JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.game = game;
@@ -137,18 +144,22 @@ public class GUI extends JFrame {
         cMove.setBounds(icon.getIconWidth()+ 30, 210, 100, 20);
         bPane.add(cMove, 2);
         cMove.setVisible(false);
-        cMove.setSelectedIndex(-1);
-        cMove.addActionListener(new boardMouseListener());
+        lMove = new boardMouseListener();
+        cMove.addActionListener(lMove);
 
         cRole = new JComboBox<String>();
         cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
         bPane.add(cRole, 2);
         cRole.setVisible(false);
+        lRole = new boardMouseListener();
+        cRole.addActionListener(lRole);
 
         cUpgrade = new JComboBox<Integer>();
         cRole.setBounds(icon.getIconWidth() + 30, 210, 100, 20);
         bPane.add(cUpgrade, 2);
         cUpgrade.setVisible(false);
+        lUpgrade = new boardMouseListener();
+        cUpgrade.addActionListener(lUpgrade);
 
         // Game state output
         // TODO: Adjust location and size as appropriate
@@ -192,7 +203,6 @@ public class GUI extends JFrame {
         for (int i = 0; i < contents.length; i++) {
             cMove.addItem(contents[i].getName());
         }
-        
     }
     private Location stringToLocation(String s) {
         if (s == null){
@@ -211,14 +221,58 @@ public class GUI extends JFrame {
         }
         return null;
     }
-    public void updateRolesBox(Role[] roles) {
+    public void updateRolesBox() {
         cRole.removeAllItems();
-        for (int i = 0; i < roles.length; i++) {
-            cRole.addItem(roles[i].getDescription());
+        Location curLoc = game.getCurPlayer().getLocation();
+        System.out.println("Current location" + curLoc.getName());
+        if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
+            System.out.println("No valid roles");
+            return;
+        }
+        Scene[] scenes = game.getLocationManager().getBoard().getScenes();
+        Scene curScene = null;
+        for (int i = 0; i < scenes.length; i++) {
+            if (curLoc.getName().equals(scenes[i].getName())) {
+                curScene = scenes[i];
+            }
+        }
+        Role[] validRoles = new Role[curScene.getOffCardRoles().length + curScene.getCard().getOnCardRoles().length];
+        for (int i = 0; i < curScene.getOffCardRoles().length; i++) {
+            validRoles[i] = curScene.getOffCardRoles()[i];
+        }
+        for (int i = curScene.getOffCardRoles().length; i < validRoles.length; i++) {
+            validRoles[i] = curScene.getCard().getOnCardRoles()[i- curScene.getOffCardRoles().length];
+        }
+        for (int i = 0; i < validRoles.length; i++) {
+            cRole.addItem(validRoles[i].getDescription());
         }
     }
     private Role stringToRole(String s) {
+        Location curLoc = game.getCurPlayer().getLocation();
+        System.out.println("Current location" + curLoc.getName());
+        if (curLoc.getName().equals("trailer") || curLoc.getName().equals("office")) {
+            System.out.println("No valid roles");
+            return null;
+        }
         Scene[] scenes = game.getLocationManager().getBoard().getScenes();
+        Scene curScene = null;
+        for (int i = 0; i < scenes.length; i++) {
+            if (curLoc.getName().equals(scenes[i].getName())) {
+                curScene = scenes[i];
+            }
+        }
+        Role[] validRoles = new Role[curScene.getOffCardRoles().length + curScene.getCard().getOnCardRoles().length];
+        for (int i = 0; i < curScene.getOffCardRoles().length; i++) {
+            validRoles[i] = curScene.getOffCardRoles()[i];
+        }
+        for (int i = curScene.getOffCardRoles().length; i < validRoles.length; i++) {
+            validRoles[i] = curScene.getCard().getOnCardRoles()[i- curScene.getOffCardRoles().length];
+        }
+        for (int i = 0; i < validRoles.length; i++) {
+            if (s.equals(validRoles[i].getDescription())) {
+                return validRoles[i];
+            }
+        }
         return null;
     }
     public void updateUpgradeBox(Integer[] contents) {
@@ -257,8 +311,9 @@ public class GUI extends JFrame {
             }
             else if (e.getSource()== bMove){
                 System.out.println("Move is selected");
+                cMove.removeActionListener(lMove);
                 updateNeighborsBox(game.getNeighbors(game.getCurPlayer()));
-                
+                cMove.addActionListener(lMove);
                 bWork.setVisible(false);
                 bMove.setVisible(false);
                 cMove.setVisible(true);
@@ -279,8 +334,10 @@ public class GUI extends JFrame {
 
                if(game.actPM(game.getCurPlayer())) {
                     //TODO: Show some hooray bullshit
+                    System.out.println("Act success!");
                } else {
                     //TODO: Show some boohoo bullshit
+                    System.out.println("Act failed :(");
                }
             } else if (e.getSource() == bUpgrade){
                 System.out.println("Upgrade is Selected\n");
@@ -293,6 +350,9 @@ public class GUI extends JFrame {
 
             } else if (e.getSource() == bRole){
                 System.out.println("take role is Selected\n");
+                cRole.removeActionListener(lRole);
+                updateRolesBox();
+                cRole.addActionListener(lRole);
                 cRole.setVisible(true);
                 bMove.setVisible(false);
                 bRole.setVisible(false);
@@ -336,6 +396,7 @@ public class GUI extends JFrame {
                 String dst = (String)src.getSelectedItem();
                 cRole.setVisible(false);
                 Role dest = stringToRole(dst);
+                System.out.println("Selected role: " + dest.getDescription());
                 if (game.takeARolePM(game.getCurPlayer(), dest)) {
                     System.out.println("Took role: " + dest.getDescription());
                     playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
