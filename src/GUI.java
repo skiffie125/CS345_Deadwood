@@ -261,6 +261,12 @@ public class GUI extends JFrame {
                 shotCounters[i][j].setVisible(false);
             }
         }
+        for( int i = 0; i < game.getPlayers().length; i++){
+            playerPieces[i].setVisible(false);
+            playerPieces[i].setLocation(rightBoard -150 +((i)%2)*50 ,255 + ((i)/2)*50);
+            playerPieces[i].validate();
+            playerPieces[i].setVisible(true);
+        }
     }
 
 
