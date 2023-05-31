@@ -174,7 +174,8 @@ public class GUI extends JFrame {
             + "<br/>Cash " + game.getBank().getDollars(players[i].getId())
             + "<br/>Credit " + game.getBank().getCredits(players[i].getId())
             + "<html>");
-            playersDisplay[i].setBounds( i* 170 +5, belowBoard +5, 170,200);
+            playersDisplay[i].setBounds( i* 170 +5, belowBoard -50, 170,200);
+            bPane.validate();
             playersDisplay[i].setVisible(true);
             bPane.add(playersDisplay[i],3);
             String s = "images/dice/" + players[i].getName().toLowerCase().charAt(0)+ players[i].getRank()+".png";
@@ -261,7 +262,7 @@ public class GUI extends JFrame {
             + "<br/>Credit " + game.getBank().getCredits(players[p].getId())
             + "<br/>Rehearsal tokens " +curScene.getRehearsal(p) 
             + "<html>");
-            playersDisplay[p].setBounds( p* 170 +5, belowBoard +5, 170,200);
+            playersDisplay[p].setBounds( p* 170 +5, belowBoard -50, 170,200);
             playersDisplay[p].setVisible(true);
             bPane.add(playersDisplay[p],3);
         } else {
@@ -271,7 +272,7 @@ public class GUI extends JFrame {
             + "<br/>Cash " + game.getBank().getDollars(players[p].getId())
             + "<br/>Credit " + game.getBank().getCredits(players[p].getId())
             + "<html>");
-            playersDisplay[p].setBounds( p* 170 +5, belowBoard +5, 170,200);
+            playersDisplay[p].setBounds( p* 170 +5, belowBoard -50, 170,200);
             playersDisplay[p].setVisible(true);
             bPane.add(playersDisplay[p],3);
         }
