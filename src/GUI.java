@@ -155,11 +155,11 @@ public class GUI extends JFrame {
 
         // Game state output
         JLabel oLabel = new JLabel("GAME OUTPUT");
-        oLabel.setBounds(icon.getIconWidth()+40,580,120,20);
+        oLabel.setBounds(icon.getIconWidth()+40,580,400,20);
         output = new JTextArea(100, 100);
         bPane.setVisible(true);
         bPane.add(oLabel, 2);
-        output.setBounds(icon.getIconWidth() + 60, 600, 120, 20);
+        output.setBounds(icon.getIconWidth() + 60, 600, 180, 20);
         output.setVisible(true);
         bPane.add(output, 2);
         bPane.validate();
@@ -282,7 +282,7 @@ public class GUI extends JFrame {
         System.out.println("Uncovering card");
         ImageIcon pIcon = new ImageIcon("images/cards/"+s.getCard().getImg());
         cardsAtScenes[s.getIndex()].setIcon(pIcon);
-        bPane.add(cardsAtScenes[s.getIndex()], 2);
+        //bPane.add(cardsAtScenes[s.getIndex()], 2);
     }
 
     public void markOffShotCounter(Scene s){
@@ -481,6 +481,7 @@ public class GUI extends JFrame {
                 cMove.setVisible(false);
                 Location dest = stringToLocation(dst);
                 if (dest == null){
+                    updateOutput("Invalid move");
                     System.out.println("Move failed");
                 } else if (game.movePM(game.getCurPlayer(), dest)){
                     System.out.println("Moved");
@@ -498,19 +499,20 @@ public class GUI extends JFrame {
                     bPane.validate(); 
                     if(game.getLocationManager().LocationToScene(dest) != null){
                         Scene s = game.getLocationManager().LocationToScene(dest);
-                        Role[] roles = s.getCard().getOnCardRoles();
-                        for (int i = 0; i < roles.length; i++) {
-                            int[] rDim = roles[i].getDimensions();
-                            int[] sDim = s.getDimensions();
-                            roles[i].setEachDimensions(rDim[0] + sDim[0], rDim[1] + sDim[1], rDim[2], rDim[3]);
-                        }
                         if(s.cardFaceUp() == false){
+                            Role[] roles = s.getCard().getOnCardRoles();
+                            for (int i = 0; i < roles.length; i++) {
+                                int[] rDim = roles[i].getDimensions();
+                                int[] sDim = s.getDimensions();
+                                roles[i].setEachDimensions(rDim[0] + sDim[0], rDim[1] + sDim[1], rDim[2], rDim[3]);
+                            }
                             s.flipCard(true);
                             uncoverCard(s);
                         }
                     }
                     updatePlayerDisplay(game.getCurPlayer().getId());
                 } else{
+                    updateOutput("Invalid move");
                     System.out.println("Move failed");
                 }
                 System.out.println(dst);
@@ -524,7 +526,10 @@ public class GUI extends JFrame {
                     String s = "images/dice/" + game.getCurPlayer().getName().toLowerCase().charAt(0)+ game.getCurPlayer().getRank()+".png";
                     ImageIcon sIcon = new ImageIcon(s);
                     playerPieces[game.getCurPlayer().getId()].setIcon(sIcon);
+                    updatePlayerDisplay(game.getCurPlayer().getId());
+                    updateOutput("Upgrade successful");
                 } else {
+                    updateOutput("Upgrade unsuccessful");
                     System.out.println("Rank not updated");
                 }
             }else if (src == cRole) {
@@ -538,12 +543,18 @@ public class GUI extends JFrame {
                     cRole.setVisible(false);
                     Role dest = stringToRole(dst);
                     System.out.println("Selected role: " + dest.getDescription());
+                    System.out.println("Role dimensions: ");
+                    for (int i = 0; i < 4; i++) {
+                        System.out.println(dest.getDimensions()[i]);
+                    }
                     if (game.takeARolePM(game.getCurPlayer(), dest)) {
+                        String s = "Took role: " + dest.getDescription();
+                        updateOutput(s);
                         System.out.println("Took role: " + dest.getDescription());
                         playerPieces[game.getCurPlayer().getId()].setBounds(dest.getDimensions()[0],
                         dest.getDimensions()[1], diceWidth, diceHeight);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Invalid role");
+                        updateOutput("Invalid role");
                     }
                 }
                 
