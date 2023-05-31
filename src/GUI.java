@@ -306,7 +306,7 @@ public class GUI extends JFrame {
     }
 
     public void reportOutcome( String s){
-        JOptionPane.showMessageDialog(bPane, "Game Ended <br/>" + s);
+        JOptionPane.showMessageDialog(bPane, "<html> Game Ended <br/>" + s + "<html>");
     }
 
     public void updateNeighborsBox(Location[] contents) {
