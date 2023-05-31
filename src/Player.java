@@ -116,45 +116,50 @@ public class Player {
         int credits;
         Location castingOffice = lm.getBoard().getCastingOffice();
         boolean result = false;
-        if(lm.checkLocation(castingOffice, id)){
-            switch(newRank){
-                case 2:
-                    dollars = 4;
-                    credits = 5;
-                    break;
-                case 3:
-                    dollars = 10;
-                    credits = 10;
-                    break;
-                case 4:
-                    dollars = 18;
-                    credits = 15;
-                    break;
-                case 5:
-                    dollars = 28;
-                    credits = 20;
-                    break;
-                case 6:
-                    dollars = 40;
-                    credits = 25;
-                    break;
-                default:
-                    System.out.print("Sorry Not a Valid Rank");
-                    dollars = 0;
-                    credits = 0;
-                    newRank = rank;
-                    break; 
+        if (newRank <= rank){
+            System.out.println("Less than or equal to your current rank");
+        }else{
+            if(lm.checkLocation(castingOffice, id)){
+                switch(newRank){
+                    case 2:
+                        dollars = 4;
+                        credits = 5;
+                        break;
+                    case 3:
+                        dollars = 10;
+                        credits = 10;
+                        break;
+                    case 4:
+                        dollars = 18;
+                        credits = 15;
+                        break;
+                    case 5:
+                        dollars = 28;
+                        credits = 20;
+                        break;
+                    case 6:
+                        dollars = 40;
+                        credits = 25;
+                        break;
+                    default:
+                        System.out.print("Sorry Not a Valid Rank");
+                        dollars = 0;
+                        credits = 0;
+                        newRank = rank;
+                        break; 
+                }
+                if (b.verifyWithdraw(id,dollars,credits)){
+                    b.pay(id,dollars,credits);
+                    rank=newRank;
+                    result = true;
+                } else{
+                    System.out.println("Insuffient funds");          
+                }
+            } else {
+                System.out.println("Wrong Location");
             }
-            if (b.verifyWithdraw(id,dollars,credits)){
-                b.pay(id,dollars,credits);
-                rank=newRank;
-                result = true;
-            } else{
-                 System.out.println("Insuffient funds");          
-            }
-        } else {
-            System.out.println("Wrong Location");
         }
+        
         return result;
     }
     

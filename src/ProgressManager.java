@@ -416,7 +416,7 @@ public class ProgressManager {
                         if(onCardRoles[i].getPlayer() != null){
                             if(lm.checkLocation(s, onCardRoles[i].getPlayer().getId())){
                                 if(payoutIndex<payout.length){
-                                    bank.pay(onCardRoles[i].getPlayer().getId(), payout[payoutIndex] ,0);
+                                    bank.add(onCardRoles[i].getPlayer().getId(), payout[payoutIndex] ,0);
                                     payoutIndex++;
                                 }
                             }
