@@ -18,8 +18,7 @@ CLASSES = \
 		  ProgressManager.java \
 		  Role.java \
 		  Scene.java \
-		  GUI.java \
-		  Viewer.java
+		  GUI.java
 
 default: classes
 
